@@ -7,7 +7,7 @@
       name="description"
       content="An interactive tree map with a live OpenStreetMap baseline and editable tree records for Campus Hubland Nord in Würzburg."
     />
-    <title>Hubland Canopy — Würzburg Tree Map</title>
+    <title>Tree Tracker — Würzburg Campus Tree Map</title>
     <link rel="preconnect" href="https://unpkg.com" />
     <link rel="preconnect" href="https://geoservices.bayern.de" crossorigin />
     <link
@@ -614,8 +614,241 @@
         font-weight: 800;
       }
 
-      .tree-type-filter {
-        margin-bottom: 13px;
+      .tree-filter-shell {
+        display: grid;
+        gap: 9px;
+        margin-bottom: 14px;
+      }
+
+      .tree-filter-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+
+      .tree-filter-toggle,
+      .tree-filter-clear {
+        min-height: 36px;
+        border: 1px solid rgba(41, 76, 56, 0.16);
+        border-radius: 999px;
+        padding: 7px 11px;
+        color: var(--forest-900);
+        background: rgba(255, 255, 255, 0.72);
+        cursor: pointer;
+        font: inherit;
+        font-size: 9px;
+        font-weight: 850;
+      }
+
+      .tree-filter-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+      }
+
+      .tree-filter-toggle::before {
+        content: "☷";
+        font-size: 13px;
+        line-height: 1;
+      }
+
+      .tree-filter-count {
+        display: inline-grid;
+        min-width: 19px;
+        height: 19px;
+        place-items: center;
+        border-radius: 999px;
+        padding: 0 5px;
+        color: white;
+        background: var(--forest-700);
+        font-size: 8px;
+      }
+
+      .tree-filter-count:empty,
+      .tree-filter-count[data-count="0"] {
+        display: none;
+      }
+
+      .tree-filter-clear {
+        border-color: transparent;
+        color: var(--muted);
+        background: transparent;
+      }
+
+      .tree-filter-clear:disabled {
+        opacity: 0.42;
+        cursor: default;
+      }
+
+      .tree-filter-panel {
+        overflow: hidden;
+        border: 1px solid rgba(41, 76, 56, 0.14);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.56);
+      }
+
+      .tree-filter-panel[hidden] {
+        display: none;
+      }
+
+      .active-tree-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        padding: 9px 9px 3px;
+      }
+
+      .active-tree-filters:empty {
+        display: none;
+      }
+
+      .tree-filter-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        max-width: 100%;
+        min-height: 27px;
+        border: 1px solid rgba(55, 104, 75, 0.18);
+        border-radius: 999px;
+        padding: 4px 8px;
+        color: var(--forest-900);
+        background: #e8eee3;
+        cursor: pointer;
+        font: inherit;
+        font-size: 8px;
+        font-weight: 800;
+      }
+
+      .tree-filter-chip span:first-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .tree-filter-chip b {
+        color: var(--forest-700);
+        font-size: 12px;
+        line-height: 1;
+      }
+
+      .filter-facet {
+        border-top: 1px solid rgba(41, 76, 56, 0.1);
+      }
+
+      .filter-facet:first-of-type {
+        border-top: 0;
+      }
+
+      .filter-facet summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 39px;
+        padding: 8px 10px;
+        color: var(--forest-900);
+        cursor: pointer;
+        list-style: none;
+        font-size: 9px;
+        font-weight: 850;
+      }
+
+      .filter-facet summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .filter-facet summary::after {
+        content: "+";
+        color: var(--forest-700);
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .filter-facet[open] summary::after {
+        content: "−";
+      }
+
+      .filter-facet-title {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .facet-selected-count {
+        min-width: 17px;
+        border-radius: 999px;
+        padding: 2px 5px;
+        color: var(--forest-800);
+        background: var(--sage-100);
+        text-align: center;
+        font-size: 8px;
+      }
+
+      .facet-selected-count:empty {
+        display: none;
+      }
+
+      .facet-search {
+        width: calc(100% - 18px);
+        min-height: 34px;
+        margin: 0 9px 7px;
+        border: 1px solid rgba(41, 76, 56, 0.14);
+        border-radius: 9px;
+        padding: 0 9px;
+        color: var(--forest-900);
+        background: rgba(255, 255, 255, 0.76);
+        font: inherit;
+        font-size: 9px;
+      }
+
+      .facet-options {
+        display: grid;
+        max-height: 180px;
+        overflow-y: auto;
+        padding: 0 6px 8px;
+      }
+
+      .facet-option {
+        display: grid;
+        grid-template-columns: 16px minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 7px;
+        min-height: 31px;
+        border-radius: 8px;
+        padding: 4px 5px;
+        color: #526159;
+        cursor: pointer;
+        font-size: 9px;
+      }
+
+      .facet-option:hover {
+        background: rgba(226, 235, 221, 0.72);
+      }
+
+      .facet-option input {
+        width: 14px;
+        height: 14px;
+        margin: 0;
+        accent-color: var(--forest-700);
+      }
+
+      .facet-option-label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .facet-option-count {
+        color: var(--muted);
+        font-size: 8px;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .facet-empty {
+        margin: 0;
+        padding: 8px;
+        color: var(--muted);
+        font-size: 8px;
       }
 
       .harvest-select {
@@ -635,6 +868,34 @@
         display: flex;
         flex-wrap: wrap;
         gap: 6px;
+      }
+
+      .season-filter-groups {
+        display: grid;
+        gap: 9px;
+      }
+
+      .season-filter-group {
+        display: grid;
+        gap: 6px;
+        border: 1px solid rgba(41, 76, 56, 0.1);
+        border-radius: 12px;
+        padding: 8px;
+        background: rgba(255, 255, 255, 0.38);
+      }
+
+      .season-filter-group-title,
+      .season-group-title {
+        margin: 0;
+        color: var(--forest-800);
+        font-size: 8px;
+        font-weight: 900;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+      }
+
+      .all-fruit-filter {
+        justify-self: start;
       }
 
       .fruit-filter {
@@ -843,6 +1104,23 @@
         margin-top: 2px;
         color: var(--muted);
         font-size: 8px;
+      }
+
+      .season-card-copy .season-card-period {
+        color: var(--forest-800);
+        font-weight: 800;
+      }
+
+      .season-card-description {
+        margin: 5px 0 0;
+        color: var(--muted);
+        font-size: 8px;
+        line-height: 1.45;
+      }
+
+      .season-group-title {
+        margin: 5px 2px 0;
+        padding-top: 4px;
       }
 
       .season-card-count {
@@ -1590,6 +1868,54 @@
         font-weight: 750;
       }
 
+      .source-footer {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px 9px;
+        margin: 4px 12px 16px;
+        border-top: 1px solid var(--line);
+        padding: 12px 2px 0;
+        color: var(--muted);
+        font-size: 8px;
+        line-height: 1.5;
+      }
+
+      .source-footer strong {
+        color: var(--forest-900);
+        font-size: 8px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .source-footer-links {
+        display: flex;
+        flex: 1 1 240px;
+        flex-wrap: wrap;
+        gap: 4px 0;
+      }
+
+      .source-footer a {
+        color: var(--forest-700);
+        font-weight: 750;
+        text-decoration: none;
+      }
+
+      .source-footer a:hover {
+        text-decoration: underline;
+      }
+
+      .source-footer a:not(:last-child)::after {
+        margin: 0 6px;
+        color: var(--line);
+        content: "·";
+      }
+
+      .source-footer-note {
+        flex-basis: 100%;
+        opacity: 0.82;
+      }
+
       /* Botanical field-guide theme inspired by the supplied Tree Tracker reference. */
       body {
         background:
@@ -1616,28 +1942,94 @@
         backdrop-filter: blur(10px);
       }
 
-      .brand::after {
-        position: absolute;
-        right: 238px;
-        color: rgba(54, 84, 51, 0.08);
-        content: "❧";
+      .brand-mark {
+        position: relative;
+        width: 42px;
+        height: 42px;
+        overflow: hidden;
+        color: var(--forest-900);
+        border: 1px solid rgba(48, 77, 47, 0.24);
+        background:
+          radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.95), transparent 29%),
+          linear-gradient(145deg, #f5f2e5, #e2e6d2);
+        box-shadow:
+          inset 0 0 0 3px rgba(251, 247, 235, 0.86),
+          inset 0 0 0 4px rgba(49, 88, 55, 0.12),
+          0 4px 11px rgba(49, 61, 39, 0.11);
         font-family: Georgia, "Times New Roman", serif;
-        font-size: 54px;
-        line-height: 1;
-        pointer-events: none;
-        transform: rotate(-13deg);
       }
 
-      .brand-mark {
-        width: 38px;
-        height: 38px;
-        color: var(--forest-900);
-        background: #e8ead8;
-        box-shadow:
-          inset 0 0 0 1px rgba(49, 88, 55, 0.1),
-          0 3px 9px rgba(49, 61, 39, 0.08);
-        font-family: Georgia, "Times New Roman", serif;
-        font-size: 19px;
+      .brand-mark::before {
+        position: absolute;
+        z-index: 1;
+        top: 5px;
+        left: 20px;
+        width: 1px;
+        height: 24px;
+        border-radius: 999px;
+        background: currentColor;
+        content: "";
+        opacity: 0.7;
+        transform: rotate(31deg);
+        transform-origin: bottom;
+      }
+
+      .brand-mark::after {
+        position: absolute;
+        inset: 5px;
+        border: 1px solid rgba(49, 88, 55, 0.1);
+        border-radius: 50%;
+        content: "";
+        pointer-events: none;
+      }
+
+      .brand-leaf,
+      .brand-leaf::before,
+      .brand-leaf::after {
+        position: absolute;
+        z-index: 2;
+        width: 9px;
+        height: 15px;
+        border: 1px solid currentColor;
+        border-radius: 90% 12% 90% 12%;
+        background: linear-gradient(145deg, #9db287, #66805e);
+        content: "";
+        box-shadow: inset 2px 1px 3px rgba(255, 255, 255, 0.28);
+      }
+
+      .brand-leaf {
+        top: 6px;
+        left: 21px;
+        transform: rotate(39deg);
+      }
+
+      .brand-leaf::before {
+        top: 8px;
+        left: -9px;
+        width: 8px;
+        height: 13px;
+        transform: rotate(-78deg);
+      }
+
+      .brand-leaf::after {
+        top: 14px;
+        left: 3px;
+        width: 7px;
+        height: 12px;
+        transform: rotate(54deg);
+      }
+
+      .brand-monogram {
+        position: absolute;
+        z-index: 3;
+        right: 5px;
+        bottom: 4px;
+        color: var(--forest-950);
+        font-size: 7px;
+        font-style: normal;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        line-height: 1;
       }
 
       .brand-copy {
@@ -1987,9 +2379,28 @@
         background-size: 300% 200%;
       }
 
-      .botanical-extra-genus-plate {
-        background-image: url("./assets/botanical-extra-genus-plates.png");
-        background-size: 300% 100%;
+      .botanical-aesculus-plate {
+        background-image: url("./assets/botanical-aesculus-plate.png");
+        background-position: center 84%;
+        background-size: cover;
+      }
+
+      .botanical-juglans-plate {
+        background-image: url("./assets/botanical-juglans-plate.png");
+        background-position: center 69%;
+        background-size: cover;
+      }
+
+      .botanical-syringa-plate {
+        background-image: url("./assets/botanical-syringa-plate.png");
+        background-position: center 36%;
+        background-size: cover;
+      }
+
+      .botanical-betula-plate {
+        background-image: url("./assets/botanical-betula-plate.png");
+        background-position: center;
+        background-size: cover;
       }
 
       .botanical-platanus-plate {
@@ -2000,6 +2411,12 @@
 
       .botanical-corylus-plate {
         background-image: url("./assets/botanical-corylus-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-red-mirabelle-plate {
+        background-image: url("./assets/botanical-red-mirabelle-plate.png");
         background-position: center;
         background-size: cover;
       }
@@ -2046,18 +2463,6 @@
 
       .genus-tilia {
         background-position: 50% 100%;
-      }
-
-      .genus-aesculus {
-        background-position: 0 0;
-      }
-
-      .genus-juglans {
-        background-position: 50% 0;
-      }
-
-      .genus-syringa {
-        background-position: 100% 0;
       }
 
       .tree-popup-placeholder {
@@ -2185,6 +2590,64 @@
         font-size: 9px;
         font-weight: 750;
         letter-spacing: 0.015em;
+      }
+
+      .seasonal-popup-card {
+        display: grid;
+        grid-template-columns: 34px minmax(0, 1fr);
+        gap: 10px;
+        margin-top: 13px;
+        border: 1px solid rgba(157, 65, 58, 0.18);
+        border-radius: 14px;
+        padding: 11px;
+        background: linear-gradient(145deg, #fff7f1, #f4e3d8);
+      }
+
+      .seasonal-popup-card.is-flower {
+        border-color: rgba(121, 92, 126, 0.2);
+        background: linear-gradient(145deg, #fbf6f8, #eee4ec);
+      }
+
+      .seasonal-popup-icon {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        border-radius: 50%;
+        color: #7d302f;
+        background: rgba(255, 255, 255, 0.72);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 18px;
+      }
+
+      .seasonal-popup-card.is-flower .seasonal-popup-icon {
+        color: #76587b;
+      }
+
+      .seasonal-popup-copy span,
+      .seasonal-popup-copy strong {
+        display: block;
+      }
+
+      .seasonal-popup-copy span {
+        color: var(--muted);
+        font-size: 8px;
+        font-weight: 850;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+      }
+
+      .seasonal-popup-copy strong {
+        margin-top: 2px;
+        color: var(--forest-900);
+        font-size: 11px;
+      }
+
+      .seasonal-popup-copy p {
+        margin: 5px 0 0;
+        color: var(--muted);
+        font-size: 9px;
+        line-height: 1.45;
       }
 
       .popup-measures {
@@ -2344,8 +2807,20 @@
 
       body.food-mode .brand-mark {
         color: #823a31;
-        background: #f0dfd4;
-        box-shadow: inset 0 0 0 1px rgba(130, 58, 49, 0.1);
+        border-color: rgba(130, 58, 49, 0.24);
+        background:
+          radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.9), transparent 29%),
+          linear-gradient(145deg, #f8eee7, #ead6ca);
+        box-shadow:
+          inset 0 0 0 3px rgba(252, 246, 236, 0.86),
+          inset 0 0 0 4px rgba(130, 58, 49, 0.11),
+          0 4px 11px rgba(91, 42, 34, 0.11);
+      }
+
+      body.food-mode .brand-leaf,
+      body.food-mode .brand-leaf::before,
+      body.food-mode .brand-leaf::after {
+        background: linear-gradient(145deg, #c9876c, #91483d);
       }
 
       body.food-mode .dashboard-header {
@@ -2391,6 +2866,29 @@
           width: 30px;
           height: 30px;
           font-size: 15px;
+        }
+
+        .brand-mark::before {
+          top: 3px;
+          left: 14px;
+          height: 18px;
+        }
+
+        .brand-mark::after {
+          inset: 3px;
+        }
+
+        .brand-leaf {
+          top: 3px;
+          left: 14px;
+          transform: scale(0.72) rotate(39deg);
+          transform-origin: top left;
+        }
+
+        .brand-monogram {
+          right: 3px;
+          bottom: 2px;
+          font-size: 5px;
         }
 
         .brand-copy {
@@ -2555,10 +3053,6 @@
           box-shadow: 0 10px 26px rgba(37, 43, 29, 0.14);
         }
 
-        .brand::after {
-          display: none;
-        }
-
         .brand-copy strong {
           letter-spacing: -0.025em;
         }
@@ -2638,6 +3132,61 @@
         }
       }
 
+      .brand-logo {
+        position: relative;
+        width: 122px;
+        height: 57px;
+        flex: 0 0 auto;
+        overflow: hidden;
+        margin-right: auto;
+        border: 0;
+        background: transparent;
+      }
+
+      .brand-logo img {
+        position: absolute;
+        top: -45px;
+        left: -47px;
+        width: 233px;
+        max-width: none;
+        height: auto;
+        user-select: none;
+        pointer-events: none;
+      }
+
+      @media (min-width: 761px) {
+        .maplibregl-ctrl-top-right {
+          top: 100px;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .brand-logo {
+          width: 76px;
+          height: 36px;
+          margin-right: 0;
+        }
+
+        .brand-logo img {
+          top: -28px;
+          left: -29px;
+          width: 145px;
+        }
+      }
+
+      @media (max-width: 390px) {
+        .brand-logo {
+          width: 64px;
+          height: 30px;
+        }
+
+        .brand-logo img {
+          top: -24px;
+          left: -25px;
+          width: 122px;
+        }
+      }
+
       @media (prefers-reduced-motion: reduce) {
         *,
         *::before,
@@ -2661,13 +3210,17 @@
 
     <div
       class="brand"
-      aria-label="Hubland Canopy, Campus Hubland Nord in Würzburg"
+      aria-label="Tree Tracker, Campus Hubland Nord in Würzburg"
       data-i18n-aria-label="brandAria"
     >
-      <div class="brand-mark" aria-hidden="true">❧</div>
-      <div class="brand-copy">
-        <strong>Hubland Canopy</strong>
-        <span>Campus Hubland Nord · Würzburg</span>
+      <div class="brand-logo" aria-hidden="true">
+        <img
+          src="assets/tree-tracker-logo-shield.png"
+          alt=""
+          width="1536"
+          height="1024"
+          draggable="false"
+        >
       </div>
       <nav
         class="dashboard-mode-switch"
@@ -2694,7 +3247,7 @@
           aria-selected="false"
           data-dashboard-mode="food"
           data-i18n="foodMode"
-        >Fruits &amp; food</button>
+        >Fruit &amp; flowers</button>
       </nav>
       <button
         class="language-toggle"
@@ -2715,14 +3268,10 @@
       data-i18n-aria-label="dashboardAria"
     >
       <header class="dashboard-header" id="panel-header">
-        <div class="dashboard-kicker">
-          <span data-i18n="sourceKicker">OSM + tree data + DOP40</span>
-          <span class="data-status" id="data-status" data-i18n="loading">Loading</span>
-        </div>
         <h1 data-i18n="headerTitle">Trees at Hubland Nord</h1>
         <p data-i18n="headerIntro">
-          Explore the tree inventory or switch to the edible landscape and see
-          what may be ripe.
+          Explore the tree inventory or switch to the fruit and flower
+          landscape to see what is in season.
         </p>
         <button
           class="mobile-handle"
@@ -2778,16 +3327,90 @@
             <h2 id="display-heading" data-i18n="mapColors">Map colors</h2>
             <span id="color-description" data-i18n="byGenus">By genus</span>
           </div>
-          <div class="harvest-field tree-type-filter">
-            <label for="tree-type-filter" data-i18n="selectTreeType">
-              Select tree type
-            </label>
-            <select
-              class="harvest-select"
-              id="tree-type-filter"
-              aria-label="Tree type filter"
-              data-i18n-aria-label="treeTypeFilterAria"
-            ></select>
+          <div class="tree-filter-shell">
+            <div class="tree-filter-toolbar">
+              <button
+                class="tree-filter-toggle"
+                id="tree-filter-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="tree-filter-panel"
+              >
+                <span data-i18n="filters">Filters</span>
+                <span
+                  class="tree-filter-count"
+                  id="tree-filter-count"
+                  data-count="0"
+                ></span>
+              </button>
+              <button
+                class="tree-filter-clear"
+                id="clear-tree-filters"
+                type="button"
+                data-i18n="clearAllFilters"
+                disabled
+              >Clear all</button>
+            </div>
+            <div class="tree-filter-panel" id="tree-filter-panel" hidden>
+              <div
+                class="active-tree-filters"
+                id="active-tree-filters"
+                aria-live="polite"
+              ></div>
+              <details class="filter-facet" data-tree-facet="species" open>
+                <summary>
+                  <span class="filter-facet-title">
+                    <span data-i18n="filterTreeSpecies">Tree species</span>
+                    <span class="facet-selected-count" data-facet-count="species"></span>
+                  </span>
+                </summary>
+                <input
+                  class="facet-search"
+                  id="tree-species-search"
+                  type="search"
+                  autocomplete="off"
+                  placeholder="Search tree species"
+                  data-i18n-placeholder="searchTreeSpecies"
+                >
+                <div class="facet-options" data-facet-options="species"></div>
+              </details>
+              <details class="filter-facet" data-tree-facet="genera">
+                <summary>
+                  <span class="filter-facet-title">
+                    <span data-i18n="filterGenus">Genus</span>
+                    <span class="facet-selected-count" data-facet-count="genera"></span>
+                  </span>
+                </summary>
+                <div class="facet-options" data-facet-options="genera"></div>
+              </details>
+              <details class="filter-facet" data-tree-facet="health">
+                <summary>
+                  <span class="filter-facet-title">
+                    <span data-i18n="filterCondition">Condition</span>
+                    <span class="facet-selected-count" data-facet-count="health"></span>
+                  </span>
+                </summary>
+                <div class="facet-options" data-facet-options="health"></div>
+              </details>
+              <details class="filter-facet" data-tree-facet="forms">
+                <summary>
+                  <span class="filter-facet-title">
+                    <span data-i18n="filterGrowthForm">Growth form</span>
+                    <span class="facet-selected-count" data-facet-count="forms"></span>
+                  </span>
+                </summary>
+                <div class="facet-options" data-facet-options="forms"></div>
+              </details>
+              <details class="filter-facet" data-tree-facet="sources">
+                <summary>
+                  <span class="filter-facet-title">
+                    <span data-i18n="filterDataSource">Data source</span>
+                    <span class="facet-selected-count" data-facet-count="sources"></span>
+                  </span>
+                </summary>
+                <div class="facet-options" data-facet-options="sources"></div>
+              </details>
+            </div>
           </div>
           <div
             class="segmented-control"
@@ -2880,7 +3503,7 @@
           <section class="section" aria-labelledby="harvest-heading">
             <div class="section-heading">
               <h2 id="harvest-heading" data-i18n="harvestCalendar">
-                Harvest calendar
+                Fruit &amp; flower calendar
               </h2>
               <span data-i18n="typicalWuerzburgSeason">Typical Würzburg season</span>
             </div>
@@ -2892,12 +3515,12 @@
                 <select class="harvest-select" id="harvest-month"></select>
               </div>
               <div class="harvest-field">
-                <span data-i18n="selectFruitType">Select fruit type</span>
+                <span data-i18n="selectFruitType">Select fruit or flower</span>
                 <div
-                  class="fruit-filter-list"
+                  class="season-filter-groups"
                   id="fruit-type-filters"
                   role="group"
-                  aria-label="Fruit type filter"
+                  aria-label="Fruit or flower type filter"
                   data-i18n-aria-label="fruitFilterAria"
                 ></div>
               </div>
@@ -2907,30 +3530,30 @@
           <section class="section" aria-labelledby="food-snapshot-heading">
             <div class="section-heading">
               <h2 id="food-snapshot-heading" data-i18n="foodSnapshot">
-                Edible landscape
+                Fruit &amp; flower landscape
               </h2>
-              <span data-i18n="mundraubData">Mundraub data</span>
+              <span data-i18n="mundraubData">Fruit &amp; flower data</span>
             </div>
             <div class="stats-grid">
               <article class="stat-card">
                 <span class="stat-icon" aria-hidden="true">●</span>
                 <strong class="stat-value" id="fruit-location-count">—</strong>
                 <span class="stat-label" data-i18n="mundraubLocations">
-                  Mundraub locations
+                  Fruit &amp; flower locations
                 </span>
               </article>
               <article class="stat-card">
                 <span class="stat-icon" aria-hidden="true">✦</span>
                 <strong class="stat-value" id="mapped-fruit-count">—</strong>
                 <span class="stat-label" data-i18n="mappedFruitTypes">
-                  Mapped fruit types
+                  Mapped fruit &amp; flower types
                 </span>
               </article>
               <article class="stat-card">
                 <span class="stat-icon" aria-hidden="true">◌</span>
                 <strong class="stat-value" id="ripe-type-count">—</strong>
                 <span class="stat-label" data-i18n="ripeTypesThisMonth">
-                  Types ripe this month
+                  Seasonal this month
                 </span>
               </article>
               <article class="stat-card">
@@ -2946,21 +3569,21 @@
           <section class="section" aria-labelledby="ripe-now-heading">
             <div class="section-heading">
               <h2 id="ripe-now-heading" data-i18n="ripeInMonth">
-                Ripe in this month
+                In season this month
               </h2>
               <span id="selected-month-label">—</span>
             </div>
             <div class="season-list" id="ripe-fruit-list"></div>
             <p class="harvest-note" data-i18n="harvestCaveat">
-              Harvest windows are approximate and vary by variety, weather and
-              location. Check fruit on site before picking.
+              Fruit harvest and flowering windows are approximate and vary by
+              variety, weather and location.
             </p>
           </section>
 
           <section class="section" aria-labelledby="mundraub-breakdown-heading">
             <div class="section-heading">
               <h2 id="mundraub-breakdown-heading" data-i18n="mundraubBreakdown">
-                Mundraub fruit locations
+                Fruit &amp; flower locations
               </h2>
               <span data-i18n="allMappedTypes">All mapped types</span>
             </div>
@@ -2968,7 +3591,7 @@
               class="bar-chart"
               id="mundraub-fruit-chart"
               role="img"
-              aria-label="Mundraub fruit locations by type"
+              aria-label="Fruit and flower locations by type"
               data-i18n-aria-label="mundraubChartAria"
             ></div>
           </section>
@@ -3038,83 +3661,48 @@
           </div>
         </section>
 
-        <section class="section" aria-labelledby="source-heading">
-          <div class="section-heading">
-            <h2 id="source-heading" data-i18n="dataSources">Data sources</h2>
-            <span data-i18n="retrievedDate">OSM live on request</span>
-          </div>
-          <div class="source-card">
-            <strong data-i18n="osmSourceTitle">
-              OpenStreetMap · Overpass API
-            </strong>
-            <span data-i18n="osmDescription">
-              Live OSM tree nodes, tree rows, hedges, orchards and mapped green
-              areas inside the campus bounding box.
-            </span>
+        <footer
+          class="source-footer"
+          aria-label="Data sources"
+          data-i18n-aria-label="dataSources"
+        >
+          <strong data-i18n="dataSources">Data sources</strong>
+          <div class="source-footer-links">
             <a
               href="https://www.openstreetmap.org/#map=17/49.7855/9.9740"
               target="_blank"
               rel="noopener noreferrer"
-              data-i18n="openOsmMap"
-            >Open OpenStreetMap · ODbL</a>
-          </div>
-          <div class="source-card">
-            <strong data-i18n="dopSourceTitle">
-              Bavarian Surveying Administration · DOP40
-            </strong>
-            <span data-i18n="dopDescription">
-              Official open 40 cm orthophotos provide the satellite-style map
-              background.
-            </span>
+              data-i18n="sourceOsmFooter"
+            >OpenStreetMap · ODbL</a>
             <a
               href="https://geodaten.bayern.de/opengeodata/OpenDataDetail.html?pn=dop40"
               target="_blank"
               rel="noopener noreferrer"
-              data-i18n="openDopSource"
-            >Open source · CC BY 4.0</a>
-          </div>
-          <div class="source-card">
-            <strong data-i18n="seasonSourceTitle">
-              Regional harvest calendar
-            </strong>
-            <span data-i18n="seasonSourceDescription">
-              Typical German harvest windows are based on public seasonal
-              calendars and adapted as approximate Würzburg guidance.
-            </span>
+              data-i18n="sourceDopFooter"
+            >DOP40 · CC BY 4.0</a>
             <a
               href="https://www.verbraucherzentrale.de/wissen/lebensmittel/gesund-ernaehren/saisonkalender-obst-und-gemuese-frisch-und-regional-einkaufen-17229"
               target="_blank"
               rel="noopener noreferrer"
-              data-i18n="openSeasonCalendar"
-            >Open seasonal calendar</a>
-          </div>
-          <div class="source-card">
-            <strong data-i18n="mundraubSourceTitle">mundraub.org · community mapping</strong>
-            <span data-i18n="mundraubDescription">
-              17 fruit-tree locations inside the campus boundary: 8 apple, 7 cherry,
-              1 pear and 1 mirabelle. Verify access and ownership on site.
-            </span>
+              data-i18n="sourceSeasonFooter"
+            >Seasonal calendar</a>
             <a
               href="https://mundraub.org/map#z=15&amp;lat=49.78594694963257&amp;lng=9.967989921569826"
               target="_blank"
               rel="noopener noreferrer"
-              data-i18n="openMundraubMap"
-            >Open original Mundraub map</a>
-          </div>
-          <div class="source-card">
-            <strong data-i18n="citySourceTitle">Stadt Würzburg · Fachabteilung Gartenamt</strong>
-            <span data-i18n="cityDescription">
-              56 municipal public-tree records around the campus. None of these city
-              records lies inside the drawn university boundary.
-            </span>
+              data-i18n="sourceMundraubFooter"
+            >mundraub.org</a>
             <a
               href="https://opendata.wuerzburg.de/explore/dataset/baumkataster_stadt_wuerzburg/"
               target="_blank"
               rel="noopener noreferrer"
-              data-i18n="openDataset"
-            >Open dataset · DL-DE-BY-2.0</a>
+              data-i18n="sourceCityFooter"
+            >City of Würzburg</a>
           </div>
-        </section>
+          <span class="source-footer-note" data-i18n="sourceFooterNote">
+            Seasonal dates are approximate. Check access rights and local conditions on site.
+          </span>
+        </footer>
       </div>
     </aside>
 
@@ -3182,6 +3770,8 @@
           scientific_name: "Syringa sp.",
           genus: "Syringa",
           tree_type: "Strauch",
+          flowering: true,
+          fruit_category: "Flieder",
           review_status: "reviewed",
           updated_at: "2026-08-03",
         },
@@ -3190,6 +3780,8 @@
           scientific_name: "Tilia sp.",
           genus: "Tilia",
           tree_type: "Laubbaum",
+          flowering: true,
+          fruit_category: "Linde",
           review_status: "reviewed",
           updated_at: "2026-08-03",
         },
@@ -3210,6 +3802,41 @@
           review_status: "reviewed",
           updated_at: "2026-08-03",
         },
+        "annotation-1785428421307-wipadd": {
+          common_name: "Ahornblättrige Platane",
+          scientific_name: "Platanus × acerifera",
+          scientific_synonym: "Platanus × hispanica",
+          genus: "Platanus",
+          tree_type: "Laubbaum",
+          review_status: "reviewed",
+          updated_at: "2026-08-03",
+        },
+        "annotation-1785428416199-4teo1x": {
+          common_name: "Ahornblättrige Platane",
+          scientific_name: "Platanus × acerifera",
+          scientific_synonym: "Platanus × hispanica",
+          genus: "Platanus",
+          tree_type: "Laubbaum",
+          review_status: "reviewed",
+          updated_at: "2026-08-03",
+        },
+        "annotation-1785428412140-7vj5c1": {
+          common_name: "Ahornblättrige Platane",
+          scientific_name: "Platanus × acerifera",
+          scientific_synonym: "Platanus × hispanica",
+          genus: "Platanus",
+          tree_type: "Laubbaum",
+          review_status: "reviewed",
+          updated_at: "2026-08-03",
+        },
+        "annotation-1785428592573-81dt5y": {
+          common_name: "Birke",
+          scientific_name: "Betula sp.",
+          genus: "Betula",
+          tree_type: "Laubbaum",
+          review_status: "reviewed",
+          updated_at: "2026-08-03",
+        },
         "annotation-1785429650771-4soy0h": {
           common_name: "Haselnuss",
           scientific_name: "Corylus avellana",
@@ -3217,6 +3844,26 @@
           tree_type: "Strauch",
           edible: true,
           fruit_category: "Haselnuss",
+          review_status: "reviewed",
+          updated_at: "2026-08-03",
+        },
+        "annotation-1785769742277-hndjux": {
+          common_name: "Rote Mirabelle",
+          scientific_name: "Prunus domestica subsp. syriaca",
+          genus: "Prunus",
+          tree_type: "Obstbaum-Fundort",
+          edible: true,
+          fruit_category: "Mirabelle",
+          review_status: "reviewed",
+          updated_at: "2026-08-03",
+        },
+        "annotation-1785769344291-lla14o": {
+          common_name: "Quitte",
+          scientific_name: "Cydonia oblonga",
+          genus: "Cydonia",
+          tree_type: "Obstbaum-Fundort",
+          edible: true,
+          fruit_category: "Quitte",
           review_status: "reviewed",
           updated_at: "2026-08-03",
         },
@@ -3250,6 +3897,8 @@
           scientific_name: "Tilia sp.",
           genus: "Tilia",
           tree_type: "Laubbaum",
+          flowering: true,
+          fruit_category: "Linde",
         },
         {
           id: "silver-linden",
@@ -3257,6 +3906,8 @@
           scientific_name: "Tilia tomentosa",
           genus: "Tilia",
           tree_type: "Laubbaum",
+          flowering: true,
+          fruit_category: "Linde",
         },
         {
           id: "silver-linden-brabant",
@@ -3264,6 +3915,8 @@
           scientific_name: "Tilia tomentosa ‘Brabant’",
           genus: "Tilia",
           tree_type: "Laubbaum",
+          flowering: true,
+          fruit_category: "Linde",
         },
         {
           id: "ash",
@@ -3305,6 +3958,13 @@
           common_name: "Spaeths Erle",
           scientific_name: "Alnus × spaethii",
           genus: "Alnus",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "birch",
+          common_name: "Birke",
+          scientific_name: "Betula sp.",
+          genus: "Betula",
           tree_type: "Laubbaum",
         },
         {
@@ -3383,6 +4043,15 @@
           fruit_category: "Mirabelle",
         },
         {
+          id: "red-mirabelle",
+          common_name: "Rote Mirabelle",
+          scientific_name: "Prunus domestica subsp. syriaca",
+          genus: "Prunus",
+          tree_type: "Obstbaum-Fundort",
+          edible: true,
+          fruit_category: "Mirabelle",
+        },
+        {
           id: "plum",
           common_name: "Pflaume",
           scientific_name: "Prunus domestica",
@@ -3406,6 +4075,8 @@
           scientific_name: "Syringa sp.",
           genus: "Syringa",
           tree_type: "Strauch",
+          flowering: true,
+          fruit_category: "Flieder",
         },
       ];
       const HUBLAND_ROWS = [
@@ -4302,59 +4973,93 @@
       const FRUIT_CATALOG = [
         {
           id: "apple",
+          kind: "fruit",
           category: "Apfel",
           nameKey: "fruitApple",
+          descriptionKey: "appleSeasonDescription",
           months: [8, 9, 10, 11],
           color: "#b8563f",
         },
         {
           id: "pear",
+          kind: "fruit",
           category: "Birne",
           nameKey: "fruitPear",
+          descriptionKey: "pearSeasonDescription",
           months: [8, 9, 10],
           color: "#9d9f45",
         },
         {
           id: "cherry",
+          kind: "fruit",
           category: "Kirsche",
           nameKey: "fruitCherry",
+          descriptionKey: "cherrySeasonDescription",
           months: [6, 7],
           color: "#9f3f47",
         },
         {
           id: "mirabelle",
+          kind: "fruit",
           category: "Mirabelle",
           nameKey: "fruitMirabelle",
+          descriptionKey: "mirabelleSeasonDescription",
           months: [7, 8, 9],
           color: "#d5a83f",
         },
         {
           id: "plum",
+          kind: "fruit",
           category: "Pflaume",
           nameKey: "fruitPlum",
+          descriptionKey: "plumSeasonDescription",
           months: [7, 8, 9, 10],
           color: "#76587b",
         },
         {
           id: "walnut",
+          kind: "fruit",
           category: "Walnuss",
           nameKey: "fruitWalnut",
+          descriptionKey: "walnutSeasonDescription",
           months: [9, 10],
           color: "#8b6847",
         },
         {
           id: "hazelnut",
+          kind: "fruit",
           category: "Haselnuss",
           nameKey: "fruitHazelnut",
+          descriptionKey: "hazelnutSeasonDescription",
           months: [9, 10],
           color: "#a06b4e",
         },
         {
           id: "quince",
+          kind: "fruit",
           category: "Quitte",
           nameKey: "fruitQuince",
+          descriptionKey: "quinceSeasonDescription",
           months: [9, 10, 11],
           color: "#bd9236",
+        },
+        {
+          id: "linden-flower",
+          kind: "flower",
+          category: "Linde",
+          nameKey: "flowerLinden",
+          descriptionKey: "lindenSeasonDescription",
+          months: [6, 7],
+          color: "#8f9148",
+        },
+        {
+          id: "lilac-flower",
+          kind: "flower",
+          category: "Flieder",
+          nameKey: "flowerLilac",
+          descriptionKey: "lilacSeasonDescription",
+          months: [4, 5],
+          color: "#9b6a9c",
         },
       ];
       const FRUIT_COLORS = Object.fromEntries(
@@ -4363,19 +5068,19 @@
 
       const I18N = {
         en: {
-          pageTitle: "Hubland Canopy — Würzburg Tree Map",
+          pageTitle: "Tree Tracker — Würzburg Campus Tree Map",
           metaDescription:
             "An interactive tree map with a live OpenStreetMap baseline and editable tree records for Campus Hubland Nord in Würzburg.",
           mapAria: "Interactive campus tree map",
-          brandAria: "Hubland Canopy, Campus Hubland Nord in Würzburg",
-          dashboardAria: "Campus tree and edible landscape dashboard",
+          brandAria: "Tree Tracker, Campus Hubland Nord in Würzburg",
+          dashboardAria: "Campus tree, fruit and flower landscape dashboard",
           switchToGerman: "Switch to German",
           switchToEnglish: "Switch to English",
           sourceKicker: "OSM + tree data + DOP40",
           loading: "Loading",
           headerTitle: "Trees at Hubland Nord",
           headerIntro:
-            "Explore the tree inventory or switch to the edible landscape and see what may be ripe.",
+            "Explore the tree inventory or switch to the fruit and flower landscape to see what is in season.",
           dashboardSection: "Dashboard section",
           treesMode: "Trees",
           foodMode: "Fruit & flowers",
@@ -4392,6 +5097,25 @@
           selectTreeType: "Select tree type",
           treeTypeFilterAria: "Filter the map by tree type",
           allTreeTypes: "All tree types",
+          selectTreeHealth: "Select condition",
+          treeHealthFilterAria: "Filter the map by tree condition",
+          allTreeHealth: "All conditions",
+          filters: "Filters",
+          clearAllFilters: "Clear all",
+          filterTreeSpecies: "Tree species",
+          filterGenus: "Genus",
+          filterCondition: "Condition",
+          filterGrowthForm: "Growth form",
+          filterDataSource: "Data source",
+          searchTreeSpecies: "Search tree species…",
+          noFilterResults: "No matching values",
+          removeFilter: "Remove filter: {filter}",
+          selectedFilters: "{count} active filters",
+          matchingTreeFilters: "{count} matching trees · {filters} active filters",
+          sourceMunicipal: "City tree register",
+          sourceOpenStreetMap: "OpenStreetMap",
+          sourceManual: "Manual campus annotation",
+          sourceCampus: "Campus dataset",
           colorTreesBy: "Color trees by",
           genus: "Genus",
           health: "Health",
@@ -4410,24 +5134,24 @@
           noSurveyDates:
             "No field-survey dates have been recorded yet. This chart will grow as dated surveys are added.",
           records: "records",
-          harvestCalendar: "Harvest calendar",
+          harvestCalendar: "Fruit & flower calendar",
           typicalWuerzburgSeason: "Typical Würzburg season",
           selectMonth: "Select month",
-          selectFruitType: "Select fruit type",
-          fruitFilterAria: "Filter the map by fruit type",
-          allFruitTypes: "All fruit",
-          foodSnapshot: "Edible landscape",
-          mundraubData: "Mundraub + annotations",
-          mundraubLocations: "Edible locations",
-          mappedFruitTypes: "Mapped edible types",
-          ripeTypesThisMonth: "Types ripe this month",
+          selectFruitType: "Select fruit or flower",
+          fruitFilterAria: "Filter the map by fruit or flower type",
+          allFruitTypes: "All fruit & flowers",
+          foodSnapshot: "Fruit & flower landscape",
+          mundraubData: "Fruit & flower data",
+          mundraubLocations: "Fruit & flower locations",
+          mappedFruitTypes: "Mapped fruit & flower types",
+          ripeTypesThisMonth: "Seasonal this month",
           matchingMapLocations: "Matching map locations",
-          ripeInMonth: "Ripe in this month",
+          ripeInMonth: "In season this month",
           harvestCaveat:
-            "Harvest windows are approximate and vary by variety, weather and location. Check fruit and access rights on site before picking.",
-          mundraubBreakdown: "Edible locations",
+            "Fruit harvest and flowering windows are approximate and vary by variety, weather and location. Check conditions and access rights on site.",
+          mundraubBreakdown: "Fruit & flower locations",
           allMappedTypes: "All mapped types",
-          mundraubChartAria: "Edible locations by type",
+          mundraubChartAria: "Fruit and flower locations by type",
           fruitApple: "Apple",
           fruitPear: "Pear",
           fruitCherry: "Cherry",
@@ -4436,13 +5160,40 @@
           fruitWalnut: "Walnut",
           fruitHazelnut: "Hazelnut",
           fruitQuince: "Quince",
-          fruitLocationsCount: "{count} edible locations",
-          fruitNotMapped: "No edible location",
-          typicalHarvest: "Typical harvest: {months}",
+          flowerLinden: "Linden blossom",
+          flowerLilac: "Lilac blossom",
+          fruitGroup: "Fruit",
+          flowerGroup: "Flowers",
+          seasonalInformation: "Seasonal information",
+          harvestPeriod: "Harvest time: {months}",
+          floweringPeriod: "Flowering time: {months}",
+          appleSeasonDescription:
+            "Pick when the apple comes away with a gentle twist. The exact date depends strongly on the variety.",
+          pearSeasonDescription:
+            "Harvest while still firm; many pears develop their best aroma after a short period of indoor ripening.",
+          cherrySeasonDescription:
+            "Pick fully coloured, aromatic fruit. Cherries should be ripe on the tree because they barely ripen after picking.",
+          mirabelleSeasonDescription:
+            "Harvest when fully coloured, fragrant and slightly soft. Ripe mirabelles detach easily from the branch.",
+          plumSeasonDescription:
+            "Pick once the fruit has its full colour and yields slightly to pressure; varieties ripen at different times.",
+          walnutSeasonDescription:
+            "Collect when the green husk splits and the nuts begin to fall. Dry the nuts thoroughly before storing.",
+          hazelnutSeasonDescription:
+            "Ripe nuts turn brown and fall from their husks. Collect only sound nuts and dry them before storage.",
+          quinceSeasonDescription:
+            "Harvest golden-yellow, strongly scented fruit before the first frost. Quinces are usually processed rather than eaten raw.",
+          lindenSeasonDescription:
+            "The fragrant flower clusters open in early summer. Collect only on dry days and only where picking is permitted.",
+          lilacSeasonDescription:
+            "Shown for its spring flowering period, not as a harvest recommendation. Please do not pick without permission.",
+          fruitLocationsCount: "{count} fruit & flower locations",
+          fruitNotMapped: "No fruit or flower location",
+          typicalHarvest: "Typical season: {months}",
           noRipeFruit:
-            "No selected fruit types are typically ripe in {month}.",
+            "No selected fruit or flower types are typically in season in {month}.",
           foodMapStatus:
-            "{count} matching edible locations · {month}",
+            "{count} matching fruit & flower locations · {month}",
           foodMapStatusType: "{count} locations · {fruit}",
           month1: "January",
           month2: "February",
@@ -4528,9 +5279,9 @@
           dopDescription:
             "Official open 40 cm orthophotos provide the satellite-style map background.",
           openDopSource: "Open source · CC BY 4.0",
-          seasonSourceTitle: "Regional harvest calendar",
+          seasonSourceTitle: "Regional fruit & flower calendar",
           seasonSourceDescription:
-            "Typical German harvest windows are based on public seasonal calendars and adapted as approximate Würzburg guidance.",
+            "Typical German fruit and flowering windows are adapted as approximate Würzburg guidance.",
           openSeasonCalendar: "Open seasonal calendar",
           mundraubSourceTitle: "mundraub.org · community mapping",
           mundraubDescription:
@@ -4540,6 +5291,13 @@
           cityDescription:
             "56 municipal public-tree records around the campus. None of these city records lies inside the drawn university boundary.",
           openDataset: "Open dataset · DL-DE-BY-2.0",
+          sourceOsmFooter: "OpenStreetMap · ODbL",
+          sourceDopFooter: "DOP40 · CC BY 4.0",
+          sourceSeasonFooter: "Seasonal calendar",
+          sourceMundraubFooter: "mundraub.org",
+          sourceCityFooter: "City of Würzburg · DL-DE-BY-2.0",
+          sourceFooterNote:
+            "Seasonal dates are approximate. Check access rights and local conditions on site.",
           fitTrees: "Fit all trees on map",
           viewAllTrees: "View all trees",
           fitFruitLocations: "Fit matching fruit locations on map",
@@ -4560,9 +5318,12 @@
           mappedLocations: "{count} Hubland locations",
           genusTrees: "{count} {genus} trees at Hubland",
           treeTypeTrees: "{count} {type} trees at Hubland",
+          healthTrees: "{count} Hubland trees · {health}",
+          treeFiltersTrees: "{count} matching trees · {type} · {health}",
           selectBelow: "Select below",
           onlyGenus: "{genus} only",
           onlyTreeType: "{type} only",
+          onlyHealth: "Condition: {health}",
           notInSource: "Not in source",
           healthGood: "Good",
           healthFair: "Fair",
@@ -4590,7 +5351,7 @@
           canopySpread: "Canopy spread",
           classification: "Classification",
           treeType: "Tree type",
-          fruitCategory: "Fruit category",
+          fruitCategory: "Fruit / flower category",
           ecologicalBenefits: "Ecological benefits",
           co2Stored: "CO₂ stored",
           co2PerYear: "CO₂ per year",
@@ -4637,19 +5398,19 @@
           unexpectedError: "Unexpected error.",
         },
         de: {
-          pageTitle: "Hubland Canopy — Würzburger Baumkarte",
+          pageTitle: "Tree Tracker — Würzburger Campus-Baumkarte",
           metaDescription:
             "Interaktive Baumkarte mit aktueller OpenStreetMap-Basisschicht und bearbeitbaren Baumdatensätzen für den Campus Hubland Nord in Würzburg.",
           mapAria: "Interaktive Baumkarte des Campus",
-          brandAria: "Hubland Canopy, Campus Hubland Nord in Würzburg",
-          dashboardAria: "Übersicht der Campusbäume und essbaren Landschaft",
+          brandAria: "Tree Tracker, Campus Hubland Nord in Würzburg",
+          dashboardAria: "Übersicht der Campusbäume sowie der Obst- und Blütenlandschaft",
           switchToGerman: "Zu Deutsch wechseln",
           switchToEnglish: "Zu Englisch wechseln",
           sourceKicker: "OSM + Baumdaten + DOP40",
           loading: "Wird geladen",
           headerTitle: "Bäume am Hubland Nord",
           headerIntro:
-            "Erkunde den Baumbestand oder wechsle zur essbaren Landschaft und sieh, was reif sein könnte.",
+            "Erkunde den Baumbestand oder wechsle zur Obst- und Blütenlandschaft und sieh, was Saison hat.",
           dashboardSection: "Bereich der Übersicht",
           treesMode: "Bäume",
           foodMode: "Obst & Blüten",
@@ -4666,6 +5427,25 @@
           selectTreeType: "Baumart auswählen",
           treeTypeFilterAria: "Karte nach Baumart filtern",
           allTreeTypes: "Alle Baumarten",
+          selectTreeHealth: "Zustand auswählen",
+          treeHealthFilterAria: "Karte nach Baumzustand filtern",
+          allTreeHealth: "Alle Zustände",
+          filters: "Filter",
+          clearAllFilters: "Alle zurücksetzen",
+          filterTreeSpecies: "Baumart",
+          filterGenus: "Gattung",
+          filterCondition: "Zustand",
+          filterGrowthForm: "Wuchsform",
+          filterDataSource: "Datenquelle",
+          searchTreeSpecies: "Baumart suchen…",
+          noFilterResults: "Keine passenden Werte",
+          removeFilter: "Filter entfernen: {filter}",
+          selectedFilters: "{count} aktive Filter",
+          matchingTreeFilters: "{count} passende Bäume · {filters} aktive Filter",
+          sourceMunicipal: "Städtisches Baumkataster",
+          sourceOpenStreetMap: "OpenStreetMap",
+          sourceManual: "Manuelle Campus-Annotation",
+          sourceCampus: "Campus-Datensatz",
           colorTreesBy: "Bäume einfärben nach",
           genus: "Gattung",
           health: "Zustand",
@@ -4684,24 +5464,24 @@
           noSurveyDates:
             "Noch keine Vor-Ort-Erfassungsdaten vorhanden. Das Diagramm wächst mit neu datierten Erfassungen.",
           records: "Datensätze",
-          harvestCalendar: "Erntekalender",
+          harvestCalendar: "Obst- und Blütenkalender",
           typicalWuerzburgSeason: "Typische Würzburger Saison",
           selectMonth: "Monat auswählen",
-          selectFruitType: "Obstart auswählen",
-          fruitFilterAria: "Karte nach Obstart filtern",
-          allFruitTypes: "Alle Obstarten",
-          foodSnapshot: "Essbare Landschaft",
-          mundraubData: "Mundraub + Annotationen",
-          mundraubLocations: "Essbare Standorte",
-          mappedFruitTypes: "Kartierte essbare Arten",
-          ripeTypesThisMonth: "In diesem Monat reif",
+          selectFruitType: "Obst oder Blüte auswählen",
+          fruitFilterAria: "Karte nach Obst- oder Blütenart filtern",
+          allFruitTypes: "Alles Obst & alle Blüten",
+          foodSnapshot: "Obst- und Blütenlandschaft",
+          mundraubData: "Obst- und Blütendaten",
+          mundraubLocations: "Obst- und Blütenstandorte",
+          mappedFruitTypes: "Kartierte Obst- und Blütenarten",
+          ripeTypesThisMonth: "In diesem Monat saisonal",
           matchingMapLocations: "Passende Kartenorte",
-          ripeInMonth: "Reif in diesem Monat",
+          ripeInMonth: "In diesem Monat saisonal",
           harvestCaveat:
-            "Erntefenster sind Näherungswerte und variieren je nach Sorte, Wetter und Standort. Früchte und Zugangsrechte vor dem Pflücken vor Ort prüfen.",
-          mundraubBreakdown: "Essbare Standorte",
+            "Ernte- und Blütezeiten sind Näherungswerte und variieren je nach Sorte, Wetter und Standort. Bedingungen und Zugangsrechte vor Ort prüfen.",
+          mundraubBreakdown: "Obst- und Blütenstandorte",
           allMappedTypes: "Alle kartierten Arten",
-          mundraubChartAria: "Essbare Standorte nach Art",
+          mundraubChartAria: "Obst- und Blütenstandorte nach Art",
           fruitApple: "Apfel",
           fruitPear: "Birne",
           fruitCherry: "Kirsche",
@@ -4710,13 +5490,40 @@
           fruitWalnut: "Walnuss",
           fruitHazelnut: "Haselnuss",
           fruitQuince: "Quitte",
-          fruitLocationsCount: "{count} essbare Standorte",
-          fruitNotMapped: "Kein essbarer Standort",
-          typicalHarvest: "Typische Ernte: {months}",
+          flowerLinden: "Lindenblüte",
+          flowerLilac: "Fliederblüte",
+          fruitGroup: "Obst",
+          flowerGroup: "Blüten",
+          seasonalInformation: "Saisonhinweis",
+          harvestPeriod: "Erntezeit: {months}",
+          floweringPeriod: "Blütezeit: {months}",
+          appleSeasonDescription:
+            "Ernten, wenn sich der Apfel mit einer leichten Drehung löst. Der genaue Zeitpunkt hängt stark von der Sorte ab.",
+          pearSeasonDescription:
+            "Noch fest pflücken; viele Birnen entwickeln ihr bestes Aroma erst nach kurzer Nachreife im Haus.",
+          cherrySeasonDescription:
+            "Voll ausgefärbte, aromatische Früchte pflücken. Kirschen sollten am Baum reif werden, da sie kaum nachreifen.",
+          mirabelleSeasonDescription:
+            "Ernten, wenn die Früchte voll ausgefärbt, duftend und leicht weich sind. Reife Mirabellen lösen sich leicht vom Zweig.",
+          plumSeasonDescription:
+            "Pflücken, sobald die Früchte ihre volle Farbe zeigen und auf Druck leicht nachgeben; Sorten reifen unterschiedlich.",
+          walnutSeasonDescription:
+            "Sammeln, wenn die grüne Hülle aufspringt und die Nüsse fallen. Vor der Lagerung gründlich trocknen.",
+          hazelnutSeasonDescription:
+            "Reife Nüsse werden braun und fallen aus der Hülle. Nur gesunde Nüsse sammeln und vor der Lagerung trocknen.",
+          quinceSeasonDescription:
+            "Goldgelbe, stark duftende Früchte vor dem ersten Frost ernten. Quitten werden meist verarbeitet statt roh gegessen.",
+          lindenSeasonDescription:
+            "Die duftenden Blütenstände öffnen sich im Frühsommer. Nur trocken und nur dort sammeln, wo es erlaubt ist.",
+          lilacSeasonDescription:
+            "Hier wird die Frühlingsblüte gezeigt, nicht eine Ernteempfehlung. Bitte nicht ohne Erlaubnis pflücken.",
+          fruitLocationsCount: "{count} Obst- und Blütenstandorte",
+          fruitNotMapped: "Kein Obst- oder Blütenstandort",
+          typicalHarvest: "Typische Saison: {months}",
           noRipeFruit:
-            "Keine ausgewählten Obstarten sind im {month} typischerweise reif.",
+            "Keine ausgewählten Obst- oder Blütenarten sind im {month} typischerweise saisonal.",
           foodMapStatus:
-            "{count} passende essbare Standorte · {month}",
+            "{count} passende Obst- und Blütenstandorte · {month}",
           foodMapStatusType: "{count} Fundorte · {fruit}",
           month1: "Januar",
           month2: "Februar",
@@ -4806,9 +5613,9 @@
           dopDescription:
             "Offene amtliche Orthofotos mit 40 cm Bodenauflösung bilden den satellitenähnlichen Kartenhintergrund.",
           openDopSource: "Quelle öffnen · CC BY 4.0",
-          seasonSourceTitle: "Regionaler Erntekalender",
+          seasonSourceTitle: "Regionaler Obst- und Blütenkalender",
           seasonSourceDescription:
-            "Typische deutsche Erntefenster basieren auf öffentlichen Saisonkalendern und wurden als ungefähre Würzburger Orientierung übernommen.",
+            "Typische deutsche Frucht- und Blütezeiten wurden als ungefähre Würzburger Orientierung übernommen.",
           openSeasonCalendar: "Saisonkalender öffnen",
           mundraubSourceTitle: "mundraub.org · Gemeinschaftskartierung",
           mundraubDescription:
@@ -4818,6 +5625,13 @@
           cityDescription:
             "56 kommunale Baumdatensätze rund um den Campus. Keiner dieser städtischen Datensätze liegt innerhalb der eingezeichneten Universitätsgrenze.",
           openDataset: "Offenen Datensatz öffnen · DL-DE-BY-2.0",
+          sourceOsmFooter: "OpenStreetMap · ODbL",
+          sourceDopFooter: "DOP40 · CC BY 4.0",
+          sourceSeasonFooter: "Saisonkalender",
+          sourceMundraubFooter: "mundraub.org",
+          sourceCityFooter: "Stadt Würzburg · DL-DE-BY-2.0",
+          sourceFooterNote:
+            "Saisonzeiten sind Näherungswerte. Zugangsrechte und Bedingungen bitte vor Ort prüfen.",
           fitTrees: "Alle Bäume auf der Karte anzeigen",
           viewAllTrees: "Alle Bäume anzeigen",
           fitFruitLocations: "Passende Obstfundorte auf der Karte anzeigen",
@@ -4838,9 +5652,12 @@
           mappedLocations: "{count} Hubland-Standorte",
           genusTrees: "{count} Hubland-Bäume der Gattung {genus}",
           treeTypeTrees: "{count} Hubland-Bäume der Art {type}",
+          healthTrees: "{count} Hubland-Bäume · {health}",
+          treeFiltersTrees: "{count} passende Bäume · {type} · {health}",
           selectBelow: "Unten auswählen",
           onlyGenus: "Nur {genus}",
           onlyTreeType: "Nur {type}",
+          onlyHealth: "Zustand: {health}",
           notInSource: "Nicht in den Quelldaten",
           healthGood: "Gut",
           healthFair: "Mittel",
@@ -4868,7 +5685,7 @@
           canopySpread: "Kronenbreite",
           classification: "Einordnung",
           treeType: "Baumtyp",
-          fruitCategory: "Obstkategorie",
+          fruitCategory: "Obst- / Blütenart",
           ecologicalBenefits: "Ökologische Leistungen",
           co2Stored: "Gespeichertes CO₂",
           co2PerYear: "CO₂ pro Jahr",
@@ -4930,6 +5747,7 @@
         Linde: "Linden",
         Esche: "Ash",
         Erle: "Alder",
+        Birke: "Birch",
         Kastanie: "Horse chestnut",
         Haselnuss: "Hazelnut",
         Lederhülsenbaum: "Honey locust",
@@ -4939,6 +5757,7 @@
         Birne: "Pear",
         Kirsche: "Cherry",
         Mirabelle: "Mirabelle plum",
+        "Rote Mirabelle": "Red mirabelle plum",
         Pflaume: "Plum",
         Quitte: "Quince",
       };
@@ -4947,6 +5766,7 @@
         Acer: "#c26b4c",
         Aesculus: "#7b6a43",
         Alnus: "#96704c",
+        Betula: "#879476",
         Corylus: "#a06b4e",
         Cydonia: "#bd9236",
         Fraxinus: "#597b78",
@@ -4963,7 +5783,7 @@
         fair: "#d0a438",
         poor: "#c96e3f",
         dead: "#766c64",
-        not_recorded: "#899087",
+        not_recorded: "#3f7f51",
       };
 
       const SATELLITE_STYLE = {
@@ -5071,8 +5891,14 @@
       let treeData = SAMPLE_DATA;
       let hoveredTreeId = null;
       let colorMode = "genus";
-      let selectedGenus = null;
-      let selectedTreeType = null;
+      const treeFacetSelection = {
+        species: new Set(),
+        genera: new Set(),
+        health: new Set(),
+        forms: new Set(),
+        sources: new Set(),
+      };
+      let treeSpeciesSearch = "";
       let dashboardMode = "trees";
       let selectedHarvestMonth = new Date().getMonth() + 1;
       let selectedFruitType = null;
@@ -5192,6 +6018,9 @@
         document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
           element.setAttribute("aria-label", t(element.dataset.i18nAriaLabel));
         });
+        document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+          element.setAttribute("placeholder", t(element.dataset.i18nPlaceholder));
+        });
 
         const languageToggle = document.getElementById("language-toggle");
         languageToggle.dataset.language = currentLanguage;
@@ -5219,7 +6048,7 @@
         renderTreeInsights();
         renderFruitDashboard();
         updateDashboardModeUI();
-        renderTreeTypeFilter();
+        renderTreeFacets();
         renderLegend(colorMode);
         updateSelectionStatus();
         renderAnnotationUI();
@@ -5338,7 +6167,7 @@
         if (source && !map?.getLayer("unclustered-trees")) {
           source.setData(annotationData);
         }
-        renderTreeTypeFilter();
+        renderTreeFacets();
         renderStats(treeData);
         renderSpeciesChart(treeData);
         renderTreeInsights();
@@ -5415,12 +6244,13 @@
             genus: "",
             tree_type: "",
             edible: false,
+            flowering: false,
             fruit_category: "",
             trunk_circumference_cm: null,
             dbh_cm: null,
             height_m: null,
             canopy_spread_m: null,
-            health: "not_recorded",
+            health: "good",
             co2_stored_kg: null,
             co2_per_year_kg: null,
             stormwater_l_per_year: null,
@@ -5622,6 +6452,11 @@
         edibleInput.name = "edible";
         edibleInput.value = properties.edible ? "true" : "false";
 
+        const floweringInput = document.createElement("input");
+        floweringInput.type = "hidden";
+        floweringInput.name = "flowering";
+        floweringInput.value = properties.flowering ? "true" : "false";
+
         const fruitCategoryInput = document.createElement("input");
         fruitCategoryInput.type = "hidden";
         fruitCategoryInput.name = "fruit_category";
@@ -5644,7 +6479,7 @@
           .sort((first, second) =>
             localizedCommonName(first.common_name).localeCompare(
               localizedCommonName(second.common_name),
-              language === "de" ? "de" : "en",
+              currentLanguage === "de" ? "de" : "en",
             ),
           )
           .forEach((entry) => {
@@ -5666,6 +6501,7 @@
           ),
           treeTypeInput,
           edibleInput,
+          floweringInput,
           fruitCategoryInput,
         );
 
@@ -5753,6 +6589,7 @@
           if (!preset) {
             form.elements.tree_type.value = "";
             form.elements.edible.value = "false";
+            form.elements.flowering.value = "false";
             form.elements.fruit_category.value = "";
             return;
           }
@@ -5763,6 +6600,7 @@
           form.elements.genus.value = preset.genus;
           form.elements.tree_type.value = preset.tree_type;
           form.elements.edible.value = preset.edible ? "true" : "false";
+          form.elements.flowering.value = preset.flowering ? "true" : "false";
           form.elements.fruit_category.value =
             preset.fruit_category || "";
         });
@@ -5770,11 +6608,11 @@
         const healthSelect = document.createElement("select");
         healthSelect.id = `annotation-health-${properties.id}`;
         healthSelect.name = "health";
-        Object.keys(HEALTH_COLORS).forEach((value) => {
+        ["good", "fair", "poor", "dead"].forEach((value) => {
           const option = document.createElement("option");
           option.value = value;
           option.textContent = healthLabel(value);
-          option.selected = value === properties.health;
+          option.selected = value === treeHealthKey({ properties });
           healthSelect.appendChild(option);
         });
         form.appendChild(annotationField(t("health"), healthSelect));
@@ -5892,6 +6730,7 @@
               genus: form.elements.genus.value.trim(),
               tree_type: form.elements.tree_type.value || null,
               edible: form.elements.edible.value === "true",
+              flowering: form.elements.flowering.value === "true",
               fruit_category:
                 form.elements.fruit_category.value.trim() || null,
               trunk_circumference_cm: optionalFormNumber(
@@ -6017,7 +6856,7 @@ out meta geom;`;
       function osmSnapshotAsOverpass() {
         return {
           version: 0.6,
-          generator: "Hubland Canopy embedded OSM fallback",
+          generator: "Tree Tracker embedded OSM fallback",
           osm3s: {
             timestamp_osm_base: OSM_TREE_SNAPSHOT_TIMESTAMP,
             copyright:
@@ -6192,7 +7031,7 @@ out meta geom;`;
           health:
             tags.dead === "yes" || tags.denotation === "dead"
               ? "dead"
-              : "not_recorded",
+              : "good",
           osm_id: element.id,
           osm_version: element.version || null,
           osm_timestamp: element.timestamp || null,
@@ -6504,61 +7343,281 @@ out meta geom;`;
         ).trim();
       }
 
-      function treeMatchesSelection(feature) {
+      function treeHealthKey(feature) {
+        const health = feature?.properties?.health;
+        return ["good", "fair", "poor", "dead"].includes(health)
+          ? health
+          : "good";
+      }
+
+      function treeFormKey(feature) {
+        return feature?.properties?.tree_type || "not_recorded";
+      }
+
+      function treeSourceKey(feature) {
+        const properties = feature?.properties || {};
+        const sourceName = String(properties.source_name || "").toLowerCase();
+        const method = String(properties.detection_method || "").toLowerCase();
         if (
-          selectedTreeType &&
-          treeTypeKey(feature) !== selectedTreeType
+          sourceName.includes("baumkataster") ||
+          properties.source_license === "DL-DE-BY-2.0"
         ) {
-          return false;
+          return "municipal";
         }
         if (
-          selectedGenus &&
-          feature?.properties?.genus !== selectedGenus
+          method.includes("openstreetmap") ||
+          properties.data_source === "openstreetmap" ||
+          properties.osm_id
         ) {
-          return false;
+          return "openstreetmap";
         }
-        return true;
+        if (
+          method === "manual" ||
+          properties.data_source === "generic_annotation"
+        ) {
+          return "manual";
+        }
+        return "campus";
+      }
+
+      function treeSourceLabel(value) {
+        return t(
+          {
+            municipal: "sourceMunicipal",
+            openstreetmap: "sourceOpenStreetMap",
+            manual: "sourceManual",
+            campus: "sourceCampus",
+          }[value] || "sourceCampus",
+        );
+      }
+
+      function treeFacetValue(feature, facet) {
+        if (facet === "species") return treeTypeKey(feature) || "not_recorded";
+        if (facet === "genera") {
+          return feature?.properties?.genus || "not_recorded";
+        }
+        if (facet === "health") return treeHealthKey(feature);
+        if (facet === "forms") return treeFormKey(feature);
+        if (facet === "sources") return treeSourceKey(feature);
+        return "not_recorded";
+      }
+
+      function treeFacetLabel(facet, value) {
+        if (value === "not_recorded") return t("notRecorded");
+        if (facet === "species") return localizedCommonName(value);
+        if (facet === "health") return healthLabel(value);
+        if (facet === "forms") return localizedTreeType(value);
+        if (facet === "sources") return treeSourceLabel(value);
+        return value;
+      }
+
+      function treeFacetDefinitions() {
+        return [
+          { key: "species", labelKey: "filterTreeSpecies" },
+          { key: "genera", labelKey: "filterGenus" },
+          { key: "health", labelKey: "filterCondition" },
+          { key: "forms", labelKey: "filterGrowthForm" },
+          { key: "sources", labelKey: "filterDataSource" },
+        ];
+      }
+
+      function treeMatchesSelection(feature, excludedFacet = null) {
+        return treeFacetDefinitions().every(({ key }) => {
+          if (key === excludedFacet || treeFacetSelection[key].size === 0) {
+            return true;
+          }
+          return treeFacetSelection[key].has(treeFacetValue(feature, key));
+        });
       }
 
       function filteredTreeInventoryFeatures() {
         return campusTreeInventoryFeatures().filter(treeMatchesSelection);
       }
 
-      function renderTreeTypeFilter() {
-        const select = document.getElementById("tree-type-filter");
-        if (!select || !integerFormatter) return;
-        const allFeatures = campusTreeInventoryFeatures();
-        const counts = allFeatures.reduce((totals, feature) => {
-          const type = treeTypeKey(feature);
-          if (type) totals.set(type, (totals.get(type) || 0) + 1);
-          return totals;
-        }, new Map());
-        const choices = [...counts.entries()].sort(([first], [second]) =>
-          localizedCommonName(first).localeCompare(
-            localizedCommonName(second),
+      function activeTreeFilterCount() {
+        return treeFacetDefinitions().reduce(
+          (total, { key }) => total + treeFacetSelection[key].size,
+          0,
+        );
+      }
+
+      function hasActiveTreeFilters() {
+        return activeTreeFilterCount() > 0;
+      }
+
+      function singleTreeFacetValue(facet) {
+        return treeFacetSelection[facet].size === 1
+          ? [...treeFacetSelection[facet]][0]
+          : null;
+      }
+
+      function treeFacetCounts(facet, allFeatures) {
+        return allFeatures
+          .filter((feature) => treeMatchesSelection(feature, facet))
+          .reduce((counts, feature) => {
+            const value = treeFacetValue(feature, facet);
+            counts.set(value, (counts.get(value) || 0) + 1);
+            return counts;
+          }, new Map());
+      }
+
+      function treeFacetValues(facet, allFeatures) {
+        const values = new Set(
+          allFeatures.map((feature) => treeFacetValue(feature, facet)),
+        );
+        treeFacetSelection[facet].forEach((value) => values.add(value));
+        const fixedOrder = {
+          health: ["good", "fair", "poor", "dead", "not_recorded"],
+          forms: ["Laubbaum", "Strauch", "Obstbaum-Fundort", "not_recorded"],
+          sources: ["manual", "openstreetmap", "municipal", "campus"],
+        }[facet];
+        if (fixedOrder) {
+          return fixedOrder.filter((value) => values.has(value));
+        }
+        return [...values].sort((first, second) =>
+          treeFacetLabel(facet, first).localeCompare(
+            treeFacetLabel(facet, second),
             currentLanguage === "de" ? "de" : "en",
           ),
         );
-        if (
-          selectedTreeType &&
-          !counts.has(selectedTreeType)
-        ) {
-          selectedTreeType = null;
-        }
+      }
 
-        select.replaceChildren();
-        const allOption = document.createElement("option");
-        allOption.value = "";
-        allOption.textContent = `${t("allTreeTypes")} · ${integerFormatter.format(allFeatures.length)}`;
-        select.appendChild(allOption);
-        choices.forEach(([type, count]) => {
-          const option = document.createElement("option");
-          option.value = type;
-          option.textContent = `${localizedCommonName(type)} · ${integerFormatter.format(count)}`;
-          option.selected = type === selectedTreeType;
-          select.appendChild(option);
+      function renderTreeFacetOptions(facet, allFeatures) {
+        const container = document.querySelector(
+          `[data-facet-options="${facet}"]`,
+        );
+        if (!container) return;
+        const counts = treeFacetCounts(facet, allFeatures);
+        const normalizedSearch = treeSpeciesSearch.trim().toLocaleLowerCase(
+          currentLanguage === "de" ? "de" : "en",
+        );
+        const values = treeFacetValues(facet, allFeatures).filter((value) => {
+          if (facet !== "species" || !normalizedSearch) return true;
+          return treeFacetLabel(facet, value)
+            .toLocaleLowerCase(currentLanguage === "de" ? "de" : "en")
+            .includes(normalizedSearch);
         });
-        select.value = selectedTreeType || "";
+        container.replaceChildren();
+        values.forEach((value) => {
+          const count = counts.get(value) || 0;
+          const option = document.createElement("label");
+          option.className = "facet-option";
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.checked = treeFacetSelection[facet].has(value);
+          checkbox.disabled = count === 0 && !checkbox.checked;
+          checkbox.setAttribute(
+            "aria-label",
+            `${treeFacetLabel(facet, value)} (${integerFormatter.format(count)})`,
+          );
+          checkbox.addEventListener("change", () => {
+            setTreeFacetValue(facet, value, checkbox.checked);
+          });
+          const label = document.createElement("span");
+          label.className = "facet-option-label";
+          label.textContent = treeFacetLabel(facet, value);
+          const countText = document.createElement("span");
+          countText.className = "facet-option-count";
+          countText.textContent = integerFormatter.format(count);
+          option.append(checkbox, label, countText);
+          container.appendChild(option);
+        });
+        if (!values.length) {
+          const empty = document.createElement("p");
+          empty.className = "facet-empty";
+          empty.textContent = t("noFilterResults");
+          container.appendChild(empty);
+        }
+      }
+
+      function renderActiveTreeFilters() {
+        const container = document.getElementById("active-tree-filters");
+        if (!container) return;
+        container.replaceChildren();
+        treeFacetDefinitions().forEach(({ key, labelKey }) => {
+          treeFacetSelection[key].forEach((value) => {
+            const label = `${t(labelKey)}: ${treeFacetLabel(key, value)}`;
+            const chip = document.createElement("button");
+            chip.className = "tree-filter-chip";
+            chip.type = "button";
+            chip.setAttribute("aria-label", t("removeFilter", { filter: label }));
+            const text = document.createElement("span");
+            text.textContent = label;
+            const close = document.createElement("b");
+            close.textContent = "×";
+            close.setAttribute("aria-hidden", "true");
+            chip.append(text, close);
+            chip.addEventListener("click", () => setTreeFacetValue(key, value, false));
+            container.appendChild(chip);
+          });
+        });
+      }
+
+      function renderTreeFacets() {
+        if (!integerFormatter) return;
+        const allFeatures = campusTreeInventoryFeatures();
+        treeFacetDefinitions().forEach(({ key }) => {
+          const available = new Set(
+            allFeatures.map((feature) => treeFacetValue(feature, key)),
+          );
+          [...treeFacetSelection[key]].forEach((value) => {
+            if (!available.has(value)) treeFacetSelection[key].delete(value);
+          });
+        });
+        treeFacetDefinitions().forEach(({ key }) => {
+          renderTreeFacetOptions(key, allFeatures);
+          const count = document.querySelector(`[data-facet-count="${key}"]`);
+          if (count) {
+            count.textContent = treeFacetSelection[key].size
+              ? integerFormatter.format(treeFacetSelection[key].size)
+              : "";
+          }
+        });
+        renderActiveTreeFilters();
+        const activeCount = activeTreeFilterCount();
+        const badge = document.getElementById("tree-filter-count");
+        if (badge) {
+          badge.textContent = activeCount
+            ? integerFormatter.format(activeCount)
+            : "";
+          badge.dataset.count = String(activeCount);
+        }
+        const clearButton = document.getElementById("clear-tree-filters");
+        if (clearButton) clearButton.disabled = activeCount === 0;
+        const toggle = document.getElementById("tree-filter-toggle");
+        if (toggle) {
+          toggle.setAttribute(
+            "aria-label",
+            activeCount ? t("selectedFilters", { count: activeCount }) : t("filters"),
+          );
+        }
+        const search = document.getElementById("tree-species-search");
+        if (search && search.value !== treeSpeciesSearch) {
+          search.value = treeSpeciesSearch;
+        }
+      }
+
+      function refreshTreeFilterResults() {
+        renderTreeFacets();
+        renderLegend(colorMode);
+        renderStats(treeData);
+        renderSpeciesChart(treeData);
+        renderTreeInsights();
+        applyMapView();
+        updateSelectionStatus();
+      }
+
+      function setTreeFacetValue(facet, value, selected) {
+        if (!treeFacetSelection[facet]) return;
+        if (selected) treeFacetSelection[facet].add(value);
+        else treeFacetSelection[facet].delete(value);
+        refreshTreeFilterResults();
+      }
+
+      function clearTreeFacets() {
+        treeFacetDefinitions().forEach(({ key }) => treeFacetSelection[key].clear());
+        treeSpeciesSearch = "";
+        refreshTreeFilterResults();
       }
 
       function calculateStats(data) {
@@ -6717,16 +7776,14 @@ out meta geom;`;
       }
 
       function renderHealthSummary() {
-        const healthKeys = ["good", "fair", "poor", "dead", "not_recorded"];
+        const healthKeys = ["good", "fair", "poor", "dead"];
         const counts = Object.fromEntries(healthKeys.map((key) => [key, 0]));
         treeInsightFeatures().forEach((feature) => {
-          const value = healthKeys.includes(feature.properties.health)
-            ? feature.properties.health
-            : "not_recorded";
+          const value = treeHealthKey(feature);
           counts[value] += 1;
         });
         const total = Object.values(counts).reduce((sum, count) => sum + count, 0);
-        const recorded = total - counts.not_recorded;
+        const recorded = total;
         document.getElementById("health-record-count").textContent = t(
           "healthRecordsRecorded",
           { count: integerFormatter.format(recorded) },
@@ -6757,12 +7814,6 @@ out meta geom;`;
           }));
         populateBarChart(chart, rows, t("healthChartAria"));
         container.appendChild(chart);
-        if (!recorded) {
-          const note = document.createElement("p");
-          note.className = "insight-empty";
-          note.textContent = t("noHealthRecords");
-          container.appendChild(note);
-        }
         container.setAttribute(
           "aria-label",
           `${t("healthChartAria")}: ${rows
@@ -6803,29 +7854,97 @@ out meta geom;`;
         return t(fruit.nameKey);
       }
 
-      function edibleMapFeatures() {
+      function fruitKindLabel(kind) {
+        return t(kind === "flower" ? "flowerGroup" : "fruitGroup");
+      }
+
+      function fruitSeasonRange(fruit) {
+        const firstMonth = fruit.months[0];
+        const lastMonth = fruit.months[fruit.months.length - 1];
+        return firstMonth === lastMonth
+          ? monthLabel(firstMonth)
+          : `${monthLabel(firstMonth)} – ${monthLabel(lastMonth)}`;
+      }
+
+      function fruitSeasonPeriod(fruit) {
+        return t(fruit.kind === "flower" ? "floweringPeriod" : "harvestPeriod", {
+          months: fruitSeasonRange(fruit),
+        });
+      }
+
+      function fruitSeasonDescription(fruit) {
+        return t(fruit.descriptionKey);
+      }
+
+      function fruitAndFlowerCategory(feature) {
+        const properties = feature?.properties || {};
+        const knownCategories = new Set(
+          FRUIT_CATALOG.map((fruit) => fruit.category),
+        );
+        const recordedCategory = String(properties.fruit_category || "").trim();
+        if (knownCategories.has(recordedCategory)) return recordedCategory;
+
+        const identity = [
+          recordedCategory,
+          properties.common_name,
+          properties.scientific_name,
+          properties.genus,
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLocaleLowerCase("de");
+        const categoryMatchers = [
+          ["Mirabelle", /mirabell|syriaca/],
+          ["Quitte", /quitt|quince|cydonia/],
+          ["Haselnuss", /haseln|hazelnut|corylus/],
+          ["Walnuss", /walnuss|walnut|juglans/],
+          ["Apfel", /apfel|apple|malus/],
+          ["Birne", /birn|pear|pyrus/],
+          ["Kirsche", /kirsch|cherry|prunus\s+(avium|cerasus)/],
+          ["Pflaume", /pflaum|plum/],
+          ["Linde", /linde|linden|tilia/],
+          ["Flieder", /flieder|lilac|syringa/],
+        ];
+        return (
+          categoryMatchers.find(([, matcher]) => matcher.test(identity))?.[0] ||
+          null
+        );
+      }
+
+      function foodAndFlowerFeatures() {
         const knownCategories = new Set(
           FRUIT_CATALOG.map((fruit) => fruit.category),
         );
         const uniqueFeatures = new Map();
         [
-          ...treeData.features.filter(
-            (feature) => feature.properties.data_source === "mundraub",
-          ),
-          ...annotationData.features.filter(
-            (feature) =>
-              feature.properties.edible === true ||
-              knownCategories.has(feature.properties.fruit_category),
-          ),
+          ...treeData.features,
+          ...annotationData.features,
         ].forEach((feature) => {
+          const category = fruitAndFlowerCategory(feature);
+          const isFlowering =
+            feature.properties.flowering === true ||
+            ["Tilia", "Syringa"].includes(feature.properties.genus);
+          const belongsInFoodAndFlowerMode =
+            feature.properties.data_source === "mundraub" ||
+            feature.properties.edible === true ||
+            isFlowering ||
+            knownCategories.has(category);
           if (
             feature?.geometry?.type !== "Point" ||
             !pointInCampus(feature.geometry.coordinates) ||
-            !knownCategories.has(feature.properties.fruit_category)
+            !belongsInFoodAndFlowerMode ||
+            !knownCategories.has(category)
           ) {
             return;
           }
-          uniqueFeatures.set(feature.properties.id, feature);
+          uniqueFeatures.set(String(feature.properties.id), {
+            ...feature,
+            properties: {
+              ...feature.properties,
+              fruit_category: category,
+              flowering: isFlowering,
+            },
+          });
         });
         return [...uniqueFeatures.values()];
       }
@@ -6853,14 +7972,14 @@ out meta geom;`;
         const eligibleCategories = new Set(
           mapFruitCatalog().map((fruit) => fruit.category),
         );
-        return edibleMapFeatures().filter((feature) =>
+        return foodAndFlowerFeatures().filter((feature) =>
           eligibleCategories.has(feature.properties.fruit_category),
         );
       }
 
       function renderFruitFilters() {
-        const edibleFeatures = edibleMapFeatures();
-        const counts = edibleFeatures.reduce((totals, feature) => {
+        const seasonalFeatures = foodAndFlowerFeatures();
+        const counts = seasonalFeatures.reduce((totals, feature) => {
           const category = feature.properties.fruit_category;
           totals[category] = (totals[category] || 0) + 1;
           return totals;
@@ -6868,23 +7987,9 @@ out meta geom;`;
         const container = document.getElementById("fruit-type-filters");
         container.replaceChildren();
 
-        const choices = [
-          {
-            id: null,
-            label: t("allFruitTypes"),
-            color: "#4f7658",
-            count: edibleFeatures.length,
-          },
-          ...FRUIT_CATALOG.map((fruit) => ({
-            id: fruit.id,
-            label: fruitLabel(fruit),
-            color: fruit.color,
-            count: counts[fruit.category] || 0,
-          })),
-        ];
-        choices.forEach((choice) => {
+        function buildFilterButton(choice, additionalClass = "") {
           const button = document.createElement("button");
-          button.className = "fruit-filter";
+          button.className = `fruit-filter ${additionalClass}`.trim();
           button.type = "button";
           button.style.setProperty("--fruit-color", choice.color);
           button.setAttribute(
@@ -6901,7 +8006,42 @@ out meta geom;`;
             updateSelectionStatus();
             fitAllTrees();
           });
-          container.appendChild(button);
+          return button;
+        }
+
+        container.appendChild(
+          buildFilterButton(
+            {
+              id: null,
+              label: t("allFruitTypes"),
+              color: "#4f7658",
+              count: seasonalFeatures.length,
+            },
+            "all-fruit-filter",
+          ),
+        );
+
+        ["fruit", "flower"].forEach((kind) => {
+          const group = document.createElement("section");
+          group.className = "season-filter-group";
+          group.setAttribute("aria-label", fruitKindLabel(kind));
+          const heading = document.createElement("h3");
+          heading.className = "season-filter-group-title";
+          heading.textContent = fruitKindLabel(kind);
+          const options = document.createElement("div");
+          options.className = "fruit-filter-list";
+          FRUIT_CATALOG.filter((fruit) => fruit.kind === kind).forEach((fruit) => {
+            options.appendChild(
+              buildFilterButton({
+                id: fruit.id,
+                label: fruitLabel(fruit),
+                color: fruit.color,
+                count: counts[fruit.category] || 0,
+              }),
+            );
+          });
+          group.append(heading, options);
+          container.appendChild(group);
         });
       }
 
@@ -6917,7 +8057,7 @@ out meta geom;`;
           monthSelect.appendChild(option);
         }
 
-        const mappedFeatures = edibleMapFeatures();
+        const mappedFeatures = foodAndFlowerFeatures();
         const mappedCategories = new Set(
           mappedFeatures.map((feature) => feature.properties.fruit_category),
         );
@@ -6947,7 +8087,15 @@ out meta geom;`;
           });
           ripeList.appendChild(empty);
         } else {
+          let currentKind = null;
           ripeFruit.forEach((fruit) => {
+            if (fruit.kind !== currentKind) {
+              currentKind = fruit.kind;
+              const groupHeading = document.createElement("h3");
+              groupHeading.className = "season-group-title";
+              groupHeading.textContent = fruitKindLabel(currentKind);
+              ripeList.appendChild(groupHeading);
+            }
             const count = mappedFeatures.filter(
               (feature) =>
                 feature.properties.fruit_category === fruit.category,
@@ -6965,10 +8113,12 @@ out meta geom;`;
             const name = document.createElement("strong");
             name.textContent = fruitLabel(fruit);
             const season = document.createElement("span");
-            season.textContent = t("typicalHarvest", {
-              months: fruit.months.map(monthLabel).join(" · "),
-            });
-            copy.append(name, season);
+            season.className = "season-card-period";
+            season.textContent = fruitSeasonPeriod(fruit);
+            const description = document.createElement("p");
+            description.className = "season-card-description";
+            description.textContent = fruitSeasonDescription(fruit);
+            copy.append(name, season, description);
 
             const countElement = document.createElement("span");
             countElement.className = "season-card-count";
@@ -7047,7 +8197,11 @@ out meta geom;`;
         const legend = document.getElementById("legend");
         const statisticalFeatures = campusTreeInventoryFeatures();
         const availableValues = new Set(
-          statisticalFeatures.map((feature) => feature.properties[mode]),
+          statisticalFeatures.map((feature) =>
+            mode === "health"
+              ? treeHealthKey(feature)
+              : feature.properties[mode],
+          ),
         );
         const entries =
           mode === "genus"
@@ -7084,7 +8238,14 @@ out meta geom;`;
             const item = document.createElement("button");
             item.className = "legend-item legend-button";
             item.type = "button";
-            item.setAttribute("aria-pressed", String(selectedGenus === genus));
+            item.setAttribute(
+              "aria-pressed",
+              String(
+                genus
+                  ? treeFacetSelection.genera.has(genus)
+                  : treeFacetSelection.genera.size === 0,
+              ),
+            );
             item.setAttribute(
               "aria-label",
               genus
@@ -7243,9 +8404,7 @@ out meta geom;`;
               ]
             : ["==", ["get", "id"], "__none__"];
         }
-        return selectedGenus
-          ? ["==", ["get", "genus"], selectedGenus]
-          : null;
+        return null;
       }
 
       function applyMapView() {
@@ -7274,6 +8433,9 @@ out meta geom;`;
         };
         const layerFilter =
           dashboardMode === "trees" ? currentTreeLayerFilter() : null;
+        const selectedGenus = singleTreeFacetValue("genera");
+        const selectedTreeType = singleTreeFacetValue("species");
+        const selectedHealth = singleTreeFacetValue("health");
         map.getSource("trees").setData(treeDataView);
         map.getSource("tree-clusters-source").setData(treeDataView);
         map.getSource("fruit-locations-source").setData(fruitDataView);
@@ -7284,7 +8446,7 @@ out meta geom;`;
         map.setFilter("tree-hit-targets", layerFilter);
         map.setFilter(
           "selected-tree-glow",
-          dashboardMode === "trees" && (selectedGenus || selectedTreeType)
+          dashboardMode === "trees" && hasActiveTreeFilters()
             ? ["has", "id"]
             : ["==", ["get", "id"], "__none__"],
         );
@@ -7297,24 +8459,46 @@ out meta geom;`;
         map.setPaintProperty(
           "tree-clusters",
           "circle-color",
-          selectedGenus || selectedTypeGenus
-            ? GENUS_COLORS[selectedGenus || selectedTypeGenus] || COLOR_FALLBACK
-            : clusterColorExpression(),
+          selectedHealth
+            ? HEALTH_COLORS[selectedHealth]
+            : selectedGenus || selectedTypeGenus
+              ? GENUS_COLORS[selectedGenus || selectedTypeGenus] || COLOR_FALLBACK
+              : clusterColorExpression(),
         );
         map.setPaintProperty(
           "tree-cluster-singletons",
           "circle-color",
-          colorMode === "genus"
-            ? matchColorExpression("genus", GENUS_COLORS)
-            : matchColorExpression("health", HEALTH_COLORS),
+          selectedHealth
+            ? HEALTH_COLORS[selectedHealth]
+            : colorMode === "genus"
+              ? matchColorExpression("genus", GENUS_COLORS)
+              : matchColorExpression("health", HEALTH_COLORS),
         );
         map.setPaintProperty(
           "unclustered-trees",
           "circle-color",
-          colorMode === "genus"
-            ? matchColorExpression("genus", GENUS_COLORS)
-            : matchColorExpression("health", HEALTH_COLORS),
+          selectedHealth
+            ? HEALTH_COLORS[selectedHealth]
+            : colorMode === "genus"
+              ? matchColorExpression("genus", GENUS_COLORS)
+              : matchColorExpression("health", HEALTH_COLORS),
         );
+        if (map.getLayer("annotation-points")) {
+          map.setPaintProperty(
+            "annotation-points",
+            "circle-color",
+            selectedHealth
+              ? HEALTH_COLORS[selectedHealth]
+              : [
+                  "case",
+                  ["==", ["get", "review_status"], "reviewed"],
+                  "#5f8356",
+                  ["==", ["get", "detection_method"], "manual"],
+                  "#71865a",
+                  "#315837",
+                ],
+          );
+        }
         map.setPaintProperty(
           "fruit-clusters",
           "circle-color",
@@ -7375,73 +8559,25 @@ out meta geom;`;
       }
 
       function updateSelectionStatus() {
-        if (dashboardMode === "food") {
-          const selectedFruit = FRUIT_CATALOG.find(
-            (fruit) => fruit.id === selectedFruitType,
-          );
-          document.getElementById("data-status").textContent = selectedFruit
-            ? t("foodMapStatusType", {
-                count: integerFormatter.format(
-                  visibleFruitFeatures().length,
-                ),
-                fruit: fruitLabel(selectedFruit),
+        if (dashboardMode === "food") return;
+        document.getElementById("color-description").textContent =
+          hasActiveTreeFilters()
+            ? t("selectedFilters", {
+                count: integerFormatter.format(activeTreeFilterCount()),
               })
-            : t("foodMapStatus", {
-              count: integerFormatter.format(visibleFruitFeatures().length),
-              month: monthLabel(selectedHarvestMonth),
-              });
-          return;
-        }
-
-        const visibleCount = filteredTreeInventoryFeatures().length;
-        const selectedTypeLabel = selectedTreeType
-          ? localizedCommonName(selectedTreeType)
-          : null;
-        document.getElementById("data-status").textContent = selectedTypeLabel
-          ? t("treeTypeTrees", {
-              count: integerFormatter.format(visibleCount),
-              type: selectedTypeLabel,
-            })
-          : selectedGenus
-            ? t("genusTrees", {
-                count: integerFormatter.format(visibleCount),
-                genus: selectedGenus,
-              })
-            : t("mappedLocations", {
-                count: integerFormatter.format(visibleCount),
-              });
-        if (colorMode === "genus") {
-          document.getElementById("color-description").textContent =
-            selectedTypeLabel
-              ? t("onlyTreeType", { type: selectedTypeLabel })
-              : selectedGenus
-                ? t("onlyGenus", { genus: selectedGenus })
-                : t("selectBelow");
-        }
+            : colorMode === "genus"
+              ? t("byGenus")
+              : t("health");
       }
 
       function setGenusFilter(genus) {
-        selectedGenus = genus || null;
-        selectedTreeType = null;
-        renderTreeTypeFilter();
-        renderStats(treeData);
-        renderSpeciesChart(treeData);
-        renderTreeInsights();
-        applyMapView();
-        updateSelectionStatus();
-        renderLegend(colorMode);
-      }
-
-      function setTreeTypeFilter(type) {
-        selectedTreeType = type || null;
-        selectedGenus = null;
-        renderTreeTypeFilter();
-        renderLegend(colorMode);
-        renderStats(treeData);
-        renderSpeciesChart(treeData);
-        renderTreeInsights();
-        applyMapView();
-        updateSelectionStatus();
+        const alreadyOnlySelected =
+          genus &&
+          treeFacetSelection.genera.size === 1 &&
+          treeFacetSelection.genera.has(genus);
+        treeFacetSelection.genera.clear();
+        if (genus && !alreadyOnlySelected) treeFacetSelection.genera.add(genus);
+        refreshTreeFilterResults();
       }
 
       function setColorMode(mode) {
@@ -7450,15 +8586,13 @@ out meta geom;`;
           button.setAttribute("aria-pressed", String(button.dataset.colorMode === mode));
         });
         document.getElementById("color-description").textContent =
-          mode === "genus"
-            ? selectedTreeType
-              ? t("onlyTreeType", {
-                  type: localizedCommonName(selectedTreeType),
-                })
-              : selectedGenus
-                ? t("onlyGenus", { genus: selectedGenus })
-                : t("selectBelow")
-            : t("notInSource");
+          hasActiveTreeFilters()
+            ? t("selectedFilters", {
+                count: integerFormatter.format(activeTreeFilterCount()),
+              })
+            : mode === "genus"
+              ? t("byGenus")
+              : t("health");
         renderLegend(mode);
         applyMapView();
       }
@@ -7576,6 +8710,8 @@ out meta geom;`;
           .filter(Boolean)
           .join(" ")
           .toLocaleLowerCase("de");
+        const isRedMirabelle =
+          /rot(?:e)?\s+mirabell|red\s+mirabell/.test(botanicalIdentity);
         const fruitPlate = /mirabell|syriaca/.test(botanicalIdentity)
           ? "mirabelle"
           : /kirsch|cherry|prunus\s+(avium|cerasus)/.test(
@@ -7599,25 +8735,28 @@ out meta geom;`;
           Gleditsia: "gleditsia",
           Tilia: "tilia",
         }[illustrationGenus];
-        const extraGenusPlate = {
-          Aesculus: "aesculus",
-          Juglans: "juglans",
-          Syringa: "syringa",
+        const individualGenusPlate = {
+          Aesculus: "botanical-aesculus-plate",
+          Betula: "botanical-betula-plate",
+          Juglans: "botanical-juglans-plate",
+          Syringa: "botanical-syringa-plate",
         }[illustrationGenus];
         const plate = document.createElement("div");
-        plate.className = fruitPlate
-          ? `botanical-plate botanical-fruit-plate fruit-${fruitPlate}`
-          : extraFruitPlate
-            ? `botanical-plate botanical-extra-fruit-plate fruit-${extraFruitPlate}`
-            : genusPlate
-              ? `botanical-plate botanical-genus-plate genus-${genusPlate}`
-              : extraGenusPlate
-                ? `botanical-plate botanical-extra-genus-plate genus-${extraGenusPlate}`
-                : illustrationGenus === "Corylus"
-                  ? "botanical-plate botanical-corylus-plate"
-                  : illustrationGenus === "Platanus"
-                    ? "botanical-plate botanical-platanus-plate"
-                    : "botanical-plate botanical-tree-plate";
+        plate.className = isRedMirabelle
+          ? "botanical-plate botanical-red-mirabelle-plate"
+          : fruitPlate
+            ? `botanical-plate botanical-fruit-plate fruit-${fruitPlate}`
+            : extraFruitPlate
+              ? `botanical-plate botanical-extra-fruit-plate fruit-${extraFruitPlate}`
+              : genusPlate
+                ? `botanical-plate botanical-genus-plate genus-${genusPlate}`
+                : individualGenusPlate
+                  ? `botanical-plate ${individualGenusPlate}`
+                  : illustrationGenus === "Corylus"
+                    ? "botanical-plate botanical-corylus-plate"
+                    : illustrationGenus === "Platanus"
+                      ? "botanical-plate botanical-platanus-plate"
+                      : "botanical-plate botanical-tree-plate";
         plate.setAttribute("role", "img");
         plate.setAttribute(
           "aria-label",
@@ -7628,11 +8767,15 @@ out meta geom;`;
 
       function buildTreePopup(properties, coordinates) {
         const isMundraub = properties.data_source === "mundraub";
-        const isEdible =
+        const isFoodOrFlower =
           properties.edible === true ||
+          properties.flowering === true ||
           FRUIT_CATALOG.some(
             (fruit) => fruit.category === properties.fruit_category,
           );
+        const seasonalEntry = FRUIT_CATALOG.find(
+          (fruit) => fruit.category === properties.fruit_category,
+        );
         const editableFeature = annotationData.features.find(
           (feature) => String(feature.properties.id) === String(properties.id),
         );
@@ -7642,9 +8785,7 @@ out meta geom;`;
         const displayName = localizedCommonName(properties) || t("unknownTree");
         const scientificName =
           properties.scientific_name || t("identificationPending");
-        const healthValue = HEALTH_COLORS[properties.health]
-          ? properties.health
-          : "not_recorded";
+        const healthValue = treeHealthKey({ properties });
         const root = document.createElement("article");
         root.className = "tree-popup-card";
         root.setAttribute("aria-label", t("detailsAria", { name: displayName }));
@@ -7690,7 +8831,7 @@ out meta geom;`;
         [
           properties.genus,
           localizedTreeType(properties.tree_type),
-          isEdible
+          isFoodOrFlower
             ? localizedCommonName(properties.fruit_category)
             : null,
         ]
@@ -7702,6 +8843,27 @@ out meta geom;`;
           )
           .forEach((value) => tags.appendChild(popupText("popup-tag", value)));
         if (tags.childElementCount) body.appendChild(tags);
+
+        if (seasonalEntry) {
+          const seasonalCard = document.createElement("section");
+          seasonalCard.className = `seasonal-popup-card${
+            seasonalEntry.kind === "flower" ? " is-flower" : ""
+          }`;
+          const icon = popupText(
+            "seasonal-popup-icon",
+            seasonalEntry.kind === "flower" ? "✿" : "◉",
+          );
+          icon.setAttribute("aria-hidden", "true");
+          const seasonalCopy = document.createElement("div");
+          seasonalCopy.className = "seasonal-popup-copy";
+          seasonalCopy.append(
+            popupText("", t("seasonalInformation"), "span"),
+            popupText("", fruitSeasonPeriod(seasonalEntry), "strong"),
+            popupText("", fruitSeasonDescription(seasonalEntry), "p"),
+          );
+          seasonalCard.append(icon, seasonalCopy);
+          body.appendChild(seasonalCard);
+        }
 
         const measures = document.createElement("div");
         measures.className = "popup-measures";
@@ -7780,7 +8942,7 @@ out meta geom;`;
             properties.scientific_synonym,
           ]);
         }
-        if (isEdible) {
+        if (isFoodOrFlower) {
           classificationRows.push([
             t("fruitCategory"),
             localizedCommonName(properties.fruit_category),
@@ -8405,7 +9567,7 @@ out meta geom;`;
           type: "geojson",
           data: {
             ...data,
-            features: edibleMapFeatures(),
+            features: foodAndFlowerFeatures(),
           },
           cluster: true,
           clusterMaxZoom: 14,
@@ -8763,7 +9925,7 @@ out meta geom;`;
         renderTreeInsights();
         renderFruitDashboard();
         updateDashboardModeUI();
-        renderTreeTypeFilter();
+        renderTreeFacets();
         renderLegend("genus");
         updateSelectionStatus();
         renderAnnotationUI();
@@ -8828,10 +9990,22 @@ out meta geom;`;
         setLanguage(currentLanguage === "en" ? "de" : "en");
       });
 
+      document.getElementById("tree-filter-toggle").addEventListener("click", () => {
+        const panel = document.getElementById("tree-filter-panel");
+        const toggle = document.getElementById("tree-filter-toggle");
+        panel.hidden = !panel.hidden;
+        toggle.setAttribute("aria-expanded", String(!panel.hidden));
+      });
+
       document
-        .getElementById("tree-type-filter")
-        .addEventListener("change", (event) => {
-          setTreeTypeFilter(event.currentTarget.value);
+        .getElementById("clear-tree-filters")
+        .addEventListener("click", clearTreeFacets);
+
+      document
+        .getElementById("tree-species-search")
+        .addEventListener("input", (event) => {
+          treeSpeciesSearch = event.currentTarget.value;
+          renderTreeFacetOptions("species", campusTreeInventoryFeatures());
         });
 
       document.getElementById("fit-trees").addEventListener("click", () => fitAllTrees());
