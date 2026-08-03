@@ -7228,28 +7228,72 @@ out meta geom;`;
       }
 
       function buildBotanicalPlate(properties, displayName) {
-        const fruitPlate = {
-          Apfel: "apple",
-          Kirsche: "cherry",
-          Birne: "pear",
-          Mirabelle: "mirabelle",
-        }[properties.fruit_category] || {
-          Malus: "apple",
-          Prunus: "cherry",
-          Pyrus: "pear",
-        }[properties.genus];
+        const normalizedCommonName = String(
+          properties.common_name || properties.fruit_category || "",
+        )
+          .trim()
+          .toLocaleLowerCase("de");
+        const normalizedScientificName = String(
+          properties.scientific_name || properties.scientific_synonym || "",
+        )
+          .trim()
+          .toLocaleLowerCase("de");
+        const catalogMatch = TREE_IDENTIFICATION_CATALOG.find((entry) => {
+          const commonNameMatches = [
+            entry.common_name,
+            COMMON_NAME_EN[entry.common_name],
+          ]
+            .filter(Boolean)
+            .some(
+              (name) =>
+                String(name).trim().toLocaleLowerCase("de") ===
+                normalizedCommonName,
+            );
+          const scientificNameMatches = [
+            entry.scientific_name,
+            entry.scientific_synonym,
+          ]
+            .filter(Boolean)
+            .some(
+              (name) =>
+                String(name).trim().toLocaleLowerCase("de") ===
+                normalizedScientificName,
+            );
+          return commonNameMatches || scientificNameMatches;
+        });
+        const illustrationGenus = catalogMatch?.genus || properties.genus;
+        const botanicalIdentity = [
+          properties.fruit_category,
+          properties.common_name,
+          properties.scientific_name,
+          illustrationGenus,
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLocaleLowerCase("de");
+        const fruitPlate = /mirabell|syriaca/.test(botanicalIdentity)
+          ? "mirabelle"
+          : /kirsch|cherry|prunus\s+(avium|cerasus)/.test(
+                botanicalIdentity,
+              )
+            ? "cherry"
+            : /birn|pear|pyrus/.test(botanicalIdentity)
+              ? "pear"
+              : /apfel|apple|malus/.test(botanicalIdentity)
+                ? "apple"
+                : null;
         const genusPlate = {
           Acer: "acer",
           Alnus: "alnus",
           Fraxinus: "fraxinus",
           Gleditsia: "gleditsia",
           Tilia: "tilia",
-        }[properties.genus];
+        }[illustrationGenus];
         const extraGenusPlate = {
           Aesculus: "aesculus",
           Juglans: "juglans",
           Syringa: "syringa",
-        }[properties.genus];
+        }[illustrationGenus];
         const plate = document.createElement("div");
         plate.className = fruitPlate
           ? `botanical-plate botanical-fruit-plate fruit-${fruitPlate}`
@@ -7257,7 +7301,7 @@ out meta geom;`;
             ? `botanical-plate botanical-genus-plate genus-${genusPlate}`
             : extraGenusPlate
               ? `botanical-plate botanical-extra-genus-plate genus-${extraGenusPlate}`
-              : properties.genus === "Platanus"
+              : illustrationGenus === "Platanus"
                 ? "botanical-plate botanical-platanus-plate"
                 : "botanical-plate botanical-tree-plate";
         plate.setAttribute("role", "img");
