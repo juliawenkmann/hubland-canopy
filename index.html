@@ -1099,6 +1099,19 @@
         border-color: var(--forest-600);
       }
 
+      .annotation-preset-field select {
+        border-color: rgba(64, 103, 69, 0.28);
+        background: #f3f1e5;
+        font-weight: 750;
+      }
+
+      .annotation-preset-hint {
+        margin: -4px 0 2px;
+        color: var(--muted);
+        font-size: 9px;
+        line-height: 1.45;
+      }
+
       .annotation-form-actions {
         display: grid;
         grid-template-columns: 1fr auto;
@@ -3080,7 +3093,108 @@
           review_status: "reviewed",
           updated_at: "2026-08-03",
         },
+        "annotation-1785429660172-3fouct": {
+          common_name: "Linde",
+          scientific_name: "Tilia sp.",
+          genus: "Tilia",
+          tree_type: "Laubbaum",
+          review_status: "reviewed",
+          updated_at: "2026-08-03",
+        },
       };
+      const TREE_IDENTIFICATION_CATALOG = [
+        {
+          id: "field-maple",
+          common_name: "Feld-Ahorn",
+          scientific_name: "Acer campestre",
+          genus: "Acer",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "red-maple",
+          common_name: "Rot-Ahorn",
+          scientific_name: "Acer rubrum",
+          genus: "Acer",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "linden",
+          common_name: "Linde",
+          scientific_name: "Tilia sp.",
+          genus: "Tilia",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "silver-linden",
+          common_name: "Silber-Linde",
+          scientific_name: "Tilia tomentosa",
+          genus: "Tilia",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "ash",
+          common_name: "Esche",
+          scientific_name: "Fraxinus excelsior",
+          genus: "Fraxinus",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "alder",
+          common_name: "Erle",
+          scientific_name: "Alnus sp.",
+          genus: "Alnus",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "honey-locust",
+          common_name: "Lederhülsenbaum",
+          scientific_name: "Gleditsia triacanthos",
+          genus: "Gleditsia",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "walnut",
+          common_name: "Walnuss",
+          scientific_name: "Juglans regia",
+          genus: "Juglans",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "apple",
+          common_name: "Apfel",
+          scientific_name: "Malus domestica",
+          genus: "Malus",
+          tree_type: "Obstbaum-Fundort",
+        },
+        {
+          id: "cherry",
+          common_name: "Kirsche",
+          scientific_name: "Prunus sp.",
+          genus: "Prunus",
+          tree_type: "Obstbaum-Fundort",
+        },
+        {
+          id: "pear",
+          common_name: "Birne",
+          scientific_name: "Pyrus communis",
+          genus: "Pyrus",
+          tree_type: "Obstbaum-Fundort",
+        },
+        {
+          id: "mirabelle",
+          common_name: "Mirabelle",
+          scientific_name: "Prunus domestica subsp. syriaca",
+          genus: "Prunus",
+          tree_type: "Obstbaum-Fundort",
+        },
+        {
+          id: "lilac",
+          common_name: "Flieder",
+          scientific_name: "Syringa sp.",
+          genus: "Syringa",
+          tree_type: "Strauch",
+        },
+      ];
       const HUBLAND_ROWS = [
         [
                 "36403",
@@ -4151,6 +4265,10 @@
           annotationTitle: "Tree annotation",
           osmMappedTree: "OSM mapped tree",
           manualAnnotation: "Manual annotation",
+          treeSelection: "Tree or shrub type",
+          chooseTreeType: "Choose or enter manually",
+          treeSelectionHint:
+            "Selecting a type fills the botanical fields automatically.",
           notes: "Notes",
           reviewStatus: "Review status",
           unknownTree: "Unknown tree",
@@ -4417,6 +4535,10 @@
           annotationTitle: "Baum-Annotation",
           osmMappedTree: "In OSM kartierter Baum",
           manualAnnotation: "Manuelle Annotation",
+          treeSelection: "Baum- oder Strauchart",
+          chooseTreeType: "Auswählen oder manuell eintragen",
+          treeSelectionHint:
+            "Die Auswahl füllt die botanischen Felder automatisch aus.",
           notes: "Notizen",
           reviewStatus: "Prüfstatus",
           unknownTree: "Unbekannter Baum",
@@ -4563,11 +4685,18 @@
       const COMMON_NAME_EN = {
         "Dornenloser Lederhülsenbaum": "Thornless honey locust",
         "Feld-Ahorn": "Field maple",
+        "Rot-Ahorn": "Red maple",
         "Schmalblättrige Esche": "Narrow-leaved ash",
         "Schmalblättrige Esche ‘Raywood’": "Narrow-leaved ash ‘Raywood’",
+        "Silber-Linde": "Silver linden",
         "Silber-Linde ‘Brabant’": "Silver linden ‘Brabant’",
         "Spaeths Erle": "Spaeth alder",
         "Straßen-Esche ‘Westhof’s Glorie’": "European ash ‘Westhof’s Glorie’",
+        Linde: "Linden",
+        Esche: "Ash",
+        Erle: "Alder",
+        Lederhülsenbaum: "Honey locust",
+        Walnuss: "Walnut",
         Flieder: "Lilac",
         Apfel: "Apple",
         Birne: "Pear",
@@ -5034,6 +5163,7 @@
             common_name: "",
             scientific_name: "",
             genus: "",
+            tree_type: "",
             trunk_circumference_cm: null,
             dbh_cm: null,
             height_m: null,
@@ -5230,6 +5360,44 @@
         const form = document.createElement("form");
         form.className = "annotation-form";
 
+        const treeTypeInput = document.createElement("input");
+        treeTypeInput.type = "hidden";
+        treeTypeInput.name = "tree_type";
+        treeTypeInput.value = properties.tree_type || "";
+
+        const presetSelect = document.createElement("select");
+        presetSelect.id = `annotation-preset-${properties.id}`;
+        presetSelect.name = "identification_preset";
+        const manualOption = document.createElement("option");
+        manualOption.value = "";
+        manualOption.textContent = t("chooseTreeType");
+        presetSelect.appendChild(manualOption);
+
+        const currentPreset = TREE_IDENTIFICATION_CATALOG.find(
+          (entry) =>
+            entry.common_name === properties.common_name &&
+            entry.genus === properties.genus,
+        );
+        TREE_IDENTIFICATION_CATALOG.forEach((entry) => {
+          const option = document.createElement("option");
+          option.value = entry.id;
+          option.textContent = `${localizedCommonName(entry.common_name)} · ${entry.scientific_name}`;
+          option.selected = entry.id === currentPreset?.id;
+          presetSelect.appendChild(option);
+        });
+
+        const presetField = annotationField(t("treeSelection"), presetSelect);
+        presetField.classList.add("annotation-preset-field");
+        form.append(
+          presetField,
+          popupText(
+            "annotation-preset-hint",
+            t("treeSelectionHint"),
+            "p",
+          ),
+          treeTypeInput,
+        );
+
         form.append(
           annotationField(
             t("commonName"),
@@ -5297,6 +5465,20 @@
             ),
           ),
         );
+
+        presetSelect.addEventListener("change", () => {
+          const preset = TREE_IDENTIFICATION_CATALOG.find(
+            (entry) => entry.id === presetSelect.value,
+          );
+          if (!preset) {
+            form.elements.tree_type.value = "";
+            return;
+          }
+          form.elements.common_name.value = preset.common_name;
+          form.elements.scientific_name.value = preset.scientific_name;
+          form.elements.genus.value = preset.genus;
+          form.elements.tree_type.value = preset.tree_type;
+        });
 
         const healthSelect = document.createElement("select");
         healthSelect.id = `annotation-health-${properties.id}`;
@@ -5419,6 +5601,7 @@
               common_name: form.elements.common_name.value.trim(),
               scientific_name: form.elements.scientific_name.value.trim(),
               genus: form.elements.genus.value.trim(),
+              tree_type: form.elements.tree_type.value || null,
               trunk_circumference_cm: optionalFormNumber(
                 form,
                 "trunk_circumference_cm",
