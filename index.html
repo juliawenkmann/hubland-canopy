@@ -1978,6 +1978,11 @@
         background-size: 300% 200%;
       }
 
+      .botanical-extra-genus-plate {
+        background-image: url("./assets/botanical-extra-genus-plates.png");
+        background-size: 300% 100%;
+      }
+
       .fruit-apple {
         background-position: 0 0;
       }
@@ -2012,6 +2017,18 @@
 
       .genus-tilia {
         background-position: 50% 100%;
+      }
+
+      .genus-aesculus {
+        background-position: 0 0;
+      }
+
+      .genus-juglans {
+        background-position: 50% 0;
+      }
+
+      .genus-syringa {
+        background-position: 100% 0;
       }
 
       .tree-popup-placeholder {
@@ -7152,12 +7169,19 @@ out meta geom;`;
           Gleditsia: "gleditsia",
           Tilia: "tilia",
         }[properties.genus];
+        const extraGenusPlate = {
+          Aesculus: "aesculus",
+          Juglans: "juglans",
+          Syringa: "syringa",
+        }[properties.genus];
         const plate = document.createElement("div");
         plate.className = fruitPlate
           ? `botanical-plate botanical-fruit-plate fruit-${fruitPlate}`
           : genusPlate
             ? `botanical-plate botanical-genus-plate genus-${genusPlate}`
-            : "botanical-plate botanical-tree-plate";
+            : extraGenusPlate
+              ? `botanical-plate botanical-extra-genus-plate genus-${extraGenusPlate}`
+              : "botanical-plate botanical-tree-plate";
         plate.setAttribute("role", "img");
         plate.setAttribute(
           "aria-label",
