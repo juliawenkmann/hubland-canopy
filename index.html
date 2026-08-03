@@ -1993,6 +1993,12 @@
         background-size: cover;
       }
 
+      .botanical-corylus-plate {
+        background-image: url("./assets/botanical-corylus-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
       .fruit-apple {
         background-position: 0 0;
       }
@@ -3191,6 +3197,16 @@
           review_status: "reviewed",
           updated_at: "2026-08-03",
         },
+        "annotation-1785429650771-4soy0h": {
+          common_name: "Haselnuss",
+          scientific_name: "Corylus avellana",
+          genus: "Corylus",
+          tree_type: "Strauch",
+          edible: true,
+          fruit_category: "Haselnuss",
+          review_status: "reviewed",
+          updated_at: "2026-08-03",
+        },
       };
       const TREE_IDENTIFICATION_CATALOG = [
         {
@@ -3251,6 +3267,15 @@
           tree_type: "Laubbaum",
         },
         {
+          id: "hazelnut",
+          common_name: "Haselnuss",
+          scientific_name: "Corylus avellana",
+          genus: "Corylus",
+          tree_type: "Strauch",
+          edible: true,
+          fruit_category: "Haselnuss",
+        },
+        {
           id: "honey-locust",
           common_name: "Lederhülsenbaum",
           scientific_name: "Gleditsia triacanthos",
@@ -3263,6 +3288,8 @@
           scientific_name: "Juglans regia",
           genus: "Juglans",
           tree_type: "Laubbaum",
+          edible: true,
+          fruit_category: "Walnuss",
         },
         {
           id: "apple",
@@ -3270,6 +3297,8 @@
           scientific_name: "Malus domestica",
           genus: "Malus",
           tree_type: "Obstbaum-Fundort",
+          edible: true,
+          fruit_category: "Apfel",
         },
         {
           id: "cherry",
@@ -3277,6 +3306,8 @@
           scientific_name: "Prunus sp.",
           genus: "Prunus",
           tree_type: "Obstbaum-Fundort",
+          edible: true,
+          fruit_category: "Kirsche",
         },
         {
           id: "pear",
@@ -3284,6 +3315,8 @@
           scientific_name: "Pyrus communis",
           genus: "Pyrus",
           tree_type: "Obstbaum-Fundort",
+          edible: true,
+          fruit_category: "Birne",
         },
         {
           id: "mirabelle",
@@ -3291,6 +3324,8 @@
           scientific_name: "Prunus domestica subsp. syriaca",
           genus: "Prunus",
           tree_type: "Obstbaum-Fundort",
+          edible: true,
+          fruit_category: "Mirabelle",
         },
         {
           id: "lilac",
@@ -4235,6 +4270,13 @@
           color: "#8b6847",
         },
         {
+          id: "hazelnut",
+          category: "Haselnuss",
+          nameKey: "fruitHazelnut",
+          months: [9, 10],
+          color: "#a06b4e",
+        },
+        {
           id: "quince",
           category: "Quitte",
           nameKey: "fruitQuince",
@@ -4302,31 +4344,32 @@
           fruitFilterAria: "Filter the map by fruit type",
           allFruitTypes: "All fruit",
           foodSnapshot: "Edible landscape",
-          mundraubData: "Mundraub data",
-          mundraubLocations: "Mundraub locations",
-          mappedFruitTypes: "Mapped fruit types",
+          mundraubData: "Mundraub + annotations",
+          mundraubLocations: "Edible locations",
+          mappedFruitTypes: "Mapped edible types",
           ripeTypesThisMonth: "Types ripe this month",
           matchingMapLocations: "Matching map locations",
           ripeInMonth: "Ripe in this month",
           harvestCaveat:
             "Harvest windows are approximate and vary by variety, weather and location. Check fruit and access rights on site before picking.",
-          mundraubBreakdown: "Mundraub fruit locations",
+          mundraubBreakdown: "Edible locations",
           allMappedTypes: "All mapped types",
-          mundraubChartAria: "Mundraub fruit locations by type",
+          mundraubChartAria: "Edible locations by type",
           fruitApple: "Apple",
           fruitPear: "Pear",
           fruitCherry: "Cherry",
           fruitMirabelle: "Mirabelle plum",
           fruitPlum: "Plum",
           fruitWalnut: "Walnut",
+          fruitHazelnut: "Hazelnut",
           fruitQuince: "Quince",
-          fruitLocationsCount: "{count} Mundraub locations",
-          fruitNotMapped: "No Mundraub location",
+          fruitLocationsCount: "{count} edible locations",
+          fruitNotMapped: "No edible location",
           typicalHarvest: "Typical harvest: {months}",
           noRipeFruit:
             "No selected fruit types are typically ripe in {month}.",
           foodMapStatus:
-            "{count} matching Mundraub locations · {month}",
+            "{count} matching edible locations · {month}",
           foodMapStatusType: "{count} locations · {fruit}",
           month1: "January",
           month2: "February",
@@ -4575,31 +4618,32 @@
           fruitFilterAria: "Karte nach Obstart filtern",
           allFruitTypes: "Alle Obstarten",
           foodSnapshot: "Essbare Landschaft",
-          mundraubData: "Mundraub-Daten",
-          mundraubLocations: "Mundraub-Fundorte",
-          mappedFruitTypes: "Kartierte Obstarten",
+          mundraubData: "Mundraub + Annotationen",
+          mundraubLocations: "Essbare Standorte",
+          mappedFruitTypes: "Kartierte essbare Arten",
           ripeTypesThisMonth: "In diesem Monat reif",
           matchingMapLocations: "Passende Kartenorte",
           ripeInMonth: "Reif in diesem Monat",
           harvestCaveat:
             "Erntefenster sind Näherungswerte und variieren je nach Sorte, Wetter und Standort. Früchte und Zugangsrechte vor dem Pflücken vor Ort prüfen.",
-          mundraubBreakdown: "Mundraub-Obstfundorte",
+          mundraubBreakdown: "Essbare Standorte",
           allMappedTypes: "Alle kartierten Arten",
-          mundraubChartAria: "Mundraub-Obstfundorte nach Art",
+          mundraubChartAria: "Essbare Standorte nach Art",
           fruitApple: "Apfel",
           fruitPear: "Birne",
           fruitCherry: "Kirsche",
           fruitMirabelle: "Mirabelle",
           fruitPlum: "Pflaume",
           fruitWalnut: "Walnuss",
+          fruitHazelnut: "Haselnuss",
           fruitQuince: "Quitte",
-          fruitLocationsCount: "{count} Mundraub-Fundorte",
-          fruitNotMapped: "Kein Mundraub-Fundort",
+          fruitLocationsCount: "{count} essbare Standorte",
+          fruitNotMapped: "Kein essbarer Standort",
           typicalHarvest: "Typische Ernte: {months}",
           noRipeFruit:
             "Keine ausgewählten Obstarten sind im {month} typischerweise reif.",
           foodMapStatus:
-            "{count} passende Mundraub-Fundorte · {month}",
+            "{count} passende essbare Standorte · {month}",
           foodMapStatusType: "{count} Fundorte · {fruit}",
           month1: "Januar",
           month2: "Februar",
@@ -4814,6 +4858,7 @@
         Esche: "Ash",
         Erle: "Alder",
         Kastanie: "Horse chestnut",
+        Haselnuss: "Hazelnut",
         Lederhülsenbaum: "Honey locust",
         Walnuss: "Walnut",
         Flieder: "Lilac",
@@ -4827,6 +4872,7 @@
         Acer: "#c26b4c",
         Aesculus: "#7b6a43",
         Alnus: "#96704c",
+        Corylus: "#a06b4e",
         Fraxinus: "#597b78",
         Gleditsia: "#b6943d",
         Malus: "#d25353",
@@ -5292,6 +5338,8 @@
             scientific_synonym: "",
             genus: "",
             tree_type: "",
+            edible: false,
+            fruit_category: "",
             trunk_circumference_cm: null,
             dbh_cm: null,
             height_m: null,
@@ -5493,6 +5541,16 @@
         treeTypeInput.name = "tree_type";
         treeTypeInput.value = properties.tree_type || "";
 
+        const edibleInput = document.createElement("input");
+        edibleInput.type = "hidden";
+        edibleInput.name = "edible";
+        edibleInput.value = properties.edible ? "true" : "false";
+
+        const fruitCategoryInput = document.createElement("input");
+        fruitCategoryInput.type = "hidden";
+        fruitCategoryInput.name = "fruit_category";
+        fruitCategoryInput.value = properties.fruit_category || "";
+
         const presetSelect = document.createElement("select");
         presetSelect.id = `annotation-preset-${properties.id}`;
         presetSelect.name = "identification_preset";
@@ -5524,6 +5582,8 @@
             "p",
           ),
           treeTypeInput,
+          edibleInput,
+          fruitCategoryInput,
         );
 
         form.append(
@@ -5609,6 +5669,8 @@
           );
           if (!preset) {
             form.elements.tree_type.value = "";
+            form.elements.edible.value = "false";
+            form.elements.fruit_category.value = "";
             return;
           }
           form.elements.common_name.value = preset.common_name;
@@ -5617,6 +5679,9 @@
             preset.scientific_synonym || "";
           form.elements.genus.value = preset.genus;
           form.elements.tree_type.value = preset.tree_type;
+          form.elements.edible.value = preset.edible ? "true" : "false";
+          form.elements.fruit_category.value =
+            preset.fruit_category || "";
         });
 
         const healthSelect = document.createElement("select");
@@ -5743,6 +5808,9 @@
                 form.elements.scientific_synonym.value.trim(),
               genus: form.elements.genus.value.trim(),
               tree_type: form.elements.tree_type.value || null,
+              edible: form.elements.edible.value === "true",
+              fruit_category:
+                form.elements.fruit_category.value.trim() || null,
               trunk_circumference_cm: optionalFormNumber(
                 form,
                 "trunk_circumference_cm",
@@ -6652,12 +6720,31 @@ out meta geom;`;
         return t(fruit.nameKey);
       }
 
-      function mundraubFeatures() {
-        return treeData.features.filter(
-          (feature) =>
-            feature.properties.data_source === "mundraub" &&
-            pointInCampus(feature.geometry.coordinates),
+      function edibleMapFeatures() {
+        const knownCategories = new Set(
+          FRUIT_CATALOG.map((fruit) => fruit.category),
         );
+        const uniqueFeatures = new Map();
+        [
+          ...treeData.features.filter(
+            (feature) => feature.properties.data_source === "mundraub",
+          ),
+          ...annotationData.features.filter(
+            (feature) =>
+              feature.properties.edible === true ||
+              knownCategories.has(feature.properties.fruit_category),
+          ),
+        ].forEach((feature) => {
+          if (
+            feature?.geometry?.type !== "Point" ||
+            !pointInCampus(feature.geometry.coordinates) ||
+            !knownCategories.has(feature.properties.fruit_category)
+          ) {
+            return;
+          }
+          uniqueFeatures.set(feature.properties.id, feature);
+        });
+        return [...uniqueFeatures.values()];
       }
 
       function eligibleFruitCatalog() {
@@ -6683,13 +6770,14 @@ out meta geom;`;
         const eligibleCategories = new Set(
           mapFruitCatalog().map((fruit) => fruit.category),
         );
-        return mundraubFeatures().filter((feature) =>
+        return edibleMapFeatures().filter((feature) =>
           eligibleCategories.has(feature.properties.fruit_category),
         );
       }
 
       function renderFruitFilters() {
-        const counts = mundraubFeatures().reduce((totals, feature) => {
+        const edibleFeatures = edibleMapFeatures();
+        const counts = edibleFeatures.reduce((totals, feature) => {
           const category = feature.properties.fruit_category;
           totals[category] = (totals[category] || 0) + 1;
           return totals;
@@ -6702,7 +6790,7 @@ out meta geom;`;
             id: null,
             label: t("allFruitTypes"),
             color: "#4f7658",
-            count: mundraubFeatures().length,
+            count: edibleFeatures.length,
           },
           ...FRUIT_CATALOG.map((fruit) => ({
             id: fruit.id,
@@ -6746,7 +6834,7 @@ out meta geom;`;
           monthSelect.appendChild(option);
         }
 
-        const mappedFeatures = mundraubFeatures();
+        const mappedFeatures = edibleMapFeatures();
         const mappedCategories = new Set(
           mappedFeatures.map((feature) => feature.properties.fruit_category),
         );
@@ -7435,9 +7523,11 @@ out meta geom;`;
             ? `botanical-plate botanical-genus-plate genus-${genusPlate}`
             : extraGenusPlate
               ? `botanical-plate botanical-extra-genus-plate genus-${extraGenusPlate}`
-              : illustrationGenus === "Platanus"
-                ? "botanical-plate botanical-platanus-plate"
-                : "botanical-plate botanical-tree-plate";
+              : illustrationGenus === "Corylus"
+                ? "botanical-plate botanical-corylus-plate"
+                : illustrationGenus === "Platanus"
+                  ? "botanical-plate botanical-platanus-plate"
+                  : "botanical-plate botanical-tree-plate";
         plate.setAttribute("role", "img");
         plate.setAttribute(
           "aria-label",
@@ -7448,6 +7538,11 @@ out meta geom;`;
 
       function buildTreePopup(properties, coordinates) {
         const isMundraub = properties.data_source === "mundraub";
+        const isEdible =
+          properties.edible === true ||
+          FRUIT_CATALOG.some(
+            (fruit) => fruit.category === properties.fruit_category,
+          );
         const editableFeature = annotationData.features.find(
           (feature) => String(feature.properties.id) === String(properties.id),
         );
@@ -7505,7 +7600,7 @@ out meta geom;`;
         [
           properties.genus,
           localizedTreeType(properties.tree_type),
-          isMundraub
+          isEdible
             ? localizedCommonName(properties.fruit_category)
             : null,
         ]
@@ -7595,7 +7690,7 @@ out meta geom;`;
             properties.scientific_synonym,
           ]);
         }
-        if (isMundraub) {
+        if (isEdible) {
           classificationRows.push([
             t("fruitCategory"),
             localizedCommonName(properties.fruit_category),
@@ -8220,11 +8315,7 @@ out meta geom;`;
           type: "geojson",
           data: {
             ...data,
-            features: data.features.filter(
-              (feature) =>
-                feature.properties.data_source === "mundraub" &&
-                pointInCampus(feature.geometry.coordinates),
-            ),
+            features: edibleMapFeatures(),
           },
           cluster: true,
           clusterMaxZoom: 14,
