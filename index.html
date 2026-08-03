@@ -1868,54 +1868,6 @@
         font-weight: 750;
       }
 
-      .source-footer {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 6px 9px;
-        margin: 4px 12px 16px;
-        border-top: 1px solid var(--line);
-        padding: 12px 2px 0;
-        color: var(--muted);
-        font-size: 8px;
-        line-height: 1.5;
-      }
-
-      .source-footer strong {
-        color: var(--forest-900);
-        font-size: 8px;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-
-      .source-footer-links {
-        display: flex;
-        flex: 1 1 240px;
-        flex-wrap: wrap;
-        gap: 4px 0;
-      }
-
-      .source-footer a {
-        color: var(--forest-700);
-        font-weight: 750;
-        text-decoration: none;
-      }
-
-      .source-footer a:hover {
-        text-decoration: underline;
-      }
-
-      .source-footer a:not(:last-child)::after {
-        margin: 0 6px;
-        color: var(--line);
-        content: "·";
-      }
-
-      .source-footer-note {
-        flex-basis: 100%;
-        opacity: 0.82;
-      }
-
       /* Botanical field-guide theme inspired by the supplied Tree Tracker reference. */
       body {
         background:
@@ -3661,48 +3613,6 @@
           </div>
         </section>
 
-        <footer
-          class="source-footer"
-          aria-label="Data sources"
-          data-i18n-aria-label="dataSources"
-        >
-          <strong data-i18n="dataSources">Data sources</strong>
-          <div class="source-footer-links">
-            <a
-              href="https://www.openstreetmap.org/#map=17/49.7855/9.9740"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-i18n="sourceOsmFooter"
-            >OpenStreetMap · ODbL</a>
-            <a
-              href="https://geodaten.bayern.de/opengeodata/OpenDataDetail.html?pn=dop40"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-i18n="sourceDopFooter"
-            >DOP40 · CC BY 4.0</a>
-            <a
-              href="https://www.verbraucherzentrale.de/wissen/lebensmittel/gesund-ernaehren/saisonkalender-obst-und-gemuese-frisch-und-regional-einkaufen-17229"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-i18n="sourceSeasonFooter"
-            >Seasonal calendar</a>
-            <a
-              href="https://mundraub.org/map#z=15&amp;lat=49.78594694963257&amp;lng=9.967989921569826"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-i18n="sourceMundraubFooter"
-            >mundraub.org</a>
-            <a
-              href="https://opendata.wuerzburg.de/explore/dataset/baumkataster_stadt_wuerzburg/"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-i18n="sourceCityFooter"
-            >City of Würzburg</a>
-          </div>
-          <span class="source-footer-note" data-i18n="sourceFooterNote">
-            Seasonal dates are approximate. Check access rights and local conditions on site.
-          </span>
-        </footer>
       </div>
     </aside>
 
@@ -5269,7 +5179,6 @@
           osmDescriptionTag: "OSM description",
           allOsmTags: "Show all original OSM tags",
           openOsmElement: "Open this tree in OpenStreetMap",
-          dataSources: "Data sources",
           retrievedDate: "OSM live on request",
           osmSourceTitle: "OpenStreetMap · Overpass API",
           osmDescription:
@@ -5291,13 +5200,6 @@
           cityDescription:
             "56 municipal public-tree records around the campus. None of these city records lies inside the drawn university boundary.",
           openDataset: "Open dataset · DL-DE-BY-2.0",
-          sourceOsmFooter: "OpenStreetMap · ODbL",
-          sourceDopFooter: "DOP40 · CC BY 4.0",
-          sourceSeasonFooter: "Seasonal calendar",
-          sourceMundraubFooter: "mundraub.org",
-          sourceCityFooter: "City of Würzburg · DL-DE-BY-2.0",
-          sourceFooterNote:
-            "Seasonal dates are approximate. Check access rights and local conditions on site.",
           fitTrees: "Fit all trees on map",
           viewAllTrees: "View all trees",
           fitFruitLocations: "Fit matching fruit locations on map",
@@ -5603,7 +5505,6 @@
           osmDescriptionTag: "OSM-Beschreibung",
           allOsmTags: "Alle ursprünglichen OSM-Tags anzeigen",
           openOsmElement: "Diesen Baum in OpenStreetMap öffnen",
-          dataSources: "Datenquellen",
           retrievedDate: "OSM live auf Abruf",
           osmSourceTitle: "OpenStreetMap · Overpass API",
           osmDescription:
@@ -5625,13 +5526,6 @@
           cityDescription:
             "56 kommunale Baumdatensätze rund um den Campus. Keiner dieser städtischen Datensätze liegt innerhalb der eingezeichneten Universitätsgrenze.",
           openDataset: "Offenen Datensatz öffnen · DL-DE-BY-2.0",
-          sourceOsmFooter: "OpenStreetMap · ODbL",
-          sourceDopFooter: "DOP40 · CC BY 4.0",
-          sourceSeasonFooter: "Saisonkalender",
-          sourceMundraubFooter: "mundraub.org",
-          sourceCityFooter: "Stadt Würzburg · DL-DE-BY-2.0",
-          sourceFooterNote:
-            "Saisonzeiten sind Näherungswerte. Zugangsrechte und Bedingungen bitte vor Ort prüfen.",
           fitTrees: "Alle Bäume auf der Karte anzeigen",
           viewAllTrees: "Alle Bäume anzeigen",
           fitFruitLocations: "Passende Obstfundorte auf der Karte anzeigen",
