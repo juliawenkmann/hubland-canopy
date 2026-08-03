@@ -1977,6 +1977,11 @@
         background-size: 200% 200%;
       }
 
+      .botanical-extra-fruit-plate {
+        background-image: url("./assets/botanical-extra-fruit-plates.png");
+        background-size: 200% 200%;
+      }
+
       .botanical-genus-plate {
         background-image: url("./assets/botanical-genus-plates.png");
         background-size: 300% 200%;
@@ -2013,6 +2018,14 @@
 
       .fruit-mirabelle {
         background-position: 100% 100%;
+      }
+
+      .fruit-plum {
+        background-position: 0 0;
+      }
+
+      .fruit-quince {
+        background-position: 100% 0;
       }
 
       .genus-acer {
@@ -3246,6 +3259,13 @@
           tree_type: "Laubbaum",
         },
         {
+          id: "silver-linden-brabant",
+          common_name: "Silber-Linde ‘Brabant’",
+          scientific_name: "Tilia tomentosa ‘Brabant’",
+          genus: "Tilia",
+          tree_type: "Laubbaum",
+        },
+        {
           id: "ash",
           common_name: "Esche",
           scientific_name: "Fraxinus excelsior",
@@ -3253,9 +3273,37 @@
           tree_type: "Laubbaum",
         },
         {
+          id: "narrow-leaved-ash",
+          common_name: "Schmalblättrige Esche",
+          scientific_name: "Fraxinus angustifolia",
+          genus: "Fraxinus",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "narrow-leaved-ash-raywood",
+          common_name: "Schmalblättrige Esche ‘Raywood’",
+          scientific_name: "Fraxinus angustifolia ‘Raywood’",
+          genus: "Fraxinus",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "street-ash-westhofs-glorie",
+          common_name: "Straßen-Esche ‘Westhof’s Glorie’",
+          scientific_name: "Fraxinus excelsior ‘Westhof’s Glorie’",
+          genus: "Fraxinus",
+          tree_type: "Laubbaum",
+        },
+        {
           id: "alder",
           common_name: "Erle",
           scientific_name: "Alnus sp.",
+          genus: "Alnus",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "spaeth-alder",
+          common_name: "Spaeths Erle",
+          scientific_name: "Alnus × spaethii",
           genus: "Alnus",
           tree_type: "Laubbaum",
         },
@@ -3279,6 +3327,13 @@
           id: "honey-locust",
           common_name: "Lederhülsenbaum",
           scientific_name: "Gleditsia triacanthos",
+          genus: "Gleditsia",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "thornless-honey-locust",
+          common_name: "Dornenloser Lederhülsenbaum",
+          scientific_name: "Gleditsia triacanthos f. inermis",
           genus: "Gleditsia",
           tree_type: "Laubbaum",
         },
@@ -3326,6 +3381,24 @@
           tree_type: "Obstbaum-Fundort",
           edible: true,
           fruit_category: "Mirabelle",
+        },
+        {
+          id: "plum",
+          common_name: "Pflaume",
+          scientific_name: "Prunus domestica",
+          genus: "Prunus",
+          tree_type: "Obstbaum-Fundort",
+          edible: true,
+          fruit_category: "Pflaume",
+        },
+        {
+          id: "quince",
+          common_name: "Quitte",
+          scientific_name: "Cydonia oblonga",
+          genus: "Cydonia",
+          tree_type: "Obstbaum-Fundort",
+          edible: true,
+          fruit_category: "Quitte",
         },
         {
           id: "lilac",
@@ -4866,6 +4939,8 @@
         Birne: "Pear",
         Kirsche: "Cherry",
         Mirabelle: "Mirabelle plum",
+        Pflaume: "Plum",
+        Quitte: "Quince",
       };
 
       const GENUS_COLORS = {
@@ -4873,6 +4948,7 @@
         Aesculus: "#7b6a43",
         Alnus: "#96704c",
         Corylus: "#a06b4e",
+        Cydonia: "#bd9236",
         Fraxinus: "#597b78",
         Gleditsia: "#b6943d",
         Malus: "#d25353",
@@ -5564,13 +5640,20 @@
             entry.common_name === properties.common_name &&
             entry.genus === properties.genus,
         );
-        TREE_IDENTIFICATION_CATALOG.forEach((entry) => {
-          const option = document.createElement("option");
-          option.value = entry.id;
-          option.textContent = `${localizedCommonName(entry.common_name)} · ${entry.scientific_name}`;
-          option.selected = entry.id === currentPreset?.id;
-          presetSelect.appendChild(option);
-        });
+        [...TREE_IDENTIFICATION_CATALOG]
+          .sort((first, second) =>
+            localizedCommonName(first.common_name).localeCompare(
+              localizedCommonName(second.common_name),
+              language === "de" ? "de" : "en",
+            ),
+          )
+          .forEach((entry) => {
+            const option = document.createElement("option");
+            option.value = entry.id;
+            option.textContent = `${localizedCommonName(entry.common_name)} · ${entry.scientific_name}`;
+            option.selected = entry.id === currentPreset?.id;
+            presetSelect.appendChild(option);
+          });
 
         const presetField = annotationField(t("treeSelection"), presetSelect);
         presetField.classList.add("annotation-preset-field");
@@ -7504,6 +7587,11 @@ out meta geom;`;
               : /apfel|apple|malus/.test(botanicalIdentity)
                 ? "apple"
                 : null;
+        const extraFruitPlate = /quitt|quince|cydonia/.test(botanicalIdentity)
+          ? "quince"
+          : /pflaum|plum|prunus\s+domestica/.test(botanicalIdentity)
+            ? "plum"
+            : null;
         const genusPlate = {
           Acer: "acer",
           Alnus: "alnus",
@@ -7519,15 +7607,17 @@ out meta geom;`;
         const plate = document.createElement("div");
         plate.className = fruitPlate
           ? `botanical-plate botanical-fruit-plate fruit-${fruitPlate}`
-          : genusPlate
-            ? `botanical-plate botanical-genus-plate genus-${genusPlate}`
-            : extraGenusPlate
-              ? `botanical-plate botanical-extra-genus-plate genus-${extraGenusPlate}`
-              : illustrationGenus === "Corylus"
-                ? "botanical-plate botanical-corylus-plate"
-                : illustrationGenus === "Platanus"
-                  ? "botanical-plate botanical-platanus-plate"
-                  : "botanical-plate botanical-tree-plate";
+          : extraFruitPlate
+            ? `botanical-plate botanical-extra-fruit-plate fruit-${extraFruitPlate}`
+            : genusPlate
+              ? `botanical-plate botanical-genus-plate genus-${genusPlate}`
+              : extraGenusPlate
+                ? `botanical-plate botanical-extra-genus-plate genus-${extraGenusPlate}`
+                : illustrationGenus === "Corylus"
+                  ? "botanical-plate botanical-corylus-plate"
+                  : illustrationGenus === "Platanus"
+                    ? "botanical-plate botanical-platanus-plate"
+                    : "botanical-plate botanical-tree-plate";
         plate.setAttribute("role", "img");
         plate.setAttribute(
           "aria-label",
