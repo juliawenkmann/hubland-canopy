@@ -2448,6 +2448,10 @@
         .tree-popup-card {
           max-height: min(68vh, 570px);
         }
+
+        .annotation-editor {
+          max-height: min(68vh, 570px);
+        }
       }
 
       @media (max-width: 760px) {
@@ -4689,6 +4693,7 @@
       let activePopup = null;
       let activePopupFeature = null;
       let activeAnnotationId = null;
+      let activePopupRestoresPanel = false;
       let annotationData = {
         type: "FeatureCollection",
         name: "Editable campus tree annotations",
@@ -4779,6 +4784,14 @@
           "aria-label",
           t(collapsed ? "expandDashboard" : "collapseDashboard"),
         );
+      }
+
+      function setDashboardCollapsed(collapsed) {
+        document.body.classList.toggle("panel-collapsed", Boolean(collapsed));
+        const panelToggle = document.getElementById("panel-toggle");
+        panelToggle.setAttribute("aria-expanded", String(!collapsed));
+        updatePanelToggleLabel();
+        window.setTimeout(() => map?.resize(), 370);
       }
 
       function applyLanguage({ refreshDynamic = true } = {}) {
@@ -5411,18 +5424,31 @@
       }
 
       function openAnnotationEditor(feature) {
+        const inheritedPanelRestore = activePopupRestoresPanel;
+        activePopupRestoresPanel = false;
         if (activePopup) activePopup.remove();
+        const shouldRestorePanel =
+          inheritedPanelRestore || prepareViewportForPopup();
         activeAnnotationId = feature.properties.id;
         activePopupFeature = null;
-        const popup = new maplibregl.Popup({ offset: 16, maxWidth: "368px" })
+        const popup = new maplibregl.Popup({
+          anchor: "bottom",
+          offset: 16,
+          maxWidth: "368px",
+        })
           .setLngLat(feature.geometry.coordinates)
           .setDOMContent(buildAnnotationEditor(feature))
           .addTo(map);
         activePopup = popup;
+        activePopupRestoresPanel = shouldRestorePanel;
+        focusPopupInViewport(popup);
         popup.on("close", () => {
           if (activePopup === popup) {
+            const restorePanel = activePopupRestoresPanel;
             activePopup = null;
             activeAnnotationId = null;
+            activePopupRestoresPanel = false;
+            if (restorePanel) setDashboardCollapsed(false);
           }
         });
       }
@@ -7230,6 +7256,9 @@ out meta geom;`;
         }
 
         moreInformation.append(summary, moreBody);
+        moreInformation.addEventListener("toggle", () => {
+          if (activePopup) focusPopupInViewport(activePopup);
+        });
         body.appendChild(moreInformation);
         root.append(imageWrap, body);
         return root;
@@ -7266,6 +7295,88 @@ out meta geom;`;
         }, null).feature;
       }
 
+      function prepareViewportForPopup() {
+        const mobile = window.matchMedia("(max-width: 760px)").matches;
+        const shouldCollapsePanel =
+          mobile && !document.body.classList.contains("panel-collapsed");
+        if (shouldCollapsePanel) setDashboardCollapsed(true);
+        return shouldCollapsePanel;
+      }
+
+      function popupSafeArea() {
+        const mapRectangle = map.getContainer().getBoundingClientRect();
+        const mobile = window.matchMedia("(max-width: 760px)").matches;
+        const brandRectangle = document
+          .querySelector(".brand")
+          ?.getBoundingClientRect();
+        const dashboardRectangle = document
+          .querySelector(".dashboard")
+          ?.getBoundingClientRect();
+        return {
+          left: mobile
+            ? mapRectangle.left + 12
+            : Math.max(
+                mapRectangle.left + 14,
+                (dashboardRectangle?.right || mapRectangle.left) + 14,
+              ),
+          right: mapRectangle.right - 14,
+          top: Math.max(
+            mapRectangle.top + 14,
+            (brandRectangle?.bottom || mapRectangle.top) + 12,
+          ),
+          bottom: mobile
+            ? mapRectangle.bottom - 88
+            : mapRectangle.bottom - 18,
+        };
+      }
+
+      function keepPopupInsideSafeArea(popup) {
+        const popupElement = popup?.getElement?.();
+        if (!popupElement?.isConnected || !map) return;
+        const popupRectangle = popupElement.getBoundingClientRect();
+        const safeArea = popupSafeArea();
+        const safeWidth = safeArea.right - safeArea.left;
+        const safeHeight = safeArea.bottom - safeArea.top;
+
+        let horizontalShift = 0;
+        let verticalShift = 0;
+        if (popupRectangle.width > safeWidth) {
+          horizontalShift =
+            (safeArea.left + safeArea.right) / 2 -
+            (popupRectangle.left + popupRectangle.right) / 2;
+        } else if (popupRectangle.left < safeArea.left) {
+          horizontalShift = safeArea.left - popupRectangle.left;
+        } else if (popupRectangle.right > safeArea.right) {
+          horizontalShift = safeArea.right - popupRectangle.right;
+        }
+
+        if (popupRectangle.height > safeHeight) {
+          verticalShift =
+            (safeArea.top + safeArea.bottom) / 2 -
+            (popupRectangle.top + popupRectangle.bottom) / 2;
+        } else if (popupRectangle.top < safeArea.top) {
+          verticalShift = safeArea.top - popupRectangle.top;
+        } else if (popupRectangle.bottom > safeArea.bottom) {
+          verticalShift = safeArea.bottom - popupRectangle.bottom;
+        }
+
+        if (Math.abs(horizontalShift) > 1 || Math.abs(verticalShift) > 1) {
+          map.panBy([-horizontalShift, -verticalShift], {
+            duration: 440,
+            essential: true,
+          });
+        }
+      }
+
+      function focusPopupInViewport(popup) {
+        window.requestAnimationFrame(() =>
+          window.requestAnimationFrame(() => keepPopupInsideSafeArea(popup)),
+        );
+        if (window.matchMedia("(max-width: 760px)").matches) {
+          window.setTimeout(() => keepPopupInsideSafeArea(popup), 380);
+        }
+      }
+
       function openTreePopup(event) {
         if (manualPlacementMode) return;
         if (
@@ -7283,21 +7394,34 @@ out meta geom;`;
 
       function showTreePopup(feature) {
         const coordinates = feature.geometry.coordinates.slice();
+        const inheritedPanelRestore = activePopupRestoresPanel;
+        activePopupRestoresPanel = false;
         if (activePopup) activePopup.remove();
+        const shouldRestorePanel =
+          inheritedPanelRestore || prepareViewportForPopup();
         activeAnnotationId = null;
         activePopupFeature = {
           properties: { ...feature.properties },
           coordinates,
         };
-        const popup = new maplibregl.Popup({ offset: 18, maxWidth: "390px" })
+        const popup = new maplibregl.Popup({
+          anchor: "bottom",
+          offset: 18,
+          maxWidth: "390px",
+        })
           .setLngLat(coordinates)
           .setDOMContent(buildTreePopup(feature.properties, coordinates))
           .addTo(map);
         activePopup = popup;
+        activePopupRestoresPanel = shouldRestorePanel;
+        focusPopupInViewport(popup);
         popup.on("close", () => {
           if (activePopup === popup) {
+            const restorePanel = activePopupRestoresPanel;
             activePopup = null;
             activePopupFeature = null;
+            activePopupRestoresPanel = false;
+            if (restorePanel) setDashboardCollapsed(false);
           }
         });
       }
@@ -8011,10 +8135,9 @@ out meta geom;`;
 
       document.getElementById("panel-toggle").addEventListener("click", (event) => {
         event.stopPropagation();
-        const collapsed = document.body.classList.toggle("panel-collapsed");
-        event.currentTarget.setAttribute("aria-expanded", String(!collapsed));
-        updatePanelToggleLabel();
-        window.setTimeout(() => map?.resize(), 370);
+        setDashboardCollapsed(
+          !document.body.classList.contains("panel-collapsed"),
+        );
       });
 
       document.getElementById("panel-header").addEventListener("click", (event) => {
