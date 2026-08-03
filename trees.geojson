@@ -1,0 +1,1807 @@
+{
+  "type": "FeatureCollection",
+  "name": "Municipal trees in the Campus Hubland Nord bounding area",
+  "source": {
+    "title": "Baumkataster der Stadt Würzburg",
+    "publisher": "Stadt Würzburg, Fachabteilung Gartenamt",
+    "url": "https://opendata.wuerzburg.de/explore/dataset/baumkataster_stadt_wuerzburg/",
+    "license": "DL-DE-BY-2.0",
+    "updated": "2026-06-30",
+    "filter": "in_bbox(geo_punkt,49.7838,9.9704,49.7873,9.9795)",
+    "note": "Municipal public-tree records within an approximate Campus Hubland Nord bounding box; the register may not include every tree on university or state-owned land."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9707666385,
+          49.7842164265
+        ]
+      },
+      "properties": {
+        "id": "36403",
+        "common_name": "Straßen-Esche ‘Westhof’s Glorie’",
+        "scientific_name": "Fraxinus excelsior ‘Westhof’s Glorie’",
+        "genus": "Fraxinus",
+        "dbh_cm": 16.6,
+        "height_m": 9,
+        "canopy_spread_m": 6,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 52,
+        "tree_type": "Laubbaum",
+        "source_common_name": "STRAßEN-ESCHE WESTHOF S GLORIE",
+        "source_scientific_name": "Fraxinus exc. Westhof´s Glori",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9712731923,
+          49.7840781158
+        ]
+      },
+      "properties": {
+        "id": "36400",
+        "common_name": "Straßen-Esche ‘Westhof’s Glorie’",
+        "scientific_name": "Fraxinus excelsior ‘Westhof’s Glorie’",
+        "genus": "Fraxinus",
+        "dbh_cm": 26.1,
+        "height_m": 12,
+        "canopy_spread_m": 8,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 82,
+        "tree_type": "Laubbaum",
+        "source_common_name": "STRAßEN-ESCHE WESTHOF S GLORIE",
+        "source_scientific_name": "Fraxinus exc. Westhof´s Glori",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9719070767,
+          49.7838903874
+        ]
+      },
+      "properties": {
+        "id": "38675",
+        "common_name": "Straßen-Esche ‘Westhof’s Glorie’",
+        "scientific_name": "Fraxinus excelsior ‘Westhof’s Glorie’",
+        "genus": "Fraxinus",
+        "dbh_cm": 24.2,
+        "height_m": 11,
+        "canopy_spread_m": 8,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 76,
+        "tree_type": "Laubbaum",
+        "source_common_name": "STRAßEN-ESCHE WESTHOF S GLORIE",
+        "source_scientific_name": "Fraxinus exc. Westhof´s Glori",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9717885025,
+          49.7839254251
+        ]
+      },
+      "properties": {
+        "id": "38687",
+        "common_name": "Straßen-Esche ‘Westhof’s Glorie’",
+        "scientific_name": "Fraxinus excelsior ‘Westhof’s Glorie’",
+        "genus": "Fraxinus",
+        "dbh_cm": 17.2,
+        "height_m": 10,
+        "canopy_spread_m": 7,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 54,
+        "tree_type": "Laubbaum",
+        "source_common_name": "STRAßEN-ESCHE WESTHOF S GLORIE",
+        "source_scientific_name": "Fraxinus exc. Westhof´s Glori",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9784944677,
+          49.7870538936
+        ]
+      },
+      "properties": {
+        "id": "76560",
+        "common_name": "Spaeths Erle",
+        "scientific_name": "Alnus × spaethii",
+        "genus": "Alnus",
+        "dbh_cm": 3.8,
+        "height_m": 5,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 12,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ERLE SPAETHII",
+        "source_scientific_name": "Alnus X spaethii",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9783393126,
+          49.7870537479
+        ]
+      },
+      "properties": {
+        "id": "76561",
+        "common_name": "Spaeths Erle",
+        "scientific_name": "Alnus × spaethii",
+        "genus": "Alnus",
+        "dbh_cm": 3.8,
+        "height_m": 5,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 12,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ERLE SPAETHII",
+        "source_scientific_name": "Alnus X spaethii",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9781841868,
+          49.7870550575
+        ]
+      },
+      "properties": {
+        "id": "76562",
+        "common_name": "Spaeths Erle",
+        "scientific_name": "Alnus × spaethii",
+        "genus": "Alnus",
+        "dbh_cm": 3.8,
+        "height_m": 5,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 12,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ERLE SPAETHII",
+        "source_scientific_name": "Alnus X spaethii",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9780335867,
+          49.7870577846
+        ]
+      },
+      "properties": {
+        "id": "76563",
+        "common_name": "Spaeths Erle",
+        "scientific_name": "Alnus × spaethii",
+        "genus": "Alnus",
+        "dbh_cm": 3.8,
+        "height_m": 5,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 12,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ERLE SPAETHII",
+        "source_scientific_name": "Alnus X spaethii",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9778829279,
+          49.7870576003
+        ]
+      },
+      "properties": {
+        "id": "76564",
+        "common_name": "Spaeths Erle",
+        "scientific_name": "Alnus × spaethii",
+        "genus": "Alnus",
+        "dbh_cm": 3.8,
+        "height_m": 5,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 12,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ERLE SPAETHII",
+        "source_scientific_name": "Alnus X spaethii",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9784926204,
+          49.7869621918
+        ]
+      },
+      "properties": {
+        "id": "76565",
+        "common_name": "Spaeths Erle",
+        "scientific_name": "Alnus × spaethii",
+        "genus": "Alnus",
+        "dbh_cm": 3.8,
+        "height_m": 5,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 12,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ERLE SPAETHII",
+        "source_scientific_name": "Alnus X spaethii",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9783397724,
+          49.7869649383
+        ]
+      },
+      "properties": {
+        "id": "76566",
+        "common_name": "Spaeths Erle",
+        "scientific_name": "Alnus × spaethii",
+        "genus": "Alnus",
+        "dbh_cm": 3.8,
+        "height_m": 5,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 12,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ERLE SPAETHII",
+        "source_scientific_name": "Alnus X spaethii",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9781846175,
+          49.7869647923
+        ]
+      },
+      "properties": {
+        "id": "76567",
+        "common_name": "Spaeths Erle",
+        "scientific_name": "Alnus × spaethii",
+        "genus": "Alnus",
+        "dbh_cm": 3.8,
+        "height_m": 5,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 12,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ERLE SPAETHII",
+        "source_scientific_name": "Alnus X spaethii",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9780294627,
+          49.7869646462
+        ]
+      },
+      "properties": {
+        "id": "76568",
+        "common_name": "Spaeths Erle",
+        "scientific_name": "Alnus × spaethii",
+        "genus": "Alnus",
+        "dbh_cm": 3.8,
+        "height_m": 5,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 12,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ERLE SPAETHII",
+        "source_scientific_name": "Alnus X spaethii",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9778811403,
+          49.7869688097
+        ]
+      },
+      "properties": {
+        "id": "76569",
+        "common_name": "Spaeths Erle",
+        "scientific_name": "Alnus × spaethii",
+        "genus": "Alnus",
+        "dbh_cm": 3.8,
+        "height_m": 5,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 12,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ERLE SPAETHII",
+        "source_scientific_name": "Alnus X spaethii",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9785077822,
+          49.7857056813
+        ]
+      },
+      "properties": {
+        "id": "76570",
+        "common_name": "Feld-Ahorn",
+        "scientific_name": "Acer campestre",
+        "genus": "Acer",
+        "dbh_cm": 3.8,
+        "height_m": 5,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 12,
+        "tree_type": "Laubbaum",
+        "source_common_name": "Feld-Ahorn",
+        "source_scientific_name": "Acer campestre",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9783481351,
+          49.7857055735
+        ]
+      },
+      "properties": {
+        "id": "76571",
+        "common_name": "Feld-Ahorn",
+        "scientific_name": "Acer campestre",
+        "genus": "Acer",
+        "dbh_cm": 3.8,
+        "height_m": 5,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 12,
+        "tree_type": "Laubbaum",
+        "source_common_name": "Feld-Ahorn",
+        "source_scientific_name": "Acer campestre",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9781997873,
+          49.7857082818
+        ]
+      },
+      "properties": {
+        "id": "76572",
+        "common_name": "Feld-Ahorn",
+        "scientific_name": "Acer campestre",
+        "genus": "Acer",
+        "dbh_cm": 3.8,
+        "height_m": 5,
+        "canopy_spread_m": 2,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 12,
+        "tree_type": "Laubbaum",
+        "source_common_name": "Feld-Ahorn",
+        "source_scientific_name": "Acer campestre",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9780514102,
+          49.7857095343
+        ]
+      },
+      "properties": {
+        "id": "76573",
+        "common_name": "Feld-Ahorn",
+        "scientific_name": "Acer campestre",
+        "genus": "Acer",
+        "dbh_cm": 3.8,
+        "height_m": 5,
+        "canopy_spread_m": 2,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 12,
+        "tree_type": "Laubbaum",
+        "source_common_name": "Feld-Ahorn",
+        "source_scientific_name": "Acer campestre",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9778962594,
+          49.785709388
+        ]
+      },
+      "properties": {
+        "id": "76574",
+        "common_name": "Feld-Ahorn",
+        "scientific_name": "Acer campestre",
+        "genus": "Acer",
+        "dbh_cm": 3.8,
+        "height_m": 5,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 12,
+        "tree_type": "Laubbaum",
+        "source_common_name": "Feld-Ahorn",
+        "source_scientific_name": "Acer campestre",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9785059642,
+          49.7856154351
+        ]
+      },
+      "properties": {
+        "id": "76575",
+        "common_name": "Feld-Ahorn",
+        "scientific_name": "Acer campestre",
+        "genus": "Acer",
+        "dbh_cm": 3.8,
+        "height_m": 5,
+        "canopy_spread_m": 2,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 12,
+        "tree_type": "Laubbaum",
+        "source_common_name": "Feld-Ahorn",
+        "source_scientific_name": "Acer campestre",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9783530618,
+          49.7856152703
+        ]
+      },
+      "properties": {
+        "id": "76576",
+        "common_name": "Feld-Ahorn",
+        "scientific_name": "Acer campestre",
+        "genus": "Acer",
+        "dbh_cm": 3.8,
+        "height_m": 5,
+        "canopy_spread_m": 2,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 12,
+        "tree_type": "Laubbaum",
+        "source_common_name": "Feld-Ahorn",
+        "source_scientific_name": "Acer campestre",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9781979699,
+          49.7856180356
+        ]
+      },
+      "properties": {
+        "id": "76577",
+        "common_name": "Feld-Ahorn",
+        "scientific_name": "Acer campestre",
+        "genus": "Acer",
+        "dbh_cm": 3.8,
+        "height_m": 5,
+        "canopy_spread_m": 2,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 12,
+        "tree_type": "Laubbaum",
+        "source_common_name": "Feld-Ahorn",
+        "source_scientific_name": "Acer campestre",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9780450968,
+          49.785619326
+        ]
+      },
+      "properties": {
+        "id": "76578",
+        "common_name": "Feld-Ahorn",
+        "scientific_name": "Acer campestre",
+        "genus": "Acer",
+        "dbh_cm": 3.8,
+        "height_m": 5,
+        "canopy_spread_m": 2,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 12,
+        "tree_type": "Laubbaum",
+        "source_common_name": "Feld-Ahorn",
+        "source_scientific_name": "Acer campestre",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9778944718,
+          49.7856205973
+        ]
+      },
+      "properties": {
+        "id": "76579",
+        "common_name": "Feld-Ahorn",
+        "scientific_name": "Acer campestre",
+        "genus": "Acer",
+        "dbh_cm": 3.8,
+        "height_m": 5,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 12,
+        "tree_type": "Laubbaum",
+        "source_common_name": "Feld-Ahorn",
+        "source_scientific_name": "Acer campestre",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9710153967,
+          49.7841476289
+        ]
+      },
+      "properties": {
+        "id": "36399.1",
+        "common_name": "Spaeths Erle",
+        "scientific_name": "Alnus × spaethii",
+        "genus": "Alnus",
+        "dbh_cm": 15.3,
+        "height_m": 10,
+        "canopy_spread_m": 5,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 48,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ERLE SPAETHII",
+        "source_scientific_name": "Alnus X spaethii",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9714081608,
+          49.7840386242
+        ]
+      },
+      "properties": {
+        "id": "38684",
+        "common_name": "Straßen-Esche ‘Westhof’s Glorie’",
+        "scientific_name": "Fraxinus excelsior ‘Westhof’s Glorie’",
+        "genus": "Fraxinus",
+        "dbh_cm": 23.2,
+        "height_m": 12,
+        "canopy_spread_m": 9,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 73,
+        "tree_type": "Laubbaum",
+        "source_common_name": "STRAßEN-ESCHE WESTHOF S GLORIE",
+        "source_scientific_name": "Fraxinus exc. Westhof´s Glori",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9716524307,
+          49.7839672235
+        ]
+      },
+      "properties": {
+        "id": "38686",
+        "common_name": "Straßen-Esche ‘Westhof’s Glorie’",
+        "scientific_name": "Fraxinus excelsior ‘Westhof’s Glorie’",
+        "genus": "Fraxinus",
+        "dbh_cm": 22.9,
+        "height_m": 12,
+        "canopy_spread_m": 8,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 72,
+        "tree_type": "Laubbaum",
+        "source_common_name": "STRAßEN-ESCHE WESTHOF S GLORIE",
+        "source_scientific_name": "Fraxinus exc. Westhof´s Glori",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9715328453,
+          49.7840019342
+        ]
+      },
+      "properties": {
+        "id": "38685",
+        "common_name": "Straßen-Esche ‘Westhof’s Glorie’",
+        "scientific_name": "Fraxinus excelsior ‘Westhof’s Glorie’",
+        "genus": "Fraxinus",
+        "dbh_cm": 25.8,
+        "height_m": 12,
+        "canopy_spread_m": 10,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 81,
+        "tree_type": "Laubbaum",
+        "source_common_name": "STRAßEN-ESCHE WESTHOF S GLORIE",
+        "source_scientific_name": "Fraxinus exc. Westhof´s Glori",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9711447945,
+          49.7841125399
+        ]
+      },
+      "properties": {
+        "id": "36401",
+        "common_name": "Straßen-Esche ‘Westhof’s Glorie’",
+        "scientific_name": "Fraxinus excelsior ‘Westhof’s Glorie’",
+        "genus": "Fraxinus",
+        "dbh_cm": 26.4,
+        "height_m": 12,
+        "canopy_spread_m": 8,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 83,
+        "tree_type": "Laubbaum",
+        "source_common_name": "STRAßEN-ESCHE WESTHOF S GLORIE",
+        "source_scientific_name": "Fraxinus exc. Westhof´s Glori",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9706248173,
+          49.7842595704
+        ]
+      },
+      "properties": {
+        "id": "36374",
+        "common_name": "Straßen-Esche ‘Westhof’s Glorie’",
+        "scientific_name": "Fraxinus excelsior ‘Westhof’s Glorie’",
+        "genus": "Fraxinus",
+        "dbh_cm": 24.8,
+        "height_m": 11,
+        "canopy_spread_m": 7,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 78,
+        "tree_type": "Laubbaum",
+        "source_common_name": "STRAßEN-ESCHE WESTHOF S GLORIE",
+        "source_scientific_name": "Fraxinus exc. Westhof´s Glori",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9720319959,
+          49.783853559
+        ]
+      },
+      "properties": {
+        "id": "38674",
+        "common_name": "Straßen-Esche ‘Westhof’s Glorie’",
+        "scientific_name": "Fraxinus excelsior ‘Westhof’s Glorie’",
+        "genus": "Fraxinus",
+        "dbh_cm": 25.1,
+        "height_m": 12,
+        "canopy_spread_m": 9,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 79,
+        "tree_type": "Laubbaum",
+        "source_common_name": "STRAßEN-ESCHE WESTHOF S GLORIE",
+        "source_scientific_name": "Fraxinus exc. Westhof´s Glori",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9708910514,
+          49.7841839921
+        ]
+      },
+      "properties": {
+        "id": "36402",
+        "common_name": "Straßen-Esche ‘Westhof’s Glorie’",
+        "scientific_name": "Fraxinus excelsior ‘Westhof’s Glorie’",
+        "genus": "Fraxinus",
+        "dbh_cm": 20.4,
+        "height_m": 10,
+        "canopy_spread_m": 7,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 64,
+        "tree_type": "Laubbaum",
+        "source_common_name": "STRAßEN-ESCHE WESTHOF S GLORIE",
+        "source_scientific_name": "Fraxinus exc. Westhof´s Glori",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.972164023,
+          49.7838144551
+        ]
+      },
+      "properties": {
+        "id": "38680",
+        "common_name": "Straßen-Esche ‘Westhof’s Glorie’",
+        "scientific_name": "Fraxinus excelsior ‘Westhof’s Glorie’",
+        "genus": "Fraxinus",
+        "dbh_cm": 31.5,
+        "height_m": 12,
+        "canopy_spread_m": 9,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 99,
+        "tree_type": "Laubbaum",
+        "source_common_name": "STRAßEN-ESCHE WESTHOF S GLORIE",
+        "source_scientific_name": "Fraxinus exc. Westhof´s Glori",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9705051921,
+          49.7842939635
+        ]
+      },
+      "properties": {
+        "id": "36375",
+        "common_name": "Straßen-Esche ‘Westhof’s Glorie’",
+        "scientific_name": "Fraxinus excelsior ‘Westhof’s Glorie’",
+        "genus": "Fraxinus",
+        "dbh_cm": 16.9,
+        "height_m": 9,
+        "canopy_spread_m": 7,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 53,
+        "tree_type": "Laubbaum",
+        "source_common_name": "STRAßEN-ESCHE WESTHOF S GLORIE",
+        "source_scientific_name": "Fraxinus exc. Westhof´s Glori",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9792667789,
+          49.7870423491
+        ]
+      },
+      "properties": {
+        "id": "68862",
+        "common_name": "Spaeths Erle",
+        "scientific_name": "Alnus × spaethii",
+        "genus": "Alnus",
+        "dbh_cm": 14.3,
+        "height_m": 8,
+        "canopy_spread_m": 5,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 45,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ERLE SPAETHII",
+        "source_scientific_name": "Alnus X spaethii",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9789505307,
+          49.7870450214
+        ]
+      },
+      "properties": {
+        "id": "68863",
+        "common_name": "Spaeths Erle",
+        "scientific_name": "Alnus × spaethii",
+        "genus": "Alnus",
+        "dbh_cm": 14.3,
+        "height_m": 8,
+        "canopy_spread_m": 5,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 45,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ERLE SPAETHII",
+        "source_scientific_name": "Alnus X spaethii",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9789476066,
+          49.7869609064
+        ]
+      },
+      "properties": {
+        "id": "68864",
+        "common_name": "Spaeths Erle",
+        "scientific_name": "Alnus × spaethii",
+        "genus": "Alnus",
+        "dbh_cm": 13.4,
+        "height_m": 8,
+        "canopy_spread_m": 5,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 42,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ERLE SPAETHII",
+        "source_scientific_name": "Alnus X spaethii",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9792638762,
+          49.7869590295
+        ]
+      },
+      "properties": {
+        "id": "68865",
+        "common_name": "Spaeths Erle",
+        "scientific_name": "Alnus × spaethii",
+        "genus": "Alnus",
+        "dbh_cm": 13.4,
+        "height_m": 8,
+        "canopy_spread_m": 5,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 42,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ERLE SPAETHII",
+        "source_scientific_name": "Alnus X spaethii",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9787660017,
+          49.7872565411
+        ]
+      },
+      "properties": {
+        "id": "68871",
+        "common_name": "Dornenloser Lederhülsenbaum",
+        "scientific_name": "Gleditsia triacanthos f. inermis",
+        "genus": "Gleditsia",
+        "dbh_cm": 11.1,
+        "height_m": 8,
+        "canopy_spread_m": 6,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 35,
+        "tree_type": "Laubbaum",
+        "source_common_name": "Dornenloser Lederhülsenbaum",
+        "source_scientific_name": "Gleditsia triacanthos f. inermis",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9786405049,
+          49.7872589219
+        ]
+      },
+      "properties": {
+        "id": "68880",
+        "common_name": "Dornenloser Lederhülsenbaum",
+        "scientific_name": "Gleditsia triacanthos f. inermis",
+        "genus": "Gleditsia",
+        "dbh_cm": 11.1,
+        "height_m": 8,
+        "canopy_spread_m": 4,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 35,
+        "tree_type": "Laubbaum",
+        "source_common_name": "Dornenloser Lederhülsenbaum",
+        "source_scientific_name": "Gleditsia triacanthos f. inermis",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9786348205,
+          49.7870488554
+        ]
+      },
+      "properties": {
+        "id": "68881",
+        "common_name": "Schmalblättrige Esche",
+        "scientific_name": "Fraxinus angustifolia",
+        "genus": "Fraxinus",
+        "dbh_cm": 11.8,
+        "height_m": 8,
+        "canopy_spread_m": 4,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 37,
+        "tree_type": "Laubbaum",
+        "source_common_name": "SCHMALBLÄTTRIGE ESCHE",
+        "source_scientific_name": "Fraxinus angustifolia",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9786336233,
+          49.7869652594
+        ]
+      },
+      "properties": {
+        "id": "68882",
+        "common_name": "Schmalblättrige Esche",
+        "scientific_name": "Fraxinus angustifolia",
+        "genus": "Fraxinus",
+        "dbh_cm": 11.8,
+        "height_m": 8,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 37,
+        "tree_type": "Laubbaum",
+        "source_common_name": "SCHMALBLÄTTRIGE ESCHE",
+        "source_scientific_name": "Fraxinus angustifolia",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.978626968,
+          49.7867548888
+        ]
+      },
+      "properties": {
+        "id": "68883",
+        "common_name": "Schmalblättrige Esche ‘Raywood’",
+        "scientific_name": "Fraxinus angustifolia ‘Raywood’",
+        "genus": "Fraxinus",
+        "dbh_cm": 10.2,
+        "height_m": 7,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 32,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ESCHE RAYWOOD",
+        "source_scientific_name": "Fraxinus angustifolia Raywood",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9786227986,
+          49.786547942
+        ]
+      },
+      "properties": {
+        "id": "68884",
+        "common_name": "Schmalblättrige Esche ‘Raywood’",
+        "scientific_name": "Fraxinus angustifolia ‘Raywood’",
+        "genus": "Fraxinus",
+        "dbh_cm": 10.2,
+        "height_m": 8,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 32,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ESCHE RAYWOOD",
+        "source_scientific_name": "Fraxinus angustifolia Raywood",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9786171982,
+          49.7863422626
+        ]
+      },
+      "properties": {
+        "id": "68885",
+        "common_name": "Schmalblättrige Esche ‘Raywood’",
+        "scientific_name": "Fraxinus angustifolia ‘Raywood’",
+        "genus": "Fraxinus",
+        "dbh_cm": 10.2,
+        "height_m": 8,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 32,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ESCHE RAYWOOD",
+        "source_scientific_name": "Fraxinus angustifolia Raywood",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9786134704,
+          49.7861337442
+        ]
+      },
+      "properties": {
+        "id": "68886",
+        "common_name": "Schmalblättrige Esche ‘Raywood’",
+        "scientific_name": "Fraxinus angustifolia ‘Raywood’",
+        "genus": "Fraxinus",
+        "dbh_cm": 10.5,
+        "height_m": 8,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 33,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ESCHE RAYWOOD",
+        "source_scientific_name": "Fraxinus angustifolia Raywood",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9786083301,
+          49.7859264933
+        ]
+      },
+      "properties": {
+        "id": "68887",
+        "common_name": "Schmalblättrige Esche ‘Raywood’",
+        "scientific_name": "Fraxinus angustifolia ‘Raywood’",
+        "genus": "Fraxinus",
+        "dbh_cm": 10.2,
+        "height_m": 8,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 32,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ESCHE RAYWOOD",
+        "source_scientific_name": "Fraxinus angustifolia Raywood",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9787379327,
+          49.7859260292
+        ]
+      },
+      "properties": {
+        "id": "68888",
+        "common_name": "Schmalblättrige Esche ‘Raywood’",
+        "scientific_name": "Fraxinus angustifolia ‘Raywood’",
+        "genus": "Fraxinus",
+        "dbh_cm": 10.2,
+        "height_m": 8,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 32,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ESCHE RAYWOOD",
+        "source_scientific_name": "Fraxinus angustifolia Raywood",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9787421089,
+          49.7861332884
+        ]
+      },
+      "properties": {
+        "id": "68889",
+        "common_name": "Schmalblättrige Esche ‘Raywood’",
+        "scientific_name": "Fraxinus angustifolia ‘Raywood’",
+        "genus": "Fraxinus",
+        "dbh_cm": 10.2,
+        "height_m": 8,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 32,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ESCHE RAYWOOD",
+        "source_scientific_name": "Fraxinus angustifolia Raywood",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9787462725,
+          49.7863399229
+        ]
+      },
+      "properties": {
+        "id": "68890",
+        "common_name": "Schmalblättrige Esche ‘Raywood’",
+        "scientific_name": "Fraxinus angustifolia ‘Raywood’",
+        "genus": "Fraxinus",
+        "dbh_cm": 10.2,
+        "height_m": 8,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 32,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ESCHE RAYWOOD",
+        "source_scientific_name": "Fraxinus angustifolia Raywood",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9787513916,
+          49.7865465434
+        ]
+      },
+      "properties": {
+        "id": "68891",
+        "common_name": "Schmalblättrige Esche ‘Raywood’",
+        "scientific_name": "Fraxinus angustifolia ‘Raywood’",
+        "genus": "Fraxinus",
+        "dbh_cm": 10.2,
+        "height_m": 7,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 32,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ESCHE RAYWOOD",
+        "source_scientific_name": "Fraxinus angustifolia Raywood",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9787575065,
+          49.7867537862
+        ]
+      },
+      "properties": {
+        "id": "68892",
+        "common_name": "Schmalblättrige Esche ‘Raywood’",
+        "scientific_name": "Fraxinus angustifolia ‘Raywood’",
+        "genus": "Fraxinus",
+        "dbh_cm": 10.2,
+        "height_m": 8,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 32,
+        "tree_type": "Laubbaum",
+        "source_common_name": "ESCHE RAYWOOD",
+        "source_scientific_name": "Fraxinus angustifolia Raywood",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9789576697,
+          49.7856943297
+        ]
+      },
+      "properties": {
+        "id": "68893",
+        "common_name": "Silber-Linde ‘Brabant’",
+        "scientific_name": "Tilia tomentosa ‘Brabant’",
+        "genus": "Tilia",
+        "dbh_cm": 12.7,
+        "height_m": 6,
+        "canopy_spread_m": 3,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 40,
+        "tree_type": "Laubbaum",
+        "source_common_name": "SILBERLINDE BRABANT",
+        "source_scientific_name": "Tilia tomentosa Brabant",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9792768403,
+          49.7856928881
+        ]
+      },
+      "properties": {
+        "id": "68894",
+        "common_name": "Silber-Linde ‘Brabant’",
+        "scientific_name": "Tilia tomentosa ‘Brabant’",
+        "genus": "Tilia",
+        "dbh_cm": 14.3,
+        "height_m": 7,
+        "canopy_spread_m": 4,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 45,
+        "tree_type": "Laubbaum",
+        "source_common_name": "SILBERLINDE BRABANT",
+        "source_scientific_name": "Tilia tomentosa Brabant",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9792751519,
+          49.7856095967
+        ]
+      },
+      "properties": {
+        "id": "68905",
+        "common_name": "Silber-Linde ‘Brabant’",
+        "scientific_name": "Tilia tomentosa ‘Brabant’",
+        "genus": "Tilia",
+        "dbh_cm": 14.3,
+        "height_m": 7,
+        "canopy_spread_m": 4,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 45,
+        "tree_type": "Laubbaum",
+        "source_common_name": "SILBERLINDE BRABANT",
+        "source_scientific_name": "Tilia tomentosa Brabant",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9789559946,
+          49.7856116689
+        ]
+      },
+      "properties": {
+        "id": "68906",
+        "common_name": "Silber-Linde ‘Brabant’",
+        "scientific_name": "Tilia tomentosa ‘Brabant’",
+        "genus": "Tilia",
+        "dbh_cm": 12.7,
+        "height_m": 7,
+        "canopy_spread_m": 4,
+        "health": "not_recorded",
+        "co2_stored_kg": null,
+        "co2_per_year_kg": null,
+        "stormwater_l_per_year": null,
+        "date_surveyed": null,
+        "photo_url": "",
+        "trunk_circumference_cm": 40,
+        "tree_type": "Laubbaum",
+        "source_common_name": "SILBERLINDE BRABANT",
+        "source_scientific_name": "Tilia tomentosa Brabant",
+        "source_name": "Baumkataster der Stadt Würzburg",
+        "source_updated": "2026-06-30",
+        "source_license": "DL-DE-BY-2.0"
+      }
+    }
+  ]
+}
