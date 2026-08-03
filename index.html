@@ -614,6 +614,10 @@
         font-weight: 800;
       }
 
+      .tree-type-filter {
+        margin-bottom: 13px;
+      }
+
       .harvest-select {
         width: 100%;
         min-height: 40px;
@@ -2755,6 +2759,17 @@
             <h2 id="display-heading" data-i18n="mapColors">Map colors</h2>
             <span id="color-description" data-i18n="byGenus">By genus</span>
           </div>
+          <div class="harvest-field tree-type-filter">
+            <label for="tree-type-filter" data-i18n="selectTreeType">
+              Select tree type
+            </label>
+            <select
+              class="harvest-select"
+              id="tree-type-filter"
+              aria-label="Tree type filter"
+              data-i18n-aria-label="treeTypeFilterAria"
+            ></select>
+          </div>
           <div
             class="segmented-control"
             role="group"
@@ -4259,6 +4274,9 @@
           canopyArea: "m² recorded canopy area",
           mapColors: "Map colors",
           byGenus: "By genus",
+          selectTreeType: "Select tree type",
+          treeTypeFilterAria: "Filter the map by tree type",
+          allTreeTypes: "All tree types",
           colorTreesBy: "Color trees by",
           genus: "Genus",
           health: "Health",
@@ -4425,8 +4443,10 @@
           legendSummary: "{mode} color legend: {items}, campus boundary",
           mappedLocations: "{count} Hubland locations",
           genusTrees: "{count} {genus} trees at Hubland",
+          treeTypeTrees: "{count} {type} trees at Hubland",
           selectBelow: "Select below",
           onlyGenus: "{genus} only",
+          onlyTreeType: "{type} only",
           notInSource: "Not in source",
           healthGood: "Good",
           healthFair: "Fair",
@@ -4527,6 +4547,9 @@
           canopyArea: "m² erfasste Kronenfläche",
           mapColors: "Kartenfarben",
           byGenus: "Nach Gattung",
+          selectTreeType: "Baumart auswählen",
+          treeTypeFilterAria: "Karte nach Baumart filtern",
+          allTreeTypes: "Alle Baumarten",
           colorTreesBy: "Bäume einfärben nach",
           genus: "Gattung",
           health: "Zustand",
@@ -4697,8 +4720,10 @@
           legendSummary: "Farblegende nach {mode}: {items}, Campusgrenze",
           mappedLocations: "{count} Hubland-Standorte",
           genusTrees: "{count} Hubland-Bäume der Gattung {genus}",
+          treeTypeTrees: "{count} Hubland-Bäume der Art {type}",
           selectBelow: "Unten auswählen",
           onlyGenus: "Nur {genus}",
+          onlyTreeType: "Nur {type}",
           notInSource: "Nicht in den Quelldaten",
           healthGood: "Gut",
           healthFair: "Mittel",
@@ -4925,6 +4950,7 @@
       let hoveredTreeId = null;
       let colorMode = "genus";
       let selectedGenus = null;
+      let selectedTreeType = null;
       let dashboardMode = "trees";
       let selectedHarvestMonth = new Date().getMonth() + 1;
       let selectedFruitType = null;
@@ -5071,6 +5097,7 @@
         renderTreeInsights();
         renderFruitDashboard();
         updateDashboardModeUI();
+        renderTreeTypeFilter();
         renderLegend(colorMode);
         updateSelectionStatus();
         renderAnnotationUI();
@@ -5186,11 +5213,15 @@
 
       function syncAnnotationSource() {
         const source = map?.getSource("generic-tree-annotations");
-        if (source) source.setData(annotationData);
+        if (source && !map?.getLayer("unclustered-trees")) {
+          source.setData(annotationData);
+        }
+        renderTreeTypeFilter();
         renderStats(treeData);
         renderSpeciesChart(treeData);
         renderTreeInsights();
         renderLegend(colorMode);
+        applyMapView();
         updateSelectionStatus();
       }
 
@@ -6314,8 +6345,73 @@ out meta geom;`;
         return [...uniqueTrees.values()];
       }
 
+      function treeTypeKey(feature) {
+        return (
+          feature?.properties?.common_name ||
+          feature?.properties?.scientific_name ||
+          ""
+        ).trim();
+      }
+
+      function treeMatchesSelection(feature) {
+        if (
+          selectedTreeType &&
+          treeTypeKey(feature) !== selectedTreeType
+        ) {
+          return false;
+        }
+        if (
+          selectedGenus &&
+          feature?.properties?.genus !== selectedGenus
+        ) {
+          return false;
+        }
+        return true;
+      }
+
+      function filteredTreeInventoryFeatures() {
+        return campusTreeInventoryFeatures().filter(treeMatchesSelection);
+      }
+
+      function renderTreeTypeFilter() {
+        const select = document.getElementById("tree-type-filter");
+        if (!select || !integerFormatter) return;
+        const allFeatures = campusTreeInventoryFeatures();
+        const counts = allFeatures.reduce((totals, feature) => {
+          const type = treeTypeKey(feature);
+          if (type) totals.set(type, (totals.get(type) || 0) + 1);
+          return totals;
+        }, new Map());
+        const choices = [...counts.entries()].sort(([first], [second]) =>
+          localizedCommonName(first).localeCompare(
+            localizedCommonName(second),
+            currentLanguage === "de" ? "de" : "en",
+          ),
+        );
+        if (
+          selectedTreeType &&
+          !counts.has(selectedTreeType)
+        ) {
+          selectedTreeType = null;
+        }
+
+        select.replaceChildren();
+        const allOption = document.createElement("option");
+        allOption.value = "";
+        allOption.textContent = `${t("allTreeTypes")} · ${integerFormatter.format(allFeatures.length)}`;
+        select.appendChild(allOption);
+        choices.forEach(([type, count]) => {
+          const option = document.createElement("option");
+          option.value = type;
+          option.textContent = `${localizedCommonName(type)} · ${integerFormatter.format(count)}`;
+          option.selected = type === selectedTreeType;
+          select.appendChild(option);
+        });
+        select.value = selectedTreeType || "";
+      }
+
       function calculateStats(data) {
-        const features = campusTreeInventoryFeatures();
+        const features = filteredTreeInventoryFeatures();
         const measuredHeights = features
           .map((feature) => number(feature.properties.height_m))
           .filter((height) => height > 0);
@@ -6364,7 +6460,7 @@ out meta geom;`;
       }
 
       function renderSpeciesChart(data) {
-        const counts = campusTreeInventoryFeatures().reduce((totals, feature) => {
+        const counts = filteredTreeInventoryFeatures().reduce((totals, feature) => {
           const name = localizedCommonName(feature.properties);
           totals[name] = (totals[name] || 0) + 1;
           return totals;
@@ -6466,7 +6562,7 @@ out meta geom;`;
       }
 
       function treeInsightFeatures() {
-        return campusTreeInventoryFeatures();
+        return filteredTreeInventoryFeatures();
       }
 
       function renderHealthSummary() {
@@ -6942,11 +7038,7 @@ out meta geom;`;
         const campusTrees = treeData.features.filter(
           (feature) => feature.properties.data_source !== "mundraub",
         );
-        return selectedGenus
-          ? campusTrees.filter(
-              (feature) => feature.properties.genus === selectedGenus,
-            )
-          : campusTrees;
+        return campusTrees.filter(treeMatchesSelection);
       }
 
       function currentTreeLayerFilter() {
@@ -7002,27 +7094,40 @@ out meta geom;`;
         const fruitFeatures = visibleFruitFeatures();
         const treeDataView = { ...treeData, features: treeFeatures };
         const fruitDataView = { ...treeData, features: fruitFeatures };
+        const annotationDataView = {
+          ...annotationData,
+          features:
+            dashboardMode === "trees"
+              ? annotationData.features.filter(treeMatchesSelection)
+              : [],
+        };
         const layerFilter =
           dashboardMode === "trees" ? currentTreeLayerFilter() : null;
         map.getSource("trees").setData(treeDataView);
         map.getSource("tree-clusters-source").setData(treeDataView);
         map.getSource("fruit-locations-source").setData(fruitDataView);
+        map
+          .getSource("generic-tree-annotations")
+          ?.setData(annotationDataView);
         map.setFilter("unclustered-trees", layerFilter);
         map.setFilter("tree-hit-targets", layerFilter);
         map.setFilter(
           "selected-tree-glow",
-          dashboardMode === "trees" && selectedGenus
-            ? ["==", ["get", "genus"], selectedGenus]
+          dashboardMode === "trees" && (selectedGenus || selectedTreeType)
+            ? ["has", "id"]
             : ["==", ["get", "id"], "__none__"],
         );
         const selectedFruit = FRUIT_CATALOG.find(
           (fruit) => fruit.id === selectedFruitType,
         );
+        const selectedTypeGenus = selectedTreeType
+          ? filteredTreeInventoryFeatures()[0]?.properties?.genus
+          : null;
         map.setPaintProperty(
           "tree-clusters",
           "circle-color",
-          selectedGenus
-            ? GENUS_COLORS[selectedGenus]
+          selectedGenus || selectedTypeGenus
+            ? GENUS_COLORS[selectedGenus || selectedTypeGenus] || COLOR_FALLBACK
             : clusterColorExpression(),
         );
         map.setPaintProperty(
@@ -7117,32 +7222,55 @@ out meta geom;`;
           return;
         }
 
-        const statisticalFeatures = campusTreeInventoryFeatures();
-        const visibleCount = selectedGenus
-          ? statisticalFeatures.filter(
-              (feature) => feature.properties.genus === selectedGenus,
-            ).length
-          : statisticalFeatures.length;
-        document.getElementById("data-status").textContent = selectedGenus
-          ? t("genusTrees", {
+        const visibleCount = filteredTreeInventoryFeatures().length;
+        const selectedTypeLabel = selectedTreeType
+          ? localizedCommonName(selectedTreeType)
+          : null;
+        document.getElementById("data-status").textContent = selectedTypeLabel
+          ? t("treeTypeTrees", {
               count: integerFormatter.format(visibleCount),
-              genus: selectedGenus,
+              type: selectedTypeLabel,
             })
-          : t("mappedLocations", {
-              count: integerFormatter.format(visibleCount),
-            });
+          : selectedGenus
+            ? t("genusTrees", {
+                count: integerFormatter.format(visibleCount),
+                genus: selectedGenus,
+              })
+            : t("mappedLocations", {
+                count: integerFormatter.format(visibleCount),
+              });
         if (colorMode === "genus") {
-          document.getElementById("color-description").textContent = selectedGenus
-            ? t("onlyGenus", { genus: selectedGenus })
-            : t("selectBelow");
+          document.getElementById("color-description").textContent =
+            selectedTypeLabel
+              ? t("onlyTreeType", { type: selectedTypeLabel })
+              : selectedGenus
+                ? t("onlyGenus", { genus: selectedGenus })
+                : t("selectBelow");
         }
       }
 
       function setGenusFilter(genus) {
         selectedGenus = genus || null;
+        selectedTreeType = null;
+        renderTreeTypeFilter();
+        renderStats(treeData);
+        renderSpeciesChart(treeData);
+        renderTreeInsights();
         applyMapView();
         updateSelectionStatus();
         renderLegend(colorMode);
+      }
+
+      function setTreeTypeFilter(type) {
+        selectedTreeType = type || null;
+        selectedGenus = null;
+        renderTreeTypeFilter();
+        renderLegend(colorMode);
+        renderStats(treeData);
+        renderSpeciesChart(treeData);
+        renderTreeInsights();
+        applyMapView();
+        updateSelectionStatus();
       }
 
       function setColorMode(mode) {
@@ -7152,9 +7280,13 @@ out meta geom;`;
         });
         document.getElementById("color-description").textContent =
           mode === "genus"
-            ? selectedGenus
-              ? t("onlyGenus", { genus: selectedGenus })
-              : t("selectBelow")
+            ? selectedTreeType
+              ? t("onlyTreeType", {
+                  type: localizedCommonName(selectedTreeType),
+                })
+              : selectedGenus
+                ? t("onlyGenus", { genus: selectedGenus })
+                : t("selectBelow")
             : t("notInSource");
         renderLegend(mode);
         applyMapView();
@@ -7164,7 +7296,9 @@ out meta geom;`;
         if (!map || !treeData.features.length) return;
         const bounds = new maplibregl.LngLatBounds();
         const visibleFeatures =
-          dashboardMode === "food" ? currentVisibleTreeFeatures() : treeData.features;
+          dashboardMode === "food"
+            ? currentVisibleTreeFeatures()
+            : filteredTreeInventoryFeatures();
         visibleFeatures.forEach((feature) =>
           bounds.extend(feature.geometry.coordinates),
         );
@@ -8448,6 +8582,7 @@ out meta geom;`;
         renderTreeInsights();
         renderFruitDashboard();
         updateDashboardModeUI();
+        renderTreeTypeFilter();
         renderLegend("genus");
         updateSelectionStatus();
         renderAnnotationUI();
@@ -8511,6 +8646,12 @@ out meta geom;`;
       document.getElementById("language-toggle").addEventListener("click", () => {
         setLanguage(currentLanguage === "en" ? "de" : "en");
       });
+
+      document
+        .getElementById("tree-type-filter")
+        .addEventListener("change", (event) => {
+          setTreeTypeFilter(event.currentTarget.value);
+        });
 
       document.getElementById("fit-trees").addEventListener("click", () => fitAllTrees());
 
