@@ -3,11 +3,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f2f0e4" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Tree Tracker" />
     <meta
       name="description"
       content="An interactive tree map with a live OpenStreetMap baseline and editable tree records for Campus Hubland Nord in Würzburg."
     />
     <title>Tree Tracker — Würzburg Campus Tree Map</title>
+    <link rel="apple-touch-icon" href="assets/tree-tracker-logo-shield.png" />
     <link rel="preconnect" href="https://unpkg.com" />
     <link rel="preconnect" href="https://geoservices.bayern.de" crossorigin />
     <link
@@ -477,10 +482,18 @@
       }
 
       .legend-swatch.boundary {
-        border: 1.5px dashed #5f8f61;
         border-radius: 2px;
-        background: rgba(125, 190, 126, 0.18);
         box-shadow: none;
+      }
+
+      .legend-swatch.boundary-north {
+        border: 1.5px dashed #5f8f61;
+        background: rgba(125, 190, 126, 0.18);
+      }
+
+      .legend-swatch.boundary-south {
+        border: 1.5px dashed #bd8449;
+        background: rgba(211, 166, 108, 0.2);
       }
 
       .legend-swatch.all {
@@ -1394,6 +1407,15 @@
         z-index: 4;
         right: 14px;
         bottom: 48px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 8px;
+      }
+
+      .mobile-field-button,
+      .mobile-field-status {
+        display: none;
       }
 
       .fit-button {
@@ -2313,6 +2335,186 @@
         background-size: cover;
       }
 
+      .botanical-prunus-laurocerasus-plate {
+        background-image: url("./assets/botanical-prunus-laurocerasus-plate.png");
+        background-position: center 29%;
+        background-size: cover;
+      }
+
+      .botanical-robinia-pseudoacacia-plate {
+        background-image: url("./assets/botanical-robinia-pseudoacacia-plate.png");
+        background-position: center 35%;
+        background-size: cover;
+      }
+
+      .botanical-picea-pungens-plate {
+        background-image: url("./assets/botanical-picea-pungens-plate.png");
+        background-position: center 39%;
+        background-size: cover;
+      }
+
+      .botanical-picea-abies-plate {
+        background-image: url("./assets/botanical-picea-abies-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-pinus-sylvestris-plate {
+        background-image: url("./assets/botanical-pinus-sylvestris-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-tilia-plate {
+        background-image: url("./assets/botanical-tilia-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-acer-palmatum-plate {
+        background-image: url("./assets/botanical-acer-palmatum-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-amelanchier-lamarckii-plate {
+        background-image: url("./assets/botanical-amelanchier-lamarckii-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-cornus-mas-plate {
+        background-image: url("./assets/botanical-cornus-mas-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-ginkgo-biloba-plate {
+        background-image: url("./assets/botanical-ginkgo-biloba-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-paulownia-tomentosa-plate {
+        background-image: url("./assets/botanical-paulownia-tomentosa-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-sambucus-nigra-plate {
+        background-image: url("./assets/botanical-sambucus-nigra-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-taxus-baccata-plate {
+        background-image: url("./assets/botanical-taxus-baccata-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-prunus-avium-plate {
+        background-image: url("./assets/botanical-prunus-avium-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-prunus-spinosa-plate {
+        background-image: url("./assets/botanical-prunus-spinosa-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-rosa-wild-plate {
+        background-image: url("./assets/botanical-rosa-wild-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-morus-plate {
+        background-image: url("./assets/botanical-morus-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-mespilus-germanica-plate {
+        background-image: url("./assets/botanical-mespilus-germanica-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-ficus-carica-plate {
+        background-image: url("./assets/botanical-ficus-carica-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-berberis-vulgaris-plate {
+        background-image: url("./assets/botanical-berberis-vulgaris-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-ailanthus-altissima-plate {
+        background-image: url("./assets/botanical-ailanthus-altissima-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-sorbus-aria-plate {
+        background-image: url("./assets/botanical-sorbus-aria-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-quercus-robur-plate {
+        background-image: url("./assets/botanical-quercus-robur-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-sorbus-aucuparia-plate {
+        background-image: url("./assets/botanical-sorbus-aucuparia-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-acer-platanoides-plate {
+        background-image: url("./assets/botanical-acer-platanoides-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-populus-tremula-plate {
+        background-image: url("./assets/botanical-populus-tremula-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-populus-nigra-plate {
+        background-image: url("./assets/botanical-populus-nigra-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-alnus-glutinosa-plate {
+        background-image: url("./assets/botanical-alnus-glutinosa-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-fagus-sylvatica-plate {
+        background-image: url("./assets/botanical-fagus-sylvatica-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .botanical-ulmus-glabra-plate {
+        background-image: url("./assets/botanical-ulmus-glabra-plate.png");
+        background-position: center;
+        background-size: cover;
+      }
+
       .botanical-betula-plate {
         background-image: url("./assets/botanical-betula-plate.png");
         background-position: center;
@@ -3096,6 +3298,576 @@
         }
       }
 
+      /* Mobile web app layout: full map, compact navigation and a tactile bottom sheet. */
+      @media (max-width: 760px) {
+        html,
+        body {
+          height: 100%;
+          min-height: 100dvh;
+        }
+
+        #map,
+        .map-vignette {
+          width: 100vw;
+          height: 100dvh;
+        }
+
+        .map-vignette {
+          background: linear-gradient(
+            180deg,
+            rgba(24, 50, 31, 0.08) 0,
+            transparent 18%,
+            transparent 70%,
+            rgba(24, 50, 31, 0.08) 100%
+          );
+          box-shadow: inset 0 0 48px rgba(38, 62, 48, 0.07);
+        }
+
+        .brand {
+          top: max(8px, env(safe-area-inset-top));
+          right: 8px;
+          left: 8px;
+          min-height: 60px;
+          gap: 7px;
+          padding: 7px 8px;
+          border-radius: 19px;
+          box-shadow:
+            0 14px 34px rgba(37, 43, 29, 0.17),
+            inset 0 1px 0 rgba(255, 255, 255, 0.75);
+          backdrop-filter: blur(20px) saturate(1.12);
+        }
+
+        .brand-logo {
+          width: 72px;
+          height: 36px;
+          flex: 0 0 72px;
+        }
+
+        .brand-logo img {
+          top: -28px;
+          left: -29px;
+          width: 145px;
+        }
+
+        .dashboard-mode-switch {
+          min-width: 0;
+          flex: 1 1 auto;
+          gap: 3px;
+          padding: 3px;
+          border-radius: 13px;
+        }
+
+        .dashboard-mode-button {
+          min-width: 0;
+          min-height: 38px;
+          padding: 7px 6px;
+          border-radius: 10px;
+          font-size: 10px;
+          line-height: 1.1;
+        }
+
+        .language-toggle {
+          min-width: 39px;
+          height: 34px;
+          justify-content: center;
+          padding: 0 6px;
+          font-size: 9px;
+        }
+
+        .dashboard {
+          top: auto;
+          right: 7px;
+          bottom: max(7px, env(safe-area-inset-bottom));
+          left: 7px;
+          width: auto;
+          height: min(56dvh, 560px);
+          max-height: calc(100dvh - 88px);
+          border-radius: 27px 27px 21px 21px;
+          box-shadow:
+            0 24px 64px rgba(37, 43, 29, 0.28),
+            inset 0 1px 0 rgba(255, 255, 255, 0.7);
+          backdrop-filter: blur(22px) saturate(1.08);
+          transition:
+            transform 380ms cubic-bezier(0.22, 0.75, 0.2, 1),
+            box-shadow 300ms ease;
+        }
+
+        body.panel-collapsed .dashboard {
+          transform: translateY(calc(100% - 64px));
+        }
+
+        .dashboard-header,
+        body.food-mode .dashboard-header {
+          display: block;
+          min-height: 64px;
+          padding: 0;
+          border-bottom: 1px solid var(--paper-line);
+          background: linear-gradient(180deg, rgba(255, 253, 247, 0.98), rgba(246, 242, 230, 0.96));
+          cursor: pointer;
+          touch-action: manipulation;
+        }
+
+        body.food-mode .dashboard-header {
+          background: linear-gradient(180deg, rgba(255, 250, 244, 0.98), rgba(247, 234, 224, 0.96));
+        }
+
+        .dashboard-header::before {
+          position: absolute;
+          top: 11px;
+          left: 50%;
+          width: 44px;
+          height: 4px;
+          border-radius: 999px;
+          background: color-mix(in srgb, var(--forest-800) 24%, transparent);
+          content: "";
+          transform: translateX(-50%);
+        }
+
+        .dashboard-header::after {
+          display: none;
+        }
+
+        .mobile-handle {
+          top: 20px;
+          right: 15px;
+          width: 34px;
+          height: 34px;
+          border-color: color-mix(in srgb, var(--forest-800) 16%, transparent);
+          color: var(--forest-900);
+          background: color-mix(in srgb, var(--sage-100) 88%, white);
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+          font-size: 15px;
+        }
+
+        .dashboard-scroll {
+          padding: 10px 16px max(28px, calc(env(safe-area-inset-bottom) + 20px));
+          background:
+            radial-gradient(circle at 100% 100%, rgba(111, 130, 87, 0.06), transparent 34%),
+            var(--cream);
+          scroll-padding: 16px 0 28px;
+        }
+
+        body.food-mode .dashboard-scroll {
+          background:
+            radial-gradient(circle at 100% 100%, rgba(164, 73, 63, 0.07), transparent 34%),
+            var(--cream);
+        }
+
+        .section + .section {
+          margin-top: 19px;
+          padding-top: 18px;
+        }
+
+        .section-heading {
+          align-items: flex-start;
+          gap: 10px;
+          margin-bottom: 12px;
+        }
+
+        .section-heading h2 {
+          font-size: 10px;
+          line-height: 1.35;
+        }
+
+        .section-heading span {
+          max-width: 48%;
+          font-size: 9px;
+          line-height: 1.35;
+          text-align: right;
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 9px;
+        }
+
+        .stat-card {
+          min-height: 98px;
+          padding: 13px;
+          border-radius: 17px;
+          box-shadow: 0 7px 18px rgba(42, 51, 34, 0.06);
+        }
+
+        .stat-icon {
+          display: grid;
+          width: 27px;
+          height: 27px;
+          margin-bottom: 9px;
+          border-radius: 9px;
+          font-size: 12px;
+        }
+
+        .stat-value {
+          font-size: clamp(24px, 7vw, 30px);
+        }
+
+        .stat-label {
+          margin-top: 6px;
+          font-size: 10px;
+          line-height: 1.3;
+        }
+
+        .tree-filter-toolbar {
+          align-items: stretch;
+        }
+
+        .tree-filter-toggle,
+        .tree-filter-clear {
+          min-height: 42px;
+          padding: 8px 13px;
+          font-size: 10px;
+        }
+
+        .tree-filter-panel {
+          border-radius: 16px;
+        }
+
+        .filter-facet summary {
+          min-height: 45px;
+          padding: 10px 12px;
+          font-size: 10px;
+        }
+
+        .facet-search {
+          min-height: 42px;
+          font-size: 11px;
+        }
+
+        .facet-option {
+          grid-template-columns: 20px minmax(0, 1fr) auto;
+          min-height: 40px;
+          padding: 6px 7px;
+          font-size: 10px;
+        }
+
+        .facet-option input {
+          width: 17px;
+          height: 17px;
+        }
+
+        .segmented-control {
+          min-height: 47px;
+          border-radius: 15px;
+        }
+
+        .segment {
+          min-height: 38px;
+          font-size: 11px;
+        }
+
+        .legend {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 7px;
+          margin-top: 12px;
+        }
+
+        .legend-button {
+          min-height: 40px;
+          padding: 8px;
+        }
+
+        .legend-item {
+          font-size: 10px;
+        }
+
+        .harvest-controls {
+          gap: 14px;
+        }
+
+        .harvest-field {
+          gap: 7px;
+        }
+
+        .harvest-field label,
+        .harvest-field > span {
+          font-size: 10px;
+          font-weight: 850;
+        }
+
+        .harvest-select {
+          min-height: 46px;
+          border-radius: 13px;
+          padding-left: 13px;
+          font-size: 12px;
+        }
+
+        .season-filter-groups {
+          gap: 10px;
+        }
+
+        .season-filter-group {
+          gap: 8px;
+          border-radius: 15px;
+          padding: 10px;
+        }
+
+        .fruit-filter-list {
+          gap: 7px;
+        }
+
+        .fruit-filter {
+          min-height: 40px;
+          padding: 8px 12px;
+          font-size: 10px;
+        }
+
+        .all-fruit-filter {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .season-card {
+          min-height: 66px;
+          border-radius: 15px;
+          padding: 11px;
+        }
+
+        .season-card-copy strong {
+          font-size: 11px;
+        }
+
+        .season-card-copy span,
+        .season-card-description {
+          font-size: 9px;
+        }
+
+        .map-actions {
+          right: 12px;
+          bottom: calc(min(56dvh, 560px) + max(18px, env(safe-area-inset-bottom)));
+          transition: bottom 380ms cubic-bezier(0.22, 0.75, 0.2, 1);
+        }
+
+        .mobile-field-button {
+          display: inline-flex;
+          min-height: 50px;
+          align-items: center;
+          justify-content: center;
+          gap: 9px;
+          border: 1px solid rgba(255, 255, 255, 0.72);
+          border-radius: 999px;
+          padding: 10px 17px 10px 12px;
+          color: white;
+          background: linear-gradient(145deg, #426d45, #234329);
+          box-shadow: 0 13px 30px rgba(24, 50, 31, 0.34);
+          font-size: 12px;
+          font-weight: 850;
+          cursor: pointer;
+          touch-action: manipulation;
+          transition:
+            transform 160ms ease,
+            opacity 160ms ease;
+        }
+
+        .mobile-field-button:active {
+          transform: scale(0.97);
+        }
+
+        .mobile-field-button:disabled {
+          cursor: wait;
+          opacity: 0.72;
+        }
+
+        .mobile-field-button-icon {
+          display: grid;
+          width: 30px;
+          height: 30px;
+          place-items: center;
+          border-radius: 50%;
+          color: var(--forest-900);
+          background: #f7f3df;
+          font-size: 18px;
+          line-height: 1;
+        }
+
+        .mobile-field-status {
+          max-width: min(290px, calc(100vw - 80px));
+          border: 1px solid rgba(255, 255, 255, 0.72);
+          border-radius: 14px;
+          padding: 8px 11px;
+          color: var(--forest-950);
+          background: rgba(251, 247, 235, 0.96);
+          box-shadow: 0 9px 22px rgba(24, 50, 31, 0.2);
+          font-size: 10px;
+          font-weight: 750;
+          line-height: 1.35;
+          backdrop-filter: blur(12px);
+        }
+
+        .mobile-field-status.is-visible {
+          display: block;
+        }
+
+        .mobile-field-status.is-error {
+          color: #6e3529;
+          border-color: rgba(151, 76, 54, 0.3);
+          background: rgba(255, 244, 237, 0.97);
+        }
+
+        body.food-mode .mobile-field-button,
+        body.food-mode .mobile-field-status {
+          display: none;
+        }
+
+        body.panel-collapsed .map-actions {
+          bottom: calc(80px + env(safe-area-inset-bottom));
+        }
+
+        .fit-button {
+          width: 44px;
+          height: 44px;
+          min-height: 44px;
+          padding: 0;
+          border-radius: 50%;
+          font-size: 16px;
+          box-shadow: 0 10px 24px rgba(30, 56, 34, 0.25);
+        }
+
+        .maplibregl-ctrl-top-right {
+          top: max(77px, calc(env(safe-area-inset-top) + 68px));
+          right: 5px;
+        }
+
+        .maplibregl-ctrl-group button {
+          width: 38px;
+          height: 38px;
+        }
+
+        .maplibregl-ctrl-bottom-right {
+          bottom: calc(min(56dvh, 560px) + max(10px, env(safe-area-inset-bottom)));
+          max-width: 70vw;
+          transition: bottom 380ms cubic-bezier(0.22, 0.75, 0.2, 1);
+        }
+
+        body.panel-collapsed .maplibregl-ctrl-bottom-right {
+          bottom: calc(69px + env(safe-area-inset-bottom));
+        }
+
+        .maplibregl-ctrl-attrib {
+          font-size: 8px;
+        }
+
+        .maplibregl-popup {
+          width: calc(100vw - 20px);
+          max-width: calc(100vw - 20px) !important;
+        }
+
+        .maplibregl-popup-content,
+        body.food-mode .maplibregl-popup-content {
+          border-radius: 24px;
+          box-shadow: 0 26px 64px rgba(37, 43, 29, 0.3);
+        }
+
+        .tree-popup-card,
+        .annotation-editor {
+          max-height: calc(100dvh - 108px);
+        }
+
+        .tree-popup-image {
+          height: clamp(160px, 25dvh, 205px);
+        }
+
+        .tree-popup-body {
+          padding: 15px 15px max(18px, env(safe-area-inset-bottom));
+        }
+
+        .tree-popup-title {
+          padding-right: 30px;
+          font-size: 23px;
+        }
+
+        .maplibregl-popup-close-button {
+          top: 11px;
+          right: 11px;
+          width: 34px;
+          height: 34px;
+          font-size: 20px;
+        }
+
+        .popup-measures {
+          gap: 6px;
+        }
+
+        .popup-measure {
+          padding: 10px 4px 9px;
+        }
+
+        .more-information summary {
+          min-height: 48px;
+          font-size: 11px;
+        }
+
+        .annotation-editor {
+          padding: 18px 15px max(20px, env(safe-area-inset-bottom));
+        }
+
+        .annotation-field input,
+        .annotation-field select,
+        .annotation-field textarea {
+          min-height: 44px;
+          font-size: 16px;
+        }
+
+        .annotation-form-actions {
+          position: sticky;
+          bottom: 0;
+          margin: 8px -5px -6px;
+          padding: 8px 5px 6px;
+          background: linear-gradient(180deg, transparent, var(--cream) 24%);
+        }
+      }
+
+      @media (max-width: 350px) {
+        .brand {
+          gap: 5px;
+          padding-right: 6px;
+          padding-left: 6px;
+        }
+
+        .brand-logo {
+          width: 56px;
+          height: 29px;
+          flex-basis: 56px;
+        }
+
+        .brand-logo img {
+          top: -23px;
+          left: -23px;
+          width: 116px;
+        }
+
+        .dashboard-mode-button {
+          padding-inline: 4px;
+          font-size: 9px;
+        }
+
+        .language-toggle {
+          min-width: 36px;
+          padding-inline: 4px;
+        }
+
+        .legend {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 760px) and (max-height: 560px) {
+        .dashboard {
+          height: min(64dvh, 360px);
+        }
+
+        .map-actions {
+          bottom: calc(min(64dvh, 360px) + max(14px, env(safe-area-inset-bottom)));
+        }
+
+        .maplibregl-ctrl-bottom-right {
+          bottom: calc(min(64dvh, 360px) + max(8px, env(safe-area-inset-bottom)));
+        }
+
+        .tree-popup-image {
+          height: 126px;
+        }
+      }
+
       @media (prefers-reduced-motion: reduce) {
         *,
         *::before,
@@ -3327,9 +4099,9 @@
               type="button"
               data-color-mode="genus"
               aria-pressed="true"
-              data-i18n="genus"
+              data-i18n="treeSpeciesColor"
             >
-              Genus
+              Tree species
             </button>
             <button
               class="segment"
@@ -3569,6 +4341,21 @@
     </aside>
 
     <div class="map-actions">
+      <output
+        class="mobile-field-status"
+        id="mobile-field-status"
+        role="status"
+        aria-live="polite"
+      ></output>
+      <button
+        class="mobile-field-button"
+        id="mobile-add-tree"
+        type="button"
+        aria-label="Track a new tree at my location"
+      >
+        <span class="mobile-field-button-icon" aria-hidden="true">⌖</span>
+        <span data-field-add-label>Track tree</span>
+      </button>
       <button
         class="fit-button"
         id="fit-trees"
@@ -3699,6 +4486,54 @@
           review_status: "reviewed",
           updated_at: "2026-08-03",
         },
+        "annotation-1785428109139-3w0c23": {
+          common_name: "Akazie",
+          scientific_name: "Robinia pseudoacacia",
+          genus: "Robinia",
+          tree_type: "Laubbaum",
+          review_status: "reviewed",
+          updated_at: "2026-08-06",
+        },
+        "annotation-1785770572072-1sauhw": {
+          common_name: "Kirschlorbeer",
+          scientific_name: "Prunus laurocerasus",
+          genus: "Prunus",
+          tree_type: "Strauch",
+          review_status: "reviewed",
+          updated_at: "2026-08-06",
+        },
+        "annotation-1786024541908-4mbxe6": {
+          common_name: "Blaufichte",
+          scientific_name: "Picea pungens",
+          genus: "Picea",
+          tree_type: "Nadelbaum",
+          review_status: "reviewed",
+          updated_at: "2026-08-06",
+        },
+        "annotation-1786027301691-xyfkdf": {
+          common_name: "Kiefer",
+          scientific_name: "Pinus sylvestris",
+          genus: "Pinus",
+          tree_type: "Nadelbaum",
+          review_status: "reviewed",
+          updated_at: "2026-08-06",
+        },
+        "annotation-1785428642598-85x9l5": {
+          common_name: "Fichte",
+          scientific_name: "Picea abies",
+          genus: "Picea",
+          tree_type: "Nadelbaum",
+          review_status: "reviewed",
+          updated_at: "2026-08-06",
+        },
+        "annotation-1785428129571-q0gps6": {
+          common_name: "Eiche",
+          scientific_name: "Quercus robur",
+          genus: "Quercus",
+          tree_type: "Laubbaum",
+          review_status: "reviewed",
+          updated_at: "2026-08-06",
+        },
         "annotation-1785429650771-4soy0h": {
           common_name: "Haselnuss",
           scientific_name: "Corylus avellana",
@@ -3731,6 +4566,62 @@
         },
       };
       const TREE_IDENTIFICATION_CATALOG = [
+        {
+          id: "norway-maple",
+          common_name: "Ahorn",
+          scientific_name: "Acer platanoides",
+          genus: "Acer",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "japanese-maple",
+          common_name: "Fächerahorn",
+          scientific_name: "Acer palmatum",
+          genus: "Acer",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "serviceberry",
+          common_name: "Felsenbirne",
+          scientific_name: "Amelanchier lamarckii",
+          genus: "Amelanchier",
+          tree_type: "Strauch",
+        },
+        {
+          id: "cornelian-cherry",
+          common_name: "Kornelkirsche",
+          scientific_name: "Cornus mas",
+          genus: "Cornus",
+          tree_type: "Strauch",
+        },
+        {
+          id: "ginkgo",
+          common_name: "Ginkgo",
+          scientific_name: "Ginkgo biloba",
+          genus: "Ginkgo",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "empress-tree",
+          common_name: "Blauglockenbaum",
+          scientific_name: "Paulownia tomentosa",
+          genus: "Paulownia",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "black-elder",
+          common_name: "Holunder",
+          scientific_name: "Sambucus nigra",
+          genus: "Sambucus",
+          tree_type: "Strauch",
+        },
+        {
+          id: "european-yew",
+          common_name: "Eibe",
+          scientific_name: "Taxus baccata",
+          genus: "Taxus",
+          tree_type: "Nadelbaum",
+        },
         {
           id: "field-maple",
           common_name: "Feld-Ahorn",
@@ -3811,7 +4702,7 @@
         {
           id: "alder",
           common_name: "Erle",
-          scientific_name: "Alnus sp.",
+          scientific_name: "Alnus glutinosa",
           genus: "Alnus",
           tree_type: "Laubbaum",
         },
@@ -3823,11 +4714,88 @@
           tree_type: "Laubbaum",
         },
         {
+          id: "oak",
+          common_name: "Eiche",
+          scientific_name: "Quercus robur",
+          genus: "Quercus",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "rowan",
+          common_name: "Eberesche",
+          scientific_name: "Sorbus aucuparia",
+          genus: "Sorbus",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "common-whitebeam",
+          common_name: "Mehlbeere",
+          scientific_name: "Sorbus aria",
+          genus: "Sorbus",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "aspen",
+          common_name: "Espe",
+          scientific_name: "Populus tremula",
+          genus: "Populus",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "poplar",
+          common_name: "Pappel",
+          scientific_name: "Populus sp.",
+          genus: "Populus",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "beech",
+          common_name: "Buche",
+          scientific_name: "Fagus sylvatica",
+          genus: "Fagus",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "elm",
+          common_name: "Ulme",
+          scientific_name: "Ulmus glabra",
+          genus: "Ulmus",
+          tree_type: "Laubbaum",
+        },
+        {
           id: "birch",
           common_name: "Birke",
           scientific_name: "Betula sp.",
           genus: "Betula",
           tree_type: "Laubbaum",
+        },
+        {
+          id: "black-locust",
+          common_name: "Akazie",
+          scientific_name: "Robinia pseudoacacia",
+          genus: "Robinia",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "blue-spruce",
+          common_name: "Blaufichte",
+          scientific_name: "Picea pungens",
+          genus: "Picea",
+          tree_type: "Nadelbaum",
+        },
+        {
+          id: "norway-spruce",
+          common_name: "Fichte",
+          scientific_name: "Picea abies",
+          genus: "Picea",
+          tree_type: "Nadelbaum",
+        },
+        {
+          id: "scots-pine",
+          common_name: "Kiefer",
+          scientific_name: "Pinus sylvestris",
+          genus: "Pinus",
+          tree_type: "Nadelbaum",
         },
         {
           id: "horse-chestnut",
@@ -3887,6 +4855,76 @@
           fruit_category: "Kirsche",
         },
         {
+          id: "wild-cherry",
+          common_name: "Vogelkirsche",
+          scientific_name: "Prunus avium",
+          genus: "Prunus",
+          tree_type: "Laubbaum",
+          edible: true,
+          flowering: true,
+          fruit_category: "Kirsche",
+        },
+        {
+          id: "blackthorn",
+          common_name: "Schlehe",
+          scientific_name: "Prunus spinosa",
+          genus: "Prunus",
+          tree_type: "Strauch",
+          edible: true,
+          flowering: true,
+          fruit_category: "Schlehe",
+        },
+        {
+          id: "wild-rose",
+          common_name: "Rose",
+          scientific_name: "Rosa sp.",
+          genus: "Rosa",
+          tree_type: "Strauch",
+          flowering: true,
+          fruit_category: "Rose",
+        },
+        {
+          id: "mulberry",
+          common_name: "Maulbeere",
+          scientific_name: "Morus sp.",
+          genus: "Morus",
+          tree_type: "Laubbaum",
+          edible: true,
+          fruit_category: "Maulbeere",
+        },
+        {
+          id: "common-fig",
+          common_name: "Feige",
+          scientific_name: "Ficus carica",
+          genus: "Ficus",
+          tree_type: "Obstbaum-Fundort",
+          edible: true,
+          fruit_category: "Feige",
+        },
+        {
+          id: "common-barberry",
+          common_name: "Berberitze",
+          scientific_name: "Berberis vulgaris",
+          genus: "Berberis",
+          tree_type: "Strauch",
+          edible: true,
+          fruit_category: "Berberitze",
+        },
+        {
+          id: "tree-of-heaven",
+          common_name: "Götterbaum",
+          scientific_name: "Ailanthus altissima",
+          genus: "Ailanthus",
+          tree_type: "Laubbaum",
+        },
+        {
+          id: "cherry-laurel",
+          common_name: "Kirschlorbeer",
+          scientific_name: "Prunus laurocerasus",
+          genus: "Prunus",
+          tree_type: "Strauch",
+        },
+        {
           id: "pear",
           common_name: "Birne",
           scientific_name: "Pyrus communis",
@@ -3930,6 +4968,15 @@
           tree_type: "Obstbaum-Fundort",
           edible: true,
           fruit_category: "Quitte",
+        },
+        {
+          id: "medlar",
+          common_name: "Mispel",
+          scientific_name: "Mespilus germanica",
+          genus: "Mespilus",
+          tree_type: "Obstbaum-Fundort",
+          edible: true,
+          fruit_category: "Mispel",
         },
         {
           id: "lilac",
@@ -4906,6 +5953,51 @@
           color: "#bd9236",
         },
         {
+          id: "medlar",
+          kind: "fruit",
+          category: "Mispel",
+          nameKey: "fruitMedlar",
+          descriptionKey: "medlarSeasonDescription",
+          months: [10, 11],
+          color: "#936a4f",
+        },
+        {
+          id: "fig",
+          kind: "fruit",
+          category: "Feige",
+          nameKey: "fruitFig",
+          descriptionKey: "figSeasonDescription",
+          months: [8, 9, 10],
+          color: "#8a4f69",
+        },
+        {
+          id: "mulberry",
+          kind: "fruit",
+          category: "Maulbeere",
+          nameKey: "fruitMulberry",
+          descriptionKey: "mulberrySeasonDescription",
+          months: [8, 9],
+          color: "#70435f",
+        },
+        {
+          id: "barberry",
+          kind: "fruit",
+          category: "Berberitze",
+          nameKey: "fruitBarberry",
+          descriptionKey: "barberrySeasonDescription",
+          months: [9, 10],
+          color: "#a94c43",
+        },
+        {
+          id: "blackthorn",
+          kind: "fruit",
+          category: "Schlehe",
+          nameKey: "fruitSloe",
+          descriptionKey: "sloeSeasonDescription",
+          months: [9, 10, 11],
+          color: "#53607b",
+        },
+        {
           id: "linden-flower",
           kind: "flower",
           category: "Linde",
@@ -4922,6 +6014,15 @@
           descriptionKey: "lilacSeasonDescription",
           months: [4, 5],
           color: "#9b6a9c",
+        },
+        {
+          id: "rose-flower",
+          kind: "flower",
+          category: "Rose",
+          nameKey: "flowerRose",
+          descriptionKey: "roseSeasonDescription",
+          months: [6, 7],
+          color: "#b96f7d",
         },
       ];
       const FRUIT_COLORS = Object.fromEntries(
@@ -4953,9 +6054,11 @@
           canopyArea: "m² recorded canopy area",
           mapColors: "Map colors",
           byGenus: "By genus",
-          selectTreeType: "Select tree type",
-          treeTypeFilterAria: "Filter the map by tree type",
-          allTreeTypes: "All tree types",
+          selectTreeType: "Select tree species",
+          treeTypeFilterAria: "Filter the map by tree species",
+          allTreeTypes: "All tree species",
+          showAllTreeTypes: "Show all tree species",
+          showOnlyTreeType: "Show only {type} trees",
           selectTreeHealth: "Select condition",
           treeHealthFilterAria: "Filter the map by tree condition",
           allTreeHealth: "All conditions",
@@ -4976,6 +6079,7 @@
           sourceManual: "Manual campus annotation",
           sourceCampus: "Campus dataset",
           colorTreesBy: "Color trees by",
+          treeSpeciesColor: "Tree species",
           genus: "Genus",
           health: "Health",
           treeLegend: "Tree color legend",
@@ -5019,8 +6123,14 @@
           fruitWalnut: "Walnut",
           fruitHazelnut: "Hazelnut",
           fruitQuince: "Quince",
+          fruitMedlar: "Medlar",
+          fruitFig: "Fig",
+          fruitMulberry: "Mulberry",
+          fruitBarberry: "Barberry",
+          fruitSloe: "Sloe",
           flowerLinden: "Linden blossom",
           flowerLilac: "Lilac blossom",
+          flowerRose: "Rose blossom",
           fruitGroup: "Fruit",
           flowerGroup: "Flowers",
           seasonalInformation: "Seasonal information",
@@ -5042,10 +6152,22 @@
             "Ripe nuts turn brown and fall from their husks. Collect only sound nuts and dry them before storage.",
           quinceSeasonDescription:
             "Harvest golden-yellow, strongly scented fruit before the first frost. Quinces are usually processed rather than eaten raw.",
+          medlarSeasonDescription:
+            "Harvest in late October or November. Medlars develop their aroma and sweetness only after frost or several weeks of cool storage, when the flesh becomes soft; halve the fruit and remove the seeds before eating.",
+          figSeasonDescription:
+            "Harvest when the fruit hangs slightly, feels soft and develops its full colour. Ripe figs bruise easily and are best used promptly.",
+          mulberrySeasonDescription:
+            "Harvest when the fruit has developed its species-specific ripe colour, feels very soft and detaches with almost no resistance. Mulberries bruise easily and are best eaten or processed promptly.",
+          barberrySeasonDescription:
+            "Use only confidently identified, fully ripe red berries. Avoid unripe fruit and all other plant parts, and observe local access rules.",
+          sloeSeasonDescription:
+            "The blue-black sloes ripen in September and October. Traditionally they are harvested after the first frost, or frozen before processing to soften their very astringent taste; do not crush the stones.",
           lindenSeasonDescription:
             "The fragrant flower clusters open in early summer. Collect only on dry days and only where picking is permitted.",
           lilacSeasonDescription:
             "Shown for its spring flowering period, not as a harvest recommendation. Please do not pick without permission.",
+          roseSeasonDescription:
+            "Wild roses usually begin flowering in June, with the exact period varying by species. Their rose hips colour from late summer and often remain into winter. This entry is a flowering guide; do not pick without permission.",
           fruitLocationsCount: "{count} fruit & flower locations",
           fruitNotMapped: "No fruit or flower location",
           typicalHarvest: "Typical season: {months}",
@@ -5094,6 +6216,18 @@
           placementCancelled: "Manual placement cancelled.",
           placementOutside: "Place annotations inside the drawn campus boundary.",
           manualAdded: "Generic tree added. Complete its information in the popup.",
+          quickAddTree: "Track tree",
+          quickAddTreeAria: "Track a new tree at my current location",
+          locatingTree: "Finding GPS position…",
+          tapTreeLocation: "Tap tree location",
+          gpsAdded:
+            "GPS location captured (±{accuracy} m). Complete the tree information.",
+          gpsFallback:
+            "Your position could not be determined. Tap the tree location on the map.",
+          gpsOutside:
+            "Your position is outside Hubland Nord. Tap a location inside the campus boundary.",
+          shareExportTitle: "Tree Tracker field data",
+          shareExportText: "Exported tree records from Tree Tracker.",
           exportEmpty: "There are no annotations to export yet.",
           exportReady: "{count} annotations exported as GeoJSON.",
           annotationTitle: "Tree annotation",
@@ -5163,9 +6297,11 @@
           showAllGenera: "Show trees from all genera",
           showOnlyGenus: "Show only {genus} trees",
           campusBoundary: "Campus boundary",
+          campusBoundaryNorth: "Campus Hubland North",
+          campusBoundarySouth: "Campus Hubland South",
           healthDataNote:
             "Health assessments are not included in the published source data.",
-          legendSummary: "{mode} color legend: {items}, campus boundary",
+          legendSummary: "{mode} color legend: {items}, Hubland North and South campus boundaries",
           mappedLocations: "{count} Hubland locations",
           genusTrees: "{count} {genus} trees at Hubland",
           treeTypeTrees: "{count} {type} trees at Hubland",
@@ -5271,10 +6407,12 @@
           averageHeight: "m mittlere gemessene Höhe",
           canopyArea: "m² erfasste Kronenfläche",
           mapColors: "Kartenfarben",
-          byGenus: "Nach Gattung",
+          byGenus: "Nach Baumart",
           selectTreeType: "Baumart auswählen",
           treeTypeFilterAria: "Karte nach Baumart filtern",
           allTreeTypes: "Alle Baumarten",
+          showAllTreeTypes: "Alle Baumarten anzeigen",
+          showOnlyTreeType: "Nur Bäume der Art {type} anzeigen",
           selectTreeHealth: "Zustand auswählen",
           treeHealthFilterAria: "Karte nach Baumzustand filtern",
           allTreeHealth: "Alle Zustände",
@@ -5295,6 +6433,7 @@
           sourceManual: "Manuelle Campus-Annotation",
           sourceCampus: "Campus-Datensatz",
           colorTreesBy: "Bäume einfärben nach",
+          treeSpeciesColor: "Baumart",
           genus: "Gattung",
           health: "Zustand",
           treeLegend: "Legende der Baumfarben",
@@ -5338,8 +6477,14 @@
           fruitWalnut: "Walnuss",
           fruitHazelnut: "Haselnuss",
           fruitQuince: "Quitte",
+          fruitMedlar: "Mispel",
+          fruitFig: "Feige",
+          fruitMulberry: "Maulbeere",
+          fruitBarberry: "Berberitze",
+          fruitSloe: "Schlehe",
           flowerLinden: "Lindenblüte",
           flowerLilac: "Fliederblüte",
+          flowerRose: "Rosenblüte",
           fruitGroup: "Obst",
           flowerGroup: "Blüten",
           seasonalInformation: "Saisonhinweis",
@@ -5361,10 +6506,22 @@
             "Reife Nüsse werden braun und fallen aus der Hülle. Nur gesunde Nüsse sammeln und vor der Lagerung trocknen.",
           quinceSeasonDescription:
             "Goldgelbe, stark duftende Früchte vor dem ersten Frost ernten. Quitten werden meist verarbeitet statt roh gegessen.",
+          medlarSeasonDescription:
+            "Ende Oktober oder im November ernten. Erst nach Frost oder mehrwöchiger kühler Lagerung entwickeln Mispeln ihr Aroma und ihre Süße und das Fruchtfleisch wird weich; zum Essen halbieren und die Kerne entfernen.",
+          figSeasonDescription:
+            "Ernten, wenn die Frucht leicht herabhängt, weich wird und ihre volle Farbe entwickelt. Reife Feigen sind druckempfindlich und sollten rasch verwendet werden.",
+          mulberrySeasonDescription:
+            "Ernten, wenn die Frucht ihre je nach Art typische Reifefarbe erreicht hat, sehr weich ist und sich fast ohne Widerstand löst. Maulbeeren sind druckempfindlich und sollten rasch gegessen oder verarbeitet werden.",
+          barberrySeasonDescription:
+            "Nur sicher bestimmte, vollreife rote Beeren verwenden. Unreife Früchte und andere Pflanzenteile meiden und die Zugangsregeln vor Ort beachten.",
+          sloeSeasonDescription:
+            "Die blau-schwarzen Schlehen reifen im September und Oktober. Traditionell werden sie nach dem ersten Frost geerntet oder vor der Verarbeitung eingefroren, damit der sehr herbe Geschmack milder wird; die Steine nicht zerkleinern.",
           lindenSeasonDescription:
             "Die duftenden Blütenstände öffnen sich im Frühsommer. Nur trocken und nur dort sammeln, wo es erlaubt ist.",
           lilacSeasonDescription:
             "Hier wird die Frühlingsblüte gezeigt, nicht eine Ernteempfehlung. Bitte nicht ohne Erlaubnis pflücken.",
+          roseSeasonDescription:
+            "Wildrosen beginnen meist im Juni zu blühen; der genaue Zeitraum variiert je nach Art. Ihre Hagebutten färben sich ab dem Spätsommer und bleiben oft bis in den Winter am Strauch. Dies ist ein Blütehinweis; bitte nicht ohne Erlaubnis pflücken.",
           fruitLocationsCount: "{count} Obst- und Blütenstandorte",
           fruitNotMapped: "Kein Obst- oder Blütenstandort",
           typicalHarvest: "Typische Saison: {months}",
@@ -5416,6 +6573,18 @@
             "Setze Annotationen innerhalb der eingezeichneten Campusgrenze.",
           manualAdded:
             "Generischer Baum hinzugefügt. Ergänze seine Informationen im Popup.",
+          quickAddTree: "Baum erfassen",
+          quickAddTreeAria: "Neuen Baum an meinem aktuellen Standort erfassen",
+          locatingTree: "GPS-Standort wird gesucht…",
+          tapTreeLocation: "Baumstandort antippen",
+          gpsAdded:
+            "GPS-Standort erfasst (±{accuracy} m). Ergänze jetzt die Baumdaten.",
+          gpsFallback:
+            "Dein Standort konnte nicht bestimmt werden. Tippe den Baumstandort auf der Karte an.",
+          gpsOutside:
+            "Dein Standort liegt außerhalb von Hubland Nord. Tippe einen Standort innerhalb der Campusgrenze an.",
+          shareExportTitle: "Tree-Tracker-Felddaten",
+          shareExportText: "Exportierte Baumdatensätze aus Tree Tracker.",
           exportEmpty: "Es gibt noch keine Annotationen zum Exportieren.",
           exportReady: "{count} Annotationen als GeoJSON exportiert.",
           annotationTitle: "Baum-Annotation",
@@ -5486,9 +6655,11 @@
           showAllGenera: "Bäume aller Gattungen anzeigen",
           showOnlyGenus: "Nur Bäume der Gattung {genus} anzeigen",
           campusBoundary: "Campusgrenze",
+          campusBoundaryNorth: "Campus Hubland Nord",
+          campusBoundarySouth: "Campus Hubland Süd",
           healthDataNote:
             "Zustandsbewertungen sind in den veröffentlichten Quelldaten nicht enthalten.",
-          legendSummary: "Farblegende nach {mode}: {items}, Campusgrenze",
+          legendSummary: "Farblegende nach {mode}: {items}, Campusgrenzen Hubland Nord und Süd",
           mappedLocations: "{count} Hubland-Standorte",
           genusTrees: "{count} Hubland-Bäume der Gattung {genus}",
           treeTypeTrees: "{count} Hubland-Bäume der Art {type}",
@@ -5575,6 +6746,14 @@
 
       const COMMON_NAME_EN = {
         "Dornenloser Lederhülsenbaum": "Thornless honey locust",
+        Ahorn: "Norway maple",
+        Fächerahorn: "Japanese maple",
+        Felsenbirne: "Serviceberry",
+        Kornelkirsche: "Cornelian cherry",
+        Ginkgo: "Ginkgo",
+        Blauglockenbaum: "Empress tree",
+        Holunder: "Black elder",
+        Eibe: "European yew",
         "Feld-Ahorn": "Field maple",
         "Ahornblättrige Platane": "London plane tree",
         "Rot-Ahorn": "Red maple",
@@ -5586,8 +6765,19 @@
         "Straßen-Esche ‘Westhof’s Glorie’": "European ash ‘Westhof’s Glorie’",
         Linde: "Linden",
         Esche: "Ash",
+        Eiche: "Pedunculate oak",
+        Eberesche: "Rowan",
+        Mehlbeere: "Common whitebeam",
+        Espe: "European aspen",
+        Pappel: "Poplar",
         Erle: "Alder",
+        Buche: "European beech",
+        Ulme: "Wych elm",
         Birke: "Birch",
+        Blaufichte: "Blue spruce",
+        Fichte: "Norway spruce",
+        Kiefer: "Scots pine",
+        Akazie: "Black locust",
         Kastanie: "Horse chestnut",
         Haselnuss: "Hazelnut",
         Lederhülsenbaum: "Honey locust",
@@ -5596,26 +6786,55 @@
         Apfel: "Apple",
         Birne: "Pear",
         Kirsche: "Cherry",
+        Kirschlorbeer: "Cherry laurel",
+        Vogelkirsche: "Wild cherry",
+        Schlehe: "Blackthorn",
+        Rose: "Rose",
+        Maulbeere: "Mulberry",
+        Mispel: "Medlar",
         Mirabelle: "Mirabelle plum",
         "Rote Mirabelle": "Red mirabelle plum",
         Pflaume: "Plum",
         Quitte: "Quince",
+        Feige: "Fig",
+        Berberitze: "Common barberry",
+        Götterbaum: "Tree of heaven",
       };
 
       const GENUS_COLORS = {
         Acer: "#c26b4c",
         Aesculus: "#7b6a43",
+        Ailanthus: "#9b7b55",
         Alnus: "#96704c",
+        Amelanchier: "#8a6f58",
+        Berberis: "#a94c43",
         Betula: "#879476",
+        Cornus: "#b56b43",
         Corylus: "#a06b4e",
         Cydonia: "#bd9236",
+        Fagus: "#8b7252",
+        Ficus: "#8a4f69",
         Fraxinus: "#597b78",
         Gleditsia: "#b6943d",
+        Ginkgo: "#b59b3c",
         Malus: "#d25353",
+        Mespilus: "#936a4f",
+        Morus: "#70435f",
         Prunus: "#bd668c",
         Platanus: "#7a7654",
+        Picea: "#547879",
+        Pinus: "#5f7656",
+        Paulownia: "#7d6aa3",
+        Populus: "#6d8b73",
         Pyrus: "#a88b39",
+        Quercus: "#6f7443",
+        Robinia: "#a8843d",
+        Rosa: "#b96f7d",
+        Sambucus: "#6d665f",
+        Sorbus: "#b35c45",
+        Taxus: "#486b52",
         Tilia: "#4f7f52",
+        Ulmus: "#66784f",
       };
 
       const HEALTH_COLORS = {
@@ -5666,6 +6885,7 @@
             type: "Feature",
             properties: {
               name: "Campus Hubland Nord",
+              campus_area: "north",
               operator: "Universität Würzburg",
               source: "OpenStreetMap way 57723974",
               note: "Approximate university expansion area",
@@ -5710,6 +6930,116 @@
                   [9.9752399, 49.7836206],
                   [9.9731927, 49.7836549],
                   [9.9681884, 49.785196],
+                ],
+              ],
+            },
+          },
+          {
+            type: "Feature",
+            properties: {
+              name: "Campus Hubland Süd",
+              campus_area: "south",
+              operator: "Universität Würzburg",
+              source: "OpenStreetMap way 4481969",
+              note: "OpenStreetMap university campus boundary",
+            },
+            geometry: {
+              type: "Polygon",
+              coordinates: [
+                [
+                  [9.967105, 49.7824672],
+                  [9.9670561, 49.7822847],
+                  [9.967008, 49.7820436],
+                  [9.9670135, 49.7818722],
+                  [9.9669358, 49.7809939],
+                  [9.966905, 49.7800296],
+                  [9.9668714, 49.7790965],
+                  [9.9668674, 49.778828],
+                  [9.9668124, 49.778479],
+                  [9.9669398, 49.778331],
+                  [9.9671061, 49.7781803],
+                  [9.9673073, 49.7777299],
+                  [9.9674232, 49.7773036],
+                  [9.9673804, 49.777002],
+                  [9.9673167, 49.7746875],
+                  [9.9673696, 49.7744974],
+                  [9.9692262, 49.7748085],
+                  [9.9696014, 49.7749225],
+                  [9.9708918, 49.7750527],
+                  [9.9716091, 49.7752827],
+                  [9.9712931, 49.7757166],
+                  [9.9712851, 49.7757305],
+                  [9.9706918, 49.7767615],
+                  [9.9701682, 49.7774789],
+                  [9.9699833, 49.7778131],
+                  [9.9699073, 49.7780949],
+                  [9.9698636, 49.778317],
+                  [9.9701898, 49.7783768],
+                  [9.9705374, 49.7784406],
+                  [9.9708286, 49.7784672],
+                  [9.9713158, 49.7785121],
+                  [9.9719193, 49.7785767],
+                  [9.9724308, 49.7786576],
+                  [9.973242, 49.7788323],
+                  [9.9736355, 49.778884],
+                  [9.9738801, 49.7789434],
+                  [9.974042, 49.7790239],
+                  [9.974183, 49.7791174],
+                  [9.9742923, 49.7792211],
+                  [9.9743832, 49.7792406],
+                  [9.9747273, 49.7792603],
+                  [9.9752499, 49.7795008],
+                  [9.9758785, 49.7797641],
+                  [9.9758844, 49.7798903],
+                  [9.9758891, 49.7799918],
+                  [9.9762288, 49.7800049],
+                  [9.9762834, 49.7802238],
+                  [9.9764764, 49.7813424],
+                  [9.9765022, 49.7815588],
+                  [9.976388, 49.7818694],
+                  [9.9756972, 49.7823273],
+                  [9.9752163, 49.7826262],
+                  [9.9751459, 49.7826694],
+                  [9.9749907, 49.7827465],
+                  [9.9747557, 49.7828689],
+                  [9.9745844, 49.7829789],
+                  [9.9744915, 49.7830256],
+                  [9.9743504, 49.7830847],
+                  [9.9741856, 49.7831563],
+                  [9.9739768, 49.7832326],
+                  [9.9737195, 49.783325],
+                  [9.9734435, 49.783414],
+                  [9.9729902, 49.7835491],
+                  [9.9719401, 49.7838572],
+                  [9.97092, 49.784154],
+                  [9.9702444, 49.7843474],
+                  [9.9700637, 49.7843958],
+                  [9.969868, 49.7844345],
+                  [9.9696279, 49.7845069],
+                  [9.9693756, 49.784617],
+                  [9.9692162, 49.7846572],
+                  [9.9690478, 49.7846881],
+                  [9.9687182, 49.7847916],
+                  [9.9681952, 49.7848007],
+                  [9.9676859, 49.7848874],
+                  [9.9677258, 49.7850144],
+                  [9.9676123, 49.7850999],
+                  [9.9669191, 49.7853175],
+                  [9.9660482, 49.785639],
+                  [9.9652559, 49.7859379],
+                  [9.964647, 49.7862377],
+                  [9.9645036, 49.7860996],
+                  [9.9644578, 49.7847341],
+                  [9.9644203, 49.7841725],
+                  [9.9644317, 49.7839516],
+                  [9.9650137, 49.7835018],
+                  [9.9657546, 49.783177],
+                  [9.966459, 49.7827059],
+                  [9.9665559, 49.7826698],
+                  [9.9666523, 49.7826546],
+                  [9.9667678, 49.7826514],
+                  [9.9668793, 49.7826713],
+                  [9.967105, 49.7824672],
                 ],
               ],
             },
@@ -5761,6 +7091,8 @@
       let annotationStatus = { key: "annotationReady", variables: {}, isError: false };
       let importingOsm = false;
       let manualPlacementMode = false;
+      let locatingTree = false;
+      let mobileFieldStatusTimer = null;
       let annotationImportProgress = 0;
 
       function number(value) {
@@ -6052,6 +7384,45 @@
         const status = document.getElementById("annotation-status");
         status.textContent = t(annotationStatus.key, annotationStatus.variables);
         status.classList.toggle("is-error", annotationStatus.isError);
+
+        const mobileAddButton = document.getElementById("mobile-add-tree");
+        const mobileAddLabel = mobileAddButton.querySelector(
+          "[data-field-add-label]",
+        );
+        mobileAddButton.disabled = importingOsm || locatingTree;
+        mobileAddLabel.textContent = t(
+          locatingTree
+            ? "locatingTree"
+            : manualPlacementMode
+              ? "tapTreeLocation"
+              : "quickAddTree",
+        );
+        mobileAddButton.setAttribute("aria-label", t("quickAddTreeAria"));
+      }
+
+      function setMobileFieldStatus(
+        key,
+        variables = {},
+        isError = false,
+        persistent = false,
+      ) {
+        const status = document.getElementById("mobile-field-status");
+        window.clearTimeout(mobileFieldStatusTimer);
+        status.textContent = t(key, variables);
+        status.classList.add("is-visible");
+        status.classList.toggle("is-error", isError);
+        if (!persistent) {
+          mobileFieldStatusTimer = window.setTimeout(() => {
+            status.classList.remove("is-visible", "is-error");
+          }, 4600);
+        }
+      }
+
+      function clearMobileFieldStatus() {
+        window.clearTimeout(mobileFieldStatusTimer);
+        document
+          .getElementById("mobile-field-status")
+          .classList.remove("is-visible", "is-error");
       }
 
       function setManualPlacement(enabled) {
@@ -6061,6 +7432,73 @@
         }
         setAnnotationStatus(
           manualPlacementMode ? "placementHint" : "placementCancelled",
+        );
+      }
+
+      function localSurveyDate() {
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      }
+
+      function useMapPlacementFallback(statusKey = "gpsFallback") {
+        locatingTree = false;
+        setManualPlacement(true);
+        setAnnotationStatus(statusKey, {}, true);
+        setMobileFieldStatus(statusKey, {}, true, true);
+      }
+
+      function captureTreeAtCurrentLocation() {
+        if (locatingTree || importingOsm) return;
+        if (manualPlacementMode) {
+          setManualPlacement(false);
+          clearMobileFieldStatus();
+          return;
+        }
+
+        if (dashboardMode !== "trees") setDashboardMode("trees");
+        setDashboardCollapsed(true);
+
+        if (!navigator.geolocation) {
+          useMapPlacementFallback();
+          return;
+        }
+
+        locatingTree = true;
+        renderAnnotationUI();
+        setMobileFieldStatus("locatingTree", {}, false, true);
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            locatingTree = false;
+            const coordinates = [
+              position.coords.longitude,
+              position.coords.latitude,
+            ];
+            if (!pointInCampus(coordinates)) {
+              map.easeTo({ center: coordinates, zoom: 17, duration: 650 });
+              useMapPlacementFallback("gpsOutside");
+              return;
+            }
+
+            const accuracy = Math.max(
+              1,
+              Math.round(Number(position.coords.accuracy) || 1),
+            );
+            map.easeTo({ center: coordinates, zoom: 18, duration: 650 });
+            setMobileFieldStatus("gpsAdded", { accuracy });
+            addManualAnnotation(coordinates, {
+              detectionMethod: "gps",
+              accuracy,
+            });
+          },
+          () => useMapPlacementFallback(),
+          {
+            enableHighAccuracy: true,
+            timeout: 12000,
+            maximumAge: 5000,
+          },
         );
       }
 
@@ -6109,8 +7547,16 @@
         };
       }
 
-      function addManualAnnotation(coordinates) {
-        const feature = createAnnotationFeature(coordinates, "manual");
+      function addManualAnnotation(
+        coordinates,
+        { detectionMethod = "manual", accuracy = null } = {},
+      ) {
+        const feature = createAnnotationFeature(coordinates, detectionMethod);
+        feature.properties.date_surveyed = localSurveyDate();
+        if (detectionMethod === "gps") {
+          feature.properties.location_accuracy_m = accuracy;
+          feature.properties.source_name = "iPhone GPS field observation";
+        }
         annotationData = {
           ...annotationData,
           features: [...annotationData.features, feature],
@@ -6119,7 +7565,11 @@
         syncAnnotationSource();
         manualPlacementMode = false;
         map.getCanvas().style.cursor = "";
-        setAnnotationStatus("manualAdded");
+        if (detectionMethod === "manual") clearMobileFieldStatus();
+        setAnnotationStatus(
+          detectionMethod === "gps" ? "gpsAdded" : "manualAdded",
+          detectionMethod === "gps" ? { accuracy } : {},
+        );
         openAnnotationEditor(feature);
       }
 
@@ -6149,7 +7599,7 @@
         setAnnotationStatus("annotationDeleted");
       }
 
-      function exportAnnotations() {
+      async function exportAnnotations() {
         if (!annotationData.features.length) {
           setAnnotationStatus("exportEmpty");
           return;
@@ -6160,13 +7610,32 @@
           attribution: OSM_SOURCE.attribution,
           licence: OSM_SOURCE.license,
         };
-        const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+        const contents = JSON.stringify(exportData, null, 2);
+        const fileName = "hubland-generic-tree-annotations.geojson";
+        const file = new File([contents], fileName, {
           type: "application/geo+json",
         });
+        if (navigator.canShare?.({ files: [file] })) {
+          try {
+            await navigator.share({
+              files: [file],
+              title: t("shareExportTitle"),
+              text: t("shareExportText"),
+            });
+            setAnnotationStatus("exportReady", {
+              count: integerFormatter.format(annotationData.features.length),
+            });
+            return;
+          } catch (error) {
+            if (error?.name === "AbortError") return;
+            console.warn("Could not share annotations:", error);
+          }
+        }
+        const blob = new Blob([contents], { type: "application/geo+json" });
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
-        link.download = "hubland-generic-tree-annotations.geojson";
+        link.download = fileName;
         document.body.appendChild(link);
         link.click();
         link.remove();
@@ -6229,6 +7698,14 @@
             `${feature.geometry.coordinates[1].toFixed(5)}, ${feature.geometry.coordinates[0].toFixed(5)}`,
           ),
         );
+        if (Number.isFinite(Number(properties.location_accuracy_m))) {
+          meta.appendChild(
+            popupText(
+              "annotation-chip",
+              `GPS ±${Math.round(Number(properties.location_accuracy_m))} m`,
+            ),
+          );
+        }
         root.appendChild(meta);
 
         if (isOsm) {
@@ -6641,6 +8118,8 @@
 
       function pointInCampus(coordinates) {
         const [x, y] = coordinates;
+        // Inventory, filters and editable records remain scoped to Hubland Nord.
+        // Hubland Süd is currently an additional visual campus boundary only.
         const ring = CAMPUS_BOUNDARY.features[0].geometry.coordinates[0];
         let inside = false;
         for (let index = 0, previous = ring.length - 1; index < ring.length; previous = index++) {
@@ -7736,6 +9215,12 @@ out meta geom;`;
         const categoryMatchers = [
           ["Mirabelle", /mirabell|syriaca/],
           ["Quitte", /quitt|quince|cydonia/],
+          ["Mispel", /mispel|medlar|mespilus\s+germanica/],
+          ["Feige", /feige|fig|ficus\s+carica/],
+          ["Maulbeere", /maulbeer|mulberry|morus(?:\s|$)/],
+          ["Berberitze", /berberitz|barberry|berberis\s+vulgaris/],
+          ["Schlehe", /schlehe|schlehdorn|blackthorn|sloe|prunus\s+spinosa/],
+          ["Rose", /(?:^|\s)rose(?:\s|$)|wild\s*rose|rosa(?:\s|$)/],
           ["Haselnuss", /haseln|hazelnut|corylus/],
           ["Walnuss", /walnuss|walnut|juglans/],
           ["Apfel", /apfel|apple|malus/],
@@ -7996,6 +9481,12 @@ out meta geom;`;
           "food-mode",
           dashboardMode === "food",
         );
+        document
+          .querySelector('meta[name="theme-color"]')
+          ?.setAttribute(
+            "content",
+            dashboardMode === "food" ? "#f5e8df" : "#f2f0e4",
+          );
         document.querySelectorAll("[data-dashboard-mode]").forEach((button) => {
           const active = button.dataset.dashboardMode === dashboardMode;
           button.setAttribute("aria-selected", String(active));
@@ -8038,14 +9529,30 @@ out meta geom;`;
           statisticalFeatures.map((feature) =>
             mode === "health"
               ? treeHealthKey(feature)
-              : feature.properties[mode],
+              : treeTypeKey(feature) || "not_recorded",
           ),
         );
         const entries =
           mode === "genus"
-            ? Object.entries(GENUS_COLORS)
-                .filter(([key]) => availableValues.has(key))
-                .map(([key, color]) => ({ key, label: key, color }))
+            ? [
+                ...statisticalFeatures.reduce((species, feature) => {
+                  const key = treeTypeKey(feature) || "not_recorded";
+                  if (!species.has(key)) {
+                    species.set(key, {
+                      key,
+                      label: treeFacetLabel("species", key),
+                      color:
+                        GENUS_COLORS[feature.properties.genus] || COLOR_FALLBACK,
+                    });
+                  }
+                  return species;
+                }, new Map()).values(),
+              ].sort((first, second) =>
+                first.label.localeCompare(
+                  second.label,
+                  currentLanguage === "de" ? "de" : "en",
+                ),
+              )
             : Object.entries(HEALTH_COLORS)
                 .filter(([key]) => availableValues.has(key))
                 .map(([key, color]) => ({
@@ -8057,13 +9564,13 @@ out meta geom;`;
 
         if (mode === "genus") {
           const counts = statisticalFeatures.reduce((totals, feature) => {
-            const genus = feature.properties.genus;
-            totals[genus] = (totals[genus] || 0) + 1;
+            const treeType = treeTypeKey(feature) || "not_recorded";
+            totals[treeType] = (totals[treeType] || 0) + 1;
             return totals;
           }, {});
 
-          const genusEntries = [
-            [null, t("allGenera"), null, statisticalFeatures.length],
+          const treeTypeEntries = [
+            [null, t("allTreeTypes"), null, statisticalFeatures.length],
             ...entries.map(({ key, label, color }) => [
               key,
               label,
@@ -8072,27 +9579,27 @@ out meta geom;`;
             ]),
           ];
 
-          genusEntries.forEach(([genus, label, color, count]) => {
+          treeTypeEntries.forEach(([treeType, label, color, count]) => {
             const item = document.createElement("button");
             item.className = "legend-item legend-button";
             item.type = "button";
             item.setAttribute(
               "aria-pressed",
               String(
-                genus
-                  ? treeFacetSelection.genera.has(genus)
-                  : treeFacetSelection.genera.size === 0,
+                treeType
+                  ? treeFacetSelection.species.has(treeType)
+                  : treeFacetSelection.species.size === 0,
               ),
             );
             item.setAttribute(
               "aria-label",
-              genus
-                ? t("showOnlyGenus", { genus })
-                : t("showAllGenera"),
+              treeType
+                ? t("showOnlyTreeType", { type: label })
+                : t("showAllTreeTypes"),
             );
 
             const swatch = document.createElement("span");
-            swatch.className = `legend-swatch${genus ? "" : " all"}`;
+            swatch.className = `legend-swatch${treeType ? "" : " all"}`;
             if (color) swatch.style.background = color;
 
             const text = document.createElement("span");
@@ -8104,7 +9611,7 @@ out meta geom;`;
             countText.textContent = integerFormatter.format(count);
 
             item.append(swatch, text, countText);
-            item.addEventListener("click", () => setGenusFilter(genus));
+            item.addEventListener("click", () => setTreeTypeFilter(treeType));
             legend.appendChild(item);
           });
         } else {
@@ -8122,15 +9629,20 @@ out meta geom;`;
           });
         }
 
-        const boundaryItem = document.createElement("div");
-        boundaryItem.className = "legend-item";
-        const boundarySwatch = document.createElement("span");
-        boundarySwatch.className = "legend-swatch boundary";
-        const boundaryLabel = document.createElement("span");
-        boundaryLabel.className = "legend-label";
-        boundaryLabel.textContent = t("campusBoundary");
-        boundaryItem.append(boundarySwatch, boundaryLabel);
-        legend.appendChild(boundaryItem);
+        [
+          ["north", "campusBoundaryNorth"],
+          ["south", "campusBoundarySouth"],
+        ].forEach(([campusArea, labelKey]) => {
+          const boundaryItem = document.createElement("div");
+          boundaryItem.className = "legend-item";
+          const boundarySwatch = document.createElement("span");
+          boundarySwatch.className = `legend-swatch boundary boundary-${campusArea}`;
+          const boundaryLabel = document.createElement("span");
+          boundaryLabel.className = "legend-label";
+          boundaryLabel.textContent = t(labelKey);
+          boundaryItem.append(boundarySwatch, boundaryLabel);
+          legend.appendChild(boundaryItem);
+        });
 
         if (mode === "health" && availableValues.has("not_recorded")) {
           const note = document.createElement("p");
@@ -8142,7 +9654,7 @@ out meta geom;`;
         legend.setAttribute(
           "aria-label",
           t("legendSummary", {
-            mode: t(mode),
+            mode: t(mode === "genus" ? "treeSpeciesColor" : "health"),
             items: entries.map(({ label }) => label).join(", "),
           }),
         );
@@ -8408,13 +9920,15 @@ out meta geom;`;
               : t("health");
       }
 
-      function setGenusFilter(genus) {
+      function setTreeTypeFilter(treeType) {
         const alreadyOnlySelected =
-          genus &&
-          treeFacetSelection.genera.size === 1 &&
-          treeFacetSelection.genera.has(genus);
-        treeFacetSelection.genera.clear();
-        if (genus && !alreadyOnlySelected) treeFacetSelection.genera.add(genus);
+          treeType &&
+          treeFacetSelection.species.size === 1 &&
+          treeFacetSelection.species.has(treeType);
+        treeFacetSelection.species.clear();
+        if (treeType && !alreadyOnlySelected) {
+          treeFacetSelection.species.add(treeType);
+        }
         refreshTreeFilterResults();
       }
 
@@ -8449,9 +9963,30 @@ out meta geom;`;
           bounds.extend(coordinate),
         );
         const mobile = window.matchMedia("(max-width: 760px)").matches;
+        const mapRectangle = map.getContainer().getBoundingClientRect();
+        const dashboardRectangle = document
+          .querySelector(".dashboard")
+          ?.getBoundingClientRect();
+        const mobileBottomPadding = document.body.classList.contains(
+          "panel-collapsed",
+        )
+          ? 92
+          : Math.ceil(
+              Math.max(
+                110,
+                mapRectangle.bottom -
+                  (dashboardRectangle?.top || mapRectangle.bottom) +
+                  18,
+              ),
+            );
         map.fitBounds(bounds, {
           padding: mobile
-            ? { top: 88, right: 42, bottom: document.body.classList.contains("panel-collapsed") ? 92 : 285, left: 34 }
+            ? {
+                top: 88,
+                right: 34,
+                bottom: mobileBottomPadding,
+                left: 34,
+              }
             : { top: 86, right: 80, bottom: 72, left: 400 },
           maxZoom: 17,
           duration: options.instant ? 0 : 950,
@@ -8550,6 +10085,115 @@ out meta geom;`;
           .toLocaleLowerCase("de");
         const isRedMirabelle =
           /rot(?:e)?\s+mirabell|red\s+mirabell/.test(botanicalIdentity);
+        const isCherryLaurel =
+          /kirschlorbeer|cherry\s+laurel|laurocerasus/.test(
+            botanicalIdentity,
+          );
+        const isBlackLocust =
+          /akazie|robinie|black\s+locust|robinia\s+pseudoacacia/.test(
+            botanicalIdentity,
+          );
+        const isBlueSpruce =
+          /blaufichte|blue\s+spruce|picea\s+pungens/.test(
+            botanicalIdentity,
+          );
+        const isNorwaySpruce =
+          catalogMatch?.id === "norway-spruce" ||
+          normalizedCommonName === "fichte" ||
+          normalizedCommonName === "norway spruce" ||
+          /picea\s+abies/.test(botanicalIdentity);
+        const isScotsPine =
+          catalogMatch?.id === "scots-pine" ||
+          /kiefer|scots\s+pine|pinus\s+sylvestris/.test(botanicalIdentity);
+        const isOak =
+          /eiche|pedunculate\s+oak|quercus\s+robur/.test(botanicalIdentity);
+        const isRowan =
+          /eberesche|rowan|sorbus\s+aucuparia/.test(botanicalIdentity);
+        const isWhitebeam =
+          catalogMatch?.id === "common-whitebeam" ||
+          /mehlbeere|whitebeam|sorbus\s+aria/.test(botanicalIdentity);
+        const isNorwayMaple =
+          catalogMatch?.id === "norway-maple" ||
+          normalizedCommonName === "ahorn" ||
+          normalizedCommonName === "norway maple" ||
+          /acer\s+platanoides/.test(botanicalIdentity);
+        const isJapaneseMaple =
+          catalogMatch?.id === "japanese-maple" ||
+          /fächerahorn|japanese\s+maple|acer\s+palmatum/.test(
+            botanicalIdentity,
+          );
+        const isServiceberry =
+          catalogMatch?.id === "serviceberry" ||
+          /felsenbirne|serviceberry|amelanchier\s+lamarckii/.test(
+            botanicalIdentity,
+          );
+        const isCornelianCherry =
+          catalogMatch?.id === "cornelian-cherry" ||
+          /kornelkirsche|cornelian\s+cherry|cornus\s+mas/.test(
+            botanicalIdentity,
+          );
+        const isGinkgo =
+          catalogMatch?.id === "ginkgo" ||
+          /ginkgo|ginko|ginkgo\s+biloba/.test(botanicalIdentity);
+        const isEmpressTree =
+          catalogMatch?.id === "empress-tree" ||
+          /blauglockenbaum|empress\s+tree|paulownia\s+tomentosa/.test(
+            botanicalIdentity,
+          );
+        const isBlackElder =
+          catalogMatch?.id === "black-elder" ||
+          /holunder|black\s+elder|sambucus\s+nigra/.test(botanicalIdentity);
+        const isYew =
+          catalogMatch?.id === "european-yew" ||
+          /eibe|european\s+yew|taxus\s+baccata/.test(botanicalIdentity);
+        const isWildCherry =
+          catalogMatch?.id === "wild-cherry" ||
+          /vogelkirsche|wild\s+cherry|prunus\s+avium/.test(botanicalIdentity);
+        const isBlackthorn =
+          catalogMatch?.id === "blackthorn" ||
+          /schlehe|schlehdorn|blackthorn|sloe|prunus\s+spinosa/.test(
+            botanicalIdentity,
+          );
+        const isWildRose =
+          catalogMatch?.id === "wild-rose" ||
+          /(?:^|\s)rose(?:\s|$)|wild\s*rose|rosa\s+(?:sp\.?|canina)/.test(
+            botanicalIdentity,
+          );
+        const isMulberry =
+          catalogMatch?.id === "mulberry" ||
+          /maulbeer|mulberry|morus\s+(?:sp\.?|alba|nigra|rubra)/.test(
+            botanicalIdentity,
+          );
+        const isMedlar =
+          catalogMatch?.id === "medlar" ||
+          /mispel|medlar|mespilus\s+germanica/.test(botanicalIdentity);
+        const isFig =
+          catalogMatch?.id === "common-fig" ||
+          /feige|common\s+fig|ficus\s+carica/.test(botanicalIdentity);
+        const isBarberry =
+          catalogMatch?.id === "common-barberry" ||
+          /berberitz|barberry|berberis\s+vulgaris/.test(botanicalIdentity);
+        const isTreeOfHeaven =
+          catalogMatch?.id === "tree-of-heaven" ||
+          /götterbaum|tree\s+of\s+heaven|ailanthus\s+altissima/.test(
+            botanicalIdentity,
+          );
+        const isAspen =
+          /espe|european\s+aspen|populus\s+tremula/.test(botanicalIdentity);
+        const isPoplar =
+          catalogMatch?.id === "poplar" ||
+          normalizedCommonName === "pappel" ||
+          normalizedCommonName === "poplar" ||
+          /populus\s+(?:sp\.?|nigra|alba|canadensis)/.test(botanicalIdentity);
+        const isAlder =
+          catalogMatch?.id === "alder" ||
+          normalizedCommonName === "erle" ||
+          normalizedCommonName === "alder" ||
+          /alnus\s+glutinosa/.test(botanicalIdentity);
+        const isBeech =
+          /buche|european\s+beech|fagus\s+sylvatica/.test(botanicalIdentity);
+        const isElm =
+          /ulme|wych\s+elm|ulmus\s+glabra/.test(botanicalIdentity);
         const fruitPlate = /mirabell|syriaca/.test(botanicalIdentity)
           ? "mirabelle"
           : /kirsch|cherry|prunus\s+(avium|cerasus)/.test(
@@ -8571,17 +10215,49 @@ out meta geom;`;
           Alnus: "alnus",
           Fraxinus: "fraxinus",
           Gleditsia: "gleditsia",
-          Tilia: "tilia",
         }[illustrationGenus];
         const individualGenusPlate = {
           Aesculus: "botanical-aesculus-plate",
           Betula: "botanical-betula-plate",
           Juglans: "botanical-juglans-plate",
           Syringa: "botanical-syringa-plate",
+          Tilia: "botanical-tilia-plate",
         }[illustrationGenus];
+        const dedicatedPlateClass = [
+          [isCherryLaurel, "botanical-prunus-laurocerasus-plate"],
+          [isBlackLocust, "botanical-robinia-pseudoacacia-plate"],
+          [isBlueSpruce, "botanical-picea-pungens-plate"],
+          [isNorwaySpruce, "botanical-picea-abies-plate"],
+          [isScotsPine, "botanical-pinus-sylvestris-plate"],
+          [isJapaneseMaple, "botanical-acer-palmatum-plate"],
+          [isServiceberry, "botanical-amelanchier-lamarckii-plate"],
+          [isCornelianCherry, "botanical-cornus-mas-plate"],
+          [isGinkgo, "botanical-ginkgo-biloba-plate"],
+          [isEmpressTree, "botanical-paulownia-tomentosa-plate"],
+          [isBlackElder, "botanical-sambucus-nigra-plate"],
+          [isYew, "botanical-taxus-baccata-plate"],
+          [isWildCherry, "botanical-prunus-avium-plate"],
+          [isBlackthorn, "botanical-prunus-spinosa-plate"],
+          [isWildRose, "botanical-rosa-wild-plate"],
+          [isMulberry, "botanical-morus-plate"],
+          [isMedlar, "botanical-mespilus-germanica-plate"],
+          [isFig, "botanical-ficus-carica-plate"],
+          [isBarberry, "botanical-berberis-vulgaris-plate"],
+          [isTreeOfHeaven, "botanical-ailanthus-altissima-plate"],
+          [isOak, "botanical-quercus-robur-plate"],
+          [isRowan, "botanical-sorbus-aucuparia-plate"],
+          [isWhitebeam, "botanical-sorbus-aria-plate"],
+          [isNorwayMaple, "botanical-acer-platanoides-plate"],
+          [isAspen, "botanical-populus-tremula-plate"],
+          [isPoplar, "botanical-populus-nigra-plate"],
+          [isAlder, "botanical-alnus-glutinosa-plate"],
+          [isBeech, "botanical-fagus-sylvatica-plate"],
+          [isElm, "botanical-ulmus-glabra-plate"],
+          [isRedMirabelle, "botanical-red-mirabelle-plate"],
+        ].find(([matches]) => matches)?.[1];
         const plate = document.createElement("div");
-        plate.className = isRedMirabelle
-          ? "botanical-plate botanical-red-mirabelle-plate"
+        plate.className = dedicatedPlateClass
+          ? `botanical-plate ${dedicatedPlateClass}`
           : fruitPlate
             ? `botanical-plate botanical-fruit-plate fruit-${fruitPlate}`
             : extraFruitPlate
@@ -9370,7 +11046,13 @@ out meta geom;`;
           type: "fill",
           source: "campus-boundary",
           paint: {
-            "fill-color": "#8dd08b",
+            "fill-color": [
+              "match",
+              ["get", "campus_area"],
+              "south",
+              "#d3a66c",
+              "#8dd08b",
+            ],
             "fill-opacity": 0.12,
           },
         });
@@ -9380,7 +11062,13 @@ out meta geom;`;
           type: "line",
           source: "campus-boundary",
           paint: {
-            "line-color": "#e7f7d5",
+            "line-color": [
+              "match",
+              ["get", "campus_area"],
+              "south",
+              "#ffd7a0",
+              "#e7f7d5",
+            ],
             "line-width": ["interpolate", ["linear"], ["zoom"], 12, 1.8, 18, 4],
             "line-opacity": 0.96,
             "line-dasharray": [2.2, 1.4],
@@ -9855,6 +11543,10 @@ out meta geom;`;
       document.getElementById("place-tree").addEventListener("click", () => {
         setManualPlacement(!manualPlacementMode);
       });
+
+      document
+        .getElementById("mobile-add-tree")
+        .addEventListener("click", captureTreeAtCurrentLocation);
 
       document
         .getElementById("export-annotations")
