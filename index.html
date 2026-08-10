@@ -1231,6 +1231,134 @@
         color: #a05b2e;
       }
 
+      .cloud-sync-card {
+        display: grid;
+        gap: 10px;
+        margin: 0 0 14px;
+        border: 1px solid rgba(49, 88, 55, 0.16);
+        border-radius: 16px;
+        padding: 12px;
+        background: rgba(244, 246, 234, 0.88);
+      }
+
+      .cloud-sync-heading,
+      .cloud-sync-user,
+      .cloud-sync-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .cloud-sync-heading {
+        justify-content: space-between;
+      }
+
+      .cloud-sync-heading strong {
+        color: var(--forest-900);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 15px;
+      }
+
+      .cloud-sync-badge {
+        display: inline-flex;
+        min-height: 25px;
+        align-items: center;
+        gap: 6px;
+        border-radius: 999px;
+        padding: 4px 8px;
+        color: var(--muted);
+        background: rgba(255, 253, 247, 0.82);
+        font-size: 9px;
+        font-weight: 800;
+      }
+
+      .cloud-sync-badge::before {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #a6a99c;
+        content: "";
+      }
+
+      .cloud-sync-badge[data-state="online"]::before {
+        background: #4e8155;
+        box-shadow: 0 0 0 3px rgba(78, 129, 85, 0.14);
+      }
+
+      .cloud-sync-badge[data-state="pending"]::before {
+        background: #c6903f;
+      }
+
+      .cloud-sync-badge[data-state="error"]::before {
+        background: #a6533d;
+      }
+
+      .cloud-sync-copy,
+      .cloud-sync-message {
+        margin: 0;
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.45;
+      }
+
+      .cloud-sync-message.is-error {
+        color: #934a36;
+      }
+
+      .cloud-auth-form {
+        display: grid;
+        gap: 8px;
+      }
+
+      .cloud-auth-fields {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+        gap: 7px;
+      }
+
+      .cloud-auth-fields input {
+        min-width: 0;
+        min-height: 39px;
+        border: 1px solid rgba(41, 76, 56, 0.18);
+        border-radius: 11px;
+        padding: 8px 10px;
+        color: var(--ink);
+        background: rgba(255, 253, 247, 0.92);
+        font-size: 11px;
+      }
+
+      .cloud-sync-user {
+        justify-content: space-between;
+        color: var(--forest-800);
+        font-size: 10px;
+        font-weight: 750;
+      }
+
+      .cloud-sync-actions {
+        flex-wrap: wrap;
+      }
+
+      .cloud-sync-actions .annotation-button {
+        flex: 1 1 128px;
+      }
+
+      .cloud-file-input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+
+      .cloud-auth-form[hidden],
+      .cloud-sync-user[hidden],
+      .cloud-sync-actions[hidden],
+      .cloud-sync-actions [hidden],
+      #import-osm[hidden] {
+        display: none !important;
+      }
+
       .annotation-source-key {
         display: inline-flex;
         align-items: center;
@@ -3814,6 +3942,16 @@
           padding: 8px 5px 6px;
           background: linear-gradient(180deg, transparent, var(--cream) 24%);
         }
+
+        .cloud-auth-fields {
+          grid-template-columns: 1fr;
+        }
+
+        .cloud-auth-fields input,
+        .cloud-sync-actions .annotation-button {
+          min-height: 44px;
+          font-size: 16px;
+        }
       }
 
       @media (max-width: 350px) {
@@ -4287,6 +4425,79 @@
           <p class="annotation-copy" data-i18n="annotationsIntro">
             Load mapped OSM trees and add or edit field observations.
           </p>
+          <div class="cloud-sync-card" id="cloud-sync-card">
+            <div class="cloud-sync-heading">
+              <strong data-i18n="cloudSyncHeading">Device sync</strong>
+              <span
+                class="cloud-sync-badge"
+                id="cloud-sync-badge"
+                data-state="offline"
+              >Local only</span>
+            </div>
+            <p class="cloud-sync-copy" data-i18n="cloudSyncCopy">
+              Sign in on every device to keep field records synchronized.
+            </p>
+            <form class="cloud-auth-form" id="cloud-auth-form">
+              <div class="cloud-auth-fields">
+                <input
+                  id="cloud-email"
+                  name="email"
+                  type="email"
+                  autocomplete="username"
+                  placeholder="Email"
+                  data-i18n-placeholder="cloudEmail"
+                  required
+                >
+                <input
+                  id="cloud-password"
+                  name="password"
+                  type="password"
+                  autocomplete="current-password"
+                  placeholder="Password"
+                  data-i18n-placeholder="cloudPassword"
+                  required
+                >
+              </div>
+              <button
+                class="annotation-button primary"
+                id="cloud-sign-in"
+                type="submit"
+                data-i18n="cloudSignIn"
+              >Sign in &amp; sync</button>
+            </form>
+            <div class="cloud-sync-user" id="cloud-sync-user" hidden>
+              <span id="cloud-user-email"></span>
+              <button
+                class="annotation-button"
+                id="cloud-sign-out"
+                type="button"
+                data-i18n="cloudSignOut"
+              >Sign out</button>
+            </div>
+            <div class="cloud-sync-actions" id="cloud-sync-actions" hidden>
+              <button
+                class="annotation-button"
+                id="cloud-upload-local"
+                type="button"
+                data-i18n="cloudUploadLocal"
+              >Upload this device</button>
+              <label class="annotation-button" for="cloud-import-file">
+                <span data-i18n="cloudImportGeoJson">Import GeoJSON</span>
+              </label>
+              <input
+                class="cloud-file-input"
+                id="cloud-import-file"
+                type="file"
+                accept=".geojson,.json,application/geo+json,application/json"
+              >
+            </div>
+            <p
+              class="cloud-sync-message"
+              id="cloud-sync-message"
+              role="status"
+              aria-live="polite"
+            ></p>
+          </div>
           <div class="annotation-actions">
             <button
               class="annotation-button primary"
@@ -4378,6 +4589,10 @@
       </div>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
     <script>
       "use strict";
 
@@ -4413,6 +4628,9 @@
       const OSM_TREE_SNAPSHOT = [[2271673762,9.9732249,49.7856427,"broadleaved",""],[2271673763,9.9731835,49.7857477,"broadleaved",""],[2271673764,9.9731484,49.7858691,"broadleaved",""],[2271673766,9.9731357,49.7859803,"broadleaved",""],[2271673767,9.9730974,49.7860955,"broadleaved",""],[2271673769,9.9730847,49.7862128,"broadleaved",""],[2271673770,9.9713809,49.7862508,"",""],[2271673771,9.9730656,49.786326,"broadleaved",""],[2271673773,9.9730432,49.7864413,"broadleaved",""],[2271673774,9.9732671,49.785936,"broadleaved",""],[2271673787,9.9738465,49.7865154,"broadleaved",""],[2271673791,9.974076,49.786538,"broadleaved",""],[2271673795,9.9730528,49.7865565,"broadleaved",""],[2271673812,9.9730369,49.7866718,"broadleaved",""],[2271673813,9.973837,49.7866821,"broadleaved",""],[2271673815,9.9721586,49.7866845,"broadleaved",""],[2271673825,9.9730369,49.7867932,"broadleaved",""],[2271673831,9.9730241,49.7869105,"broadleaved",""],[2271673839,9.9733556,49.7870216,"broadleaved",""],[2271673841,9.9730847,49.7870258,"broadleaved",""],[2271673842,9.9735086,49.7870278,"broadleaved",""],[2271673850,9.973786,49.7871451,"broadleaved",""],[2271673851,9.9716287,49.7871471,"",""],[2271673861,9.9720275,49.7872388,"",""],[2271673864,9.9720893,49.7872586,"",""],[2271673866,9.9706129,49.7872932,"",""],[2271673867,9.9736521,49.7873427,"",""],[2271673868,9.9720414,49.7873525,"",""],[2271673870,9.970401,49.7873805,"",""],[2271673871,9.9748985,49.7873859,"broadleaved",""],[2271673872,9.9738943,49.7873983,"",""],[2271673874,9.9720777,49.7874261,"",""],[2271673875,9.9748634,49.7874456,"broadleaved",""],[2271673876,9.9716488,49.7875341,"",""],[2271673878,9.9749335,49.7876041,"broadleaved",""],[2271673883,9.9734959,49.7877193,"",""],[2271673884,9.9713229,49.7877604,"",""],[2271673888,9.9736234,49.7879251,"",""],[2271673904,9.9702613,49.7880863,"",""],[2271673905,9.9733779,49.7881145,"",""],[2271673907,9.9733779,49.7883141,"broadleaved",""],[2271673908,9.9717985,49.7883628,"broadleaved",""],[2271673909,9.9714063,49.7883745,"broadleaved",""],[2271673910,9.9716543,49.7884487,"broadleaved",""],[2271673911,9.9704258,49.7884516,"broadleaved",""],[2271673912,9.9714311,49.7884822,"broadleaved",""],[2289209689,9.9757742,49.7883402,"broadleaved",""],[4853405009,9.9745149,49.7881964,"broadleaved",""],[4853405729,9.9745298,49.7880039,"broadleaved",""],[4853406275,9.9742502,49.7884037,"broadleaved",""],[4853407630,9.9740661,49.7879833,"",""],[5162976607,9.972592,49.7838957,"broadleaved","2x Walnuss"],[5162976608,9.9722538,49.7840124,"broadleaved","Apfel"],[5162976609,9.9717727,49.7841421,"broadleaved","7x Mirabelle"],[5162976610,9.9692853,49.7849869,"broadleaved","Kirsche"],[5162976611,9.9685773,49.7851801,"broadleaved","Kirsche"],[5162976614,9.9689402,49.7858652,"broadleaved","Apfel"],[5162976616,9.9693574,49.7858623,"broadleaved","Apfel"],[5162976620,9.971506,49.7872176,"","Apfel"],[5162977621,9.9741931,49.7877162,"","Kirsche"],[5162977622,9.9745375,49.7865304,"broadleaved","Kirsche"],[5162977623,9.9750436,49.7872479,"broadleaved","3x Kirsche"],[5162977624,9.9766444,49.7850643,"","Kirsche"],[5162977625,9.9760078,49.785253,"","Apfel"],[12199698123,9.9691254,49.7866611,"broadleaved",""],[12199698124,9.9691254,49.7866979,"broadleaved",""],[12199698125,9.9692055,49.7866989,"broadleaved",""],[12199698126,9.969291,49.7866974,"broadleaved",""],[12199698127,9.9692887,49.7866601,"broadleaved",""],[12199698128,9.9692048,49.7866601,"broadleaved",""],[12199698129,9.9687838,49.7865805,"broadleaved",""],[12199698130,9.9687838,49.7866173,"broadleaved",""],[12199698131,9.9688639,49.7866183,"broadleaved",""],[12199698132,9.9689494,49.7866168,"broadleaved",""],[12199698133,9.9689471,49.7865795,"broadleaved",""],[12199698134,9.9688632,49.7865795,"broadleaved",""],[12199698167,9.968951,49.7850511,"broadleaved",""],[12199698168,9.9690969,49.7850467,"broadleaved",""],[12199698169,9.9693031,49.7850916,"broadleaved",""],[12199698170,9.9691758,49.7849462,"broadleaved",""],[12199698171,9.9685749,49.7851219,"broadleaved",""],[12199698172,9.9684193,49.7852111,"broadleaved",""],[12199698173,9.9684274,49.7852882,"broadleaved",""],[12199698174,9.9685642,49.7856138,"broadleaved",""],[13027313453,9.9685952,49.7883401,"broadleaved",""],[13027313458,9.968586,49.7881966,"broadleaved",""],[13027313463,9.9685828,49.7880502,"broadleaved",""],[13027313468,9.9685797,49.7879078,"broadleaved",""],[13027313473,9.9685741,49.7877635,"broadleaved",""],[13027313478,9.9685747,49.7876188,"broadleaved",""],[13027313483,9.9685716,49.7874757,"broadleaved",""],[13027313488,9.9685701,49.787332,"broadleaved",""],[13027313493,9.9685713,49.7871777,"broadleaved",""],[13027313494,9.9685766,49.7870465,"broadleaved",""],[13027359128,9.9685743,49.7867543,"broadleaved",""],[13027359129,9.968561,49.7865915,"broadleaved",""],[13027359130,9.9685522,49.7864286,"broadleaved",""],[13027359135,9.9685488,49.7862707,"broadleaved",""],[13027359144,9.9685417,49.7861052,"broadleaved",""],[13027359145,9.9685132,49.7859229,"broadleaved",""],[13027359150,9.9684485,49.7857393,"broadleaved",""]];
       const ANNOTATION_STORAGE_KEY = "hubland-generic-tree-annotations-v1";
       const OSM_CONTEXT_STORAGE_KEY = "hubland-osm-vegetation-context-v1";
+      const CLOUD_OUTBOX_STORAGE_KEY = "hubland-tree-cloud-outbox-v1";
+      const CLOUD_MIGRATION_STORAGE_KEY = "hubland-tree-cloud-migration-v1";
+      const CLOUD_MIGRATION_STATE_KEY = "hubland-tree-cloud-migration-state-v1";
       const CURATED_ANNOTATION_CORRECTIONS = {
         "annotation-1785428693123-qlrkzu": {
           common_name: "Flieder",
@@ -6191,6 +6409,40 @@
           annotationsHeading: "Editable campus trees",
           annotationsIntro:
             "Load mapped OSM trees, then add or edit field observations.",
+          cloudSyncHeading: "Device sync",
+          cloudSyncCopy:
+            "Sign in on every device to keep field records synchronized.",
+          cloudEmail: "Email",
+          cloudPassword: "Password",
+          cloudSignIn: "Sign in & sync",
+          cloudSignOut: "Sign out",
+          cloudUploadLocal: "Upload this device",
+          cloudUploadLocalCount: "Upload this device ({count})",
+          cloudImportGeoJson: "Import GeoJSON",
+          cloudLocalOnly: "Local only",
+          cloudViewOnly: "Cloud view",
+          cloudOnline: "Synchronized",
+          cloudPending: "Syncing…",
+          cloudError: "Sync error",
+          cloudNotConfigured:
+            "Cloud sync is not configured in this copy. Local editing still works.",
+          cloudSignedOut:
+            "Cloud trees are visible. Sign in to add or edit synchronized records.",
+          cloudSignedIn: "Signed in as {email}. Changes sync automatically.",
+          cloudSignInFailed: "Sign-in failed. Check email and password.",
+          cloudWriteNeedsLogin:
+            "Saved on this device. Sign in to synchronize this change.",
+          cloudUploadConfirm:
+            "Upload all {count} records from this device to the shared database? Existing records with the same ID will be updated.",
+          cloudUploadComplete: "Uploaded {count} records successfully.",
+          cloudImportComplete: "Imported and uploaded {count} GeoJSON records.",
+          cloudImportInvalid: "This file is not a valid tree GeoJSON export.",
+          cloudEmptyUpload: "There are no local records to upload.",
+          cloudWorking: "Synchronizing tree records…",
+          cloudConflict:
+            "{uploaded} record(s) synchronized; {count} older offline change(s) skipped because newer synchronized data already exists.",
+          cloudReadFailed:
+            "The shared records could not be loaded. Cached local records remain available.",
           importOsm: "Load OSM data",
           importingOsm: "Loading OSM…",
           placeTree: "Place tree",
@@ -6545,6 +6797,43 @@
           annotationsHeading: "Bearbeitbare Campusbäume",
           annotationsIntro:
             "Lade kartierte OSM-Bäume und ergänze oder bearbeite anschließend Beobachtungen vor Ort.",
+          cloudSyncHeading: "Geräte-Synchronisation",
+          cloudSyncCopy:
+            "Melde dich auf jedem Gerät an, damit Felddaten automatisch synchron bleiben.",
+          cloudEmail: "E-Mail",
+          cloudPassword: "Passwort",
+          cloudSignIn: "Anmelden & synchronisieren",
+          cloudSignOut: "Abmelden",
+          cloudUploadLocal: "Dieses Gerät hochladen",
+          cloudUploadLocalCount: "Dieses Gerät hochladen ({count})",
+          cloudImportGeoJson: "GeoJSON importieren",
+          cloudLocalOnly: "Nur lokal",
+          cloudViewOnly: "Cloud-Ansicht",
+          cloudOnline: "Synchronisiert",
+          cloudPending: "Synchronisiert…",
+          cloudError: "Sync-Fehler",
+          cloudNotConfigured:
+            "Die Cloud-Synchronisation ist in dieser Kopie noch nicht konfiguriert. Lokales Bearbeiten funktioniert weiterhin.",
+          cloudSignedOut:
+            "Cloud-Bäume sind sichtbar. Melde dich an, um synchronisierte Datensätze zu ergänzen oder zu bearbeiten.",
+          cloudSignedIn:
+            "Angemeldet als {email}. Änderungen werden automatisch synchronisiert.",
+          cloudSignInFailed:
+            "Anmeldung fehlgeschlagen. Prüfe E-Mail und Passwort.",
+          cloudWriteNeedsLogin:
+            "Auf diesem Gerät gespeichert. Melde dich an, um diese Änderung zu synchronisieren.",
+          cloudUploadConfirm:
+            "Alle {count} Datensätze dieses Geräts in die gemeinsame Datenbank hochladen? Bestehende Datensätze mit derselben ID werden aktualisiert.",
+          cloudUploadComplete: "{count} Datensätze erfolgreich hochgeladen.",
+          cloudImportComplete:
+            "{count} GeoJSON-Datensätze importiert und hochgeladen.",
+          cloudImportInvalid: "Diese Datei ist kein gültiger Baum-GeoJSON-Export.",
+          cloudEmptyUpload: "Auf diesem Gerät gibt es keine lokalen Datensätze.",
+          cloudWorking: "Baumdatensätze werden synchronisiert…",
+          cloudConflict:
+            "{uploaded} Datensatz/Datensätze synchronisiert; {count} ältere Offline-Änderung(en) übersprungen, weil bereits neuere synchronisierte Daten vorliegen.",
+          cloudReadFailed:
+            "Die gemeinsamen Datensätze konnten nicht geladen werden. Lokal gespeicherte Daten bleiben verfügbar.",
           importOsm: "OSM-Daten laden",
           importingOsm: "OSM wird geladen…",
           placeTree: "Baum setzen",
@@ -7094,6 +7383,22 @@
       let locatingTree = false;
       let mobileFieldStatusTimer = null;
       let annotationImportProgress = 0;
+      let cloudConfigured = false;
+      let cloudDb = null;
+      let cloudAuth = null;
+      let cloudUser = null;
+      let cloudUnsubscribe = null;
+      let cloudSnapshotReceived = false;
+      let cloudFlushPromise = null;
+      let cloudRecordVersions = new Map();
+      let cloudDeletedIds = new Set();
+      let cloudStatus = {
+        state: "offline",
+        badgeKey: "cloudLocalOnly",
+        messageKey: "cloudNotConfigured",
+        variables: {},
+        isError: false,
+      };
 
       function number(value) {
         const parsed = Number(value);
@@ -7213,6 +7518,8 @@
             control.title = t(key);
           });
         });
+
+        renderCloudSyncUI();
 
         if (!refreshDynamic) return;
         renderStats(treeData);
@@ -7334,6 +7641,649 @@
         }
       }
 
+      function firebaseConfigIsReady() {
+        const config = window.TREE_TRACKER_FIREBASE_CONFIG;
+        return Boolean(
+          window.firebase?.initializeApp &&
+            config?.apiKey &&
+            config?.projectId &&
+            !String(config.apiKey).startsWith("REPLACE_") &&
+            !String(config.projectId).startsWith("REPLACE_"),
+        );
+      }
+
+      function setCloudStatus(
+        state,
+        badgeKey,
+        messageKey,
+        variables = {},
+        isError = false,
+      ) {
+        cloudStatus = { state, badgeKey, messageKey, variables, isError };
+        renderCloudSyncUI();
+      }
+
+      function renderCloudSyncUI() {
+        const badge = document.getElementById("cloud-sync-badge");
+        if (!badge) return;
+        badge.dataset.state = cloudStatus.state;
+        badge.textContent = t(cloudStatus.badgeKey, cloudStatus.variables);
+
+        const message = document.getElementById("cloud-sync-message");
+        message.textContent = t(cloudStatus.messageKey, cloudStatus.variables);
+        message.classList.toggle("is-error", cloudStatus.isError);
+
+        const authForm = document.getElementById("cloud-auth-form");
+        const userPanel = document.getElementById("cloud-sync-user");
+        const actions = document.getElementById("cloud-sync-actions");
+        authForm.hidden = !cloudConfigured || Boolean(cloudUser);
+        userPanel.hidden = !cloudConfigured || !cloudUser;
+        actions.hidden = !cloudConfigured || !cloudUser;
+        document.getElementById("cloud-user-email").textContent =
+          cloudUser?.email || "";
+        const migrationCount = loadCloudMigrationData().features.length;
+        const uploadButton = document.getElementById("cloud-upload-local");
+        uploadButton.hidden = migrationCount === 0;
+        uploadButton.textContent = t(
+          migrationCount ? "cloudUploadLocalCount" : "cloudUploadLocal",
+          { count: integerFormatter?.format(migrationCount) || migrationCount },
+        );
+      }
+
+      function loadCloudOutbox() {
+        try {
+          const stored = JSON.parse(localStorage.getItem(CLOUD_OUTBOX_STORAGE_KEY));
+          return Array.isArray(stored) ? stored : [];
+        } catch {
+          return [];
+        }
+      }
+
+      function persistCloudOutbox(outbox) {
+        try {
+          localStorage.setItem(CLOUD_OUTBOX_STORAGE_KEY, JSON.stringify(outbox));
+        } catch (error) {
+          console.warn("Could not persist cloud outbox:", error);
+        }
+      }
+
+      function loadCloudMigrationData() {
+        try {
+          const stored = JSON.parse(
+            localStorage.getItem(CLOUD_MIGRATION_STORAGE_KEY),
+          );
+          if (stored?.type !== "FeatureCollection" || !Array.isArray(stored.features)) {
+            return { type: "FeatureCollection", features: [] };
+          }
+          return {
+            ...stored,
+            features: stored.features.filter(
+              (feature) =>
+                feature?.type === "Feature" &&
+                feature.geometry?.type === "Point" &&
+                feature.properties?.id,
+            ),
+          };
+        } catch {
+          return { type: "FeatureCollection", features: [] };
+        }
+      }
+
+      function captureLocalMigrationData() {
+        try {
+          if (localStorage.getItem(CLOUD_MIGRATION_STATE_KEY)) return;
+          if (annotationData.features.length) {
+            localStorage.setItem(
+              CLOUD_MIGRATION_STORAGE_KEY,
+              JSON.stringify({
+                ...annotationData,
+                name: "Pre-cloud device migration backup",
+                captured_at: new Date().toISOString(),
+              }),
+            );
+            localStorage.setItem(CLOUD_MIGRATION_STATE_KEY, "pending");
+          } else {
+            localStorage.setItem(CLOUD_MIGRATION_STATE_KEY, "complete");
+          }
+        } catch (error) {
+          console.warn("Could not preserve the pre-cloud migration data:", error);
+        }
+      }
+
+      function completeLocalMigration() {
+        try {
+          localStorage.removeItem(CLOUD_MIGRATION_STORAGE_KEY);
+          localStorage.setItem(CLOUD_MIGRATION_STATE_KEY, "complete");
+        } catch (error) {
+          console.warn("Could not complete the local migration:", error);
+        }
+        renderCloudSyncUI();
+      }
+
+      function prepareFeatureForCloud(feature) {
+        if (
+          feature?.type !== "Feature" ||
+          feature.geometry?.type !== "Point" ||
+          !Array.isArray(feature.geometry.coordinates) ||
+          feature.geometry.coordinates.length !== 2 ||
+          !feature.properties?.id
+        ) {
+          return null;
+        }
+        const coordinates = feature.geometry.coordinates.map(Number);
+        if (
+          !coordinates.every(Number.isFinite) ||
+          !pointInCampus(coordinates)
+        ) {
+          return null;
+        }
+        const now = new Date().toISOString();
+        const health = ["good", "fair", "poor", "dead", "not_recorded"].includes(
+          feature.properties.health,
+        )
+          ? feature.properties.health
+          : "good";
+        const reviewStatus = ["unreviewed", "reviewed"].includes(
+          feature.properties.review_status,
+        )
+          ? feature.properties.review_status
+          : "unreviewed";
+        return {
+          type: "Feature",
+          geometry: { type: "Point", coordinates },
+          properties: {
+            ...feature.properties,
+            id: String(feature.properties.id).slice(0, 180),
+            common_name: String(feature.properties.common_name || "").slice(0, 200),
+            scientific_name: String(
+              feature.properties.scientific_name || "",
+            ).slice(0, 300),
+            genus: String(feature.properties.genus || "").slice(0, 120),
+            notes: String(feature.properties.notes || "").slice(0, 10000),
+            photo_url: String(feature.properties.photo_url || "").slice(0, 2048),
+            health,
+            review_status: reviewStatus,
+            created_at: String(feature.properties.created_at || now).slice(0, 40),
+            updated_at: String(feature.properties.updated_at || now).slice(0, 40),
+          },
+        };
+      }
+
+      function cloudClientDate(value) {
+        const parsed = value ? new Date(value) : new Date();
+        const now = Date.now();
+        if (
+          Number.isNaN(parsed.getTime()) ||
+          parsed.getTime() > now + 5 * 60 * 1000
+        ) {
+          return new Date(now);
+        }
+        return parsed;
+      }
+
+      function cloudFeatureDate(feature) {
+        return cloudClientDate(
+          feature?.properties?.updated_at || feature?.properties?.created_at,
+        );
+      }
+
+      function queueCloudOperation(type, feature) {
+        const prepared = prepareFeatureForCloud(feature);
+        if (!cloudConfigured || !prepared) return;
+        const outbox = loadCloudOutbox().filter(
+          (entry) => entry.id !== prepared.properties.id,
+        );
+        outbox.push({
+          operation_id: `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
+          type,
+          id: prepared.properties.id,
+          feature: prepared,
+          queued_at: new Date().toISOString(),
+          client_updated_at: new Date().toISOString(),
+        });
+        persistCloudOutbox(outbox);
+        if (cloudUser) {
+          flushCloudOutbox();
+        } else {
+          setCloudStatus(
+            "pending",
+            "cloudPending",
+            "cloudWriteNeedsLogin",
+          );
+        }
+      }
+
+      function cloudDocumentData(
+        feature,
+        { deleted = false, clientUpdatedAt = null } = {},
+      ) {
+        const timestamp = window.firebase.firestore.Timestamp.fromDate(
+          cloudClientDate(clientUpdatedAt),
+        );
+        const serverTimestamp =
+          window.firebase.firestore.FieldValue.serverTimestamp();
+        return {
+          schema_version: 1,
+          feature,
+          deleted_at: deleted ? serverTimestamp : null,
+          client_updated_at: timestamp,
+          updated_at: serverTimestamp,
+          updated_by: cloudUser.uid,
+        };
+      }
+
+      function cloudOperationKey(entry) {
+        return (
+          entry.operation_id ||
+          `${entry.id}:${entry.type}:${entry.queued_at || "legacy"}`
+        );
+      }
+
+      function removeCloudOperation(operationKey) {
+        persistCloudOutbox(
+          loadCloudOutbox().filter(
+            (candidate) => cloudOperationKey(candidate) !== operationKey,
+          ),
+        );
+      }
+
+      async function cloudWriteIsStale(reference, clientUpdatedAt) {
+        try {
+          const current = await reference.get();
+          if (!current.exists) return false;
+          const data = current.data();
+          const remoteMilliseconds = data.client_updated_at?.toMillis?.() || 0;
+          const localMilliseconds = cloudClientDate(clientUpdatedAt).getTime();
+          return Boolean(data.deleted_at) || remoteMilliseconds > localMilliseconds;
+        } catch {
+          return false;
+        }
+      }
+
+      async function flushCloudOutboxNow() {
+        if (!cloudConfigured || !cloudDb || !cloudUser) return;
+        if (!loadCloudOutbox().length) {
+          setCloudStatus(
+            "online",
+            "cloudOnline",
+            "cloudSignedIn",
+            { email: cloudUser.email || "" },
+          );
+          return;
+        }
+        setCloudStatus("pending", "cloudPending", "cloudWorking");
+        let conflictCount = 0;
+        while (loadCloudOutbox().length) {
+          if (!cloudUser) return;
+          const outbox = loadCloudOutbox();
+          const entry = outbox[0];
+          const operationKey = cloudOperationKey(entry);
+          const reference = cloudDb.collection("trees").doc(entry.id);
+          try {
+            if (entry.type === "delete") {
+              await reference.update(
+                cloudDocumentData(entry.feature, {
+                  deleted: true,
+                  clientUpdatedAt:
+                    entry.client_updated_at || entry.queued_at,
+                }),
+              );
+            } else {
+              await reference.set(
+                cloudDocumentData(entry.feature, {
+                  clientUpdatedAt:
+                    entry.client_updated_at || entry.queued_at,
+                }),
+              );
+            }
+            removeCloudOperation(operationKey);
+          } catch (error) {
+            if (entry.type === "delete" && error?.code === "not-found") {
+              removeCloudOperation(operationKey);
+              continue;
+            }
+            if (
+              error?.code === "permission-denied" &&
+              (await cloudWriteIsStale(
+                reference,
+                entry.client_updated_at || entry.queued_at,
+              ))
+            ) {
+              removeCloudOperation(operationKey);
+              conflictCount += 1;
+              continue;
+            }
+            console.error("Cloud sync write failed:", error);
+            setCloudStatus(
+              "error",
+              "cloudError",
+              "cloudReadFailed",
+              {},
+              true,
+            );
+            return;
+          }
+        }
+        if (conflictCount) {
+          setCloudStatus(
+            "error",
+            "cloudError",
+            "cloudConflict",
+            { count: conflictCount, uploaded: 0 },
+            true,
+          );
+          return;
+        }
+        if (!cloudUser) {
+          setCloudStatus("online", "cloudViewOnly", "cloudSignedOut");
+          return;
+        }
+        setCloudStatus(
+          "online",
+          "cloudOnline",
+          "cloudSignedIn",
+          { email: cloudUser.email || "" },
+        );
+      }
+
+      function flushCloudOutbox() {
+        if (cloudFlushPromise) return cloudFlushPromise;
+        cloudFlushPromise = flushCloudOutboxNow().finally(() => {
+          cloudFlushPromise = null;
+        });
+        return cloudFlushPromise;
+      }
+
+      function applyCloudSnapshot(snapshot) {
+        const activeFeatures = [];
+        const recordVersions = new Map();
+        const deletedIds = new Set();
+        snapshot.forEach((documentSnapshot) => {
+          const data = documentSnapshot.data();
+          recordVersions.set(
+            documentSnapshot.id,
+            data.client_updated_at?.toMillis?.() || 0,
+          );
+          if (data.deleted_at) {
+            deletedIds.add(documentSnapshot.id);
+            return;
+          }
+          const prepared = prepareFeatureForCloud(data.feature);
+          if (prepared) activeFeatures.push(prepared);
+        });
+        cloudRecordVersions = recordVersions;
+        cloudDeletedIds = deletedIds;
+        cloudSnapshotReceived = true;
+        annotationData = {
+          ...annotationData,
+          name: "Synchronized campus tree annotations",
+          features: activeFeatures,
+        };
+        persistAnnotations();
+        if (map) syncAnnotationSource();
+        if (snapshot.metadata.hasPendingWrites) {
+          setCloudStatus("pending", "cloudPending", "cloudWorking");
+        } else if (cloudUser) {
+          setCloudStatus(
+            "online",
+            "cloudOnline",
+            "cloudSignedIn",
+            { email: cloudUser.email || "" },
+          );
+        } else {
+          setCloudStatus("online", "cloudViewOnly", "cloudSignedOut");
+        }
+      }
+
+      async function initialiseCloudSync() {
+        cloudConfigured = firebaseConfigIsReady();
+        if (!cloudConfigured) {
+          setCloudStatus(
+            "offline",
+            "cloudLocalOnly",
+            "cloudNotConfigured",
+          );
+          return;
+        }
+        captureLocalMigrationData();
+        try {
+          if (!window.firebase.apps.length) {
+            window.firebase.initializeApp(window.TREE_TRACKER_FIREBASE_CONFIG);
+          }
+          cloudAuth = window.firebase.auth();
+          cloudDb = window.firebase.firestore();
+          if (window.TREE_TRACKER_USE_FIREBASE_EMULATORS) {
+            cloudAuth.useEmulator("http://127.0.0.1:9099", {
+              disableWarnings: true,
+            });
+            cloudDb.useEmulator("127.0.0.1", 8080);
+          }
+          try {
+            await cloudDb.enablePersistence({ synchronizeTabs: true });
+          } catch (error) {
+            if (!["failed-precondition", "unimplemented"].includes(error?.code)) {
+              console.warn("Firestore persistence unavailable:", error);
+            }
+          }
+
+          cloudAuth.onAuthStateChanged((user) => {
+            cloudUser = user || null;
+            renderAnnotationUI();
+            if (cloudUser) {
+              setCloudStatus(
+                "online",
+                "cloudOnline",
+                "cloudSignedIn",
+                { email: cloudUser.email || "" },
+              );
+              flushCloudOutbox();
+            } else {
+              setCloudStatus("online", "cloudViewOnly", "cloudSignedOut");
+            }
+          });
+
+          await new Promise((resolve) => {
+            let settled = false;
+            const finish = () => {
+              if (settled) return;
+              settled = true;
+              resolve();
+            };
+            cloudUnsubscribe = cloudDb
+              .collection("trees")
+              .onSnapshot(
+                { includeMetadataChanges: true },
+                (snapshot) => {
+                  applyCloudSnapshot(snapshot);
+                  finish();
+                },
+                (error) => {
+                  console.error("Cloud sync read failed:", error);
+                  setCloudStatus(
+                    "error",
+                    "cloudError",
+                    "cloudReadFailed",
+                    {},
+                    true,
+                  );
+                  finish();
+                },
+              );
+            window.setTimeout(finish, 5000);
+          });
+        } catch (error) {
+          console.error("Could not initialize Firebase:", error);
+          setCloudStatus(
+            "error",
+            "cloudError",
+            "cloudReadFailed",
+            {},
+            true,
+          );
+        }
+      }
+
+      async function uploadFeaturesToCloud(features, successKey) {
+        if (!cloudUser || !cloudDb) return;
+        const preparedById = new Map();
+        features
+          .map(prepareFeatureForCloud)
+          .filter(Boolean)
+          .forEach((feature) => {
+            preparedById.set(feature.properties.id, feature);
+          });
+        const preparedFeatures = [...preparedById.values()];
+        if (!preparedFeatures.length) {
+          setCloudStatus("online", "cloudOnline", "cloudEmptyUpload");
+          return { uploaded: 0, conflicts: 0 };
+        }
+        setCloudStatus("pending", "cloudPending", "cloudWorking");
+        let uploaded = 0;
+        let conflicts = 0;
+        const uploadedFeatures = [];
+        for (let offset = 0; offset < preparedFeatures.length; offset += 20) {
+          const results = await Promise.all(
+            preparedFeatures.slice(offset, offset + 20).map(async (feature) => {
+              if (!cloudUser) throw new Error("Cloud session ended");
+              const id = feature.properties.id;
+              const reference = cloudDb.collection("trees").doc(id);
+              const clientDate = cloudFeatureDate(feature);
+              const remoteMilliseconds = cloudRecordVersions.get(id) || 0;
+              if (
+                cloudDeletedIds.has(id) ||
+                remoteMilliseconds > clientDate.getTime()
+              ) {
+                return { status: "conflict", feature };
+              }
+              try {
+                await reference.set(
+                  cloudDocumentData(feature, {
+                    clientUpdatedAt: clientDate,
+                  }),
+                );
+                return { status: "uploaded", feature };
+              } catch (error) {
+                if (
+                  error?.code === "permission-denied" &&
+                  (await cloudWriteIsStale(reference, clientDate))
+                ) {
+                  return { status: "conflict", feature };
+                }
+                throw error;
+              }
+            }),
+          );
+          const successfulResults = results.filter(
+            (result) => result.status === "uploaded",
+          );
+          uploaded += successfulResults.length;
+          conflicts += results.filter(
+            (result) => result.status === "conflict",
+          ).length;
+          uploadedFeatures.push(
+            ...successfulResults.map((result) => result.feature),
+          );
+        }
+        if (uploadedFeatures.length) {
+          const mergedFeatures = new Map(
+            annotationData.features.map((feature) => [
+              feature.properties.id,
+              feature,
+            ]),
+          );
+          uploadedFeatures.forEach((feature) => {
+            mergedFeatures.set(feature.properties.id, feature);
+          });
+          annotationData = {
+            ...annotationData,
+            name: "Synchronized campus tree annotations",
+            features: [...mergedFeatures.values()],
+          };
+          persistAnnotations();
+          if (map) syncAnnotationSource();
+          try {
+            const refreshedSnapshot = await cloudDb
+              .collection("trees")
+              .get({ source: "server" });
+            applyCloudSnapshot(refreshedSnapshot);
+          } catch (error) {
+            console.warn("Could not refresh records after bulk upload:", error);
+          }
+        }
+        if (conflicts) {
+          setCloudStatus(
+            "error",
+            "cloudError",
+            "cloudConflict",
+            { count: conflicts, uploaded },
+            true,
+          );
+        } else {
+          setCloudStatus(
+            "online",
+            "cloudOnline",
+            successKey,
+            { count: uploaded },
+          );
+        }
+        return { uploaded, conflicts };
+      }
+
+      async function uploadLocalAnnotations() {
+        if (!cloudUser) return;
+        const migrationData = loadCloudMigrationData();
+        const count = migrationData.features.length;
+        if (!count) {
+          completeLocalMigration();
+          setCloudStatus("online", "cloudOnline", "cloudEmptyUpload");
+          return;
+        }
+        if (!window.confirm(t("cloudUploadConfirm", { count }))) return;
+        try {
+          await uploadFeaturesToCloud(
+            migrationData.features,
+            "cloudUploadComplete",
+          );
+          completeLocalMigration();
+        } catch (error) {
+          console.error("Local annotation upload failed:", error);
+          setCloudStatus(
+            "error",
+            "cloudError",
+            "cloudReadFailed",
+            {},
+            true,
+          );
+        }
+      }
+
+      async function importCloudGeoJson(file) {
+        if (!cloudUser || !file) return;
+        try {
+          const collection = JSON.parse(await file.text());
+          if (
+            collection?.type !== "FeatureCollection" ||
+            !Array.isArray(collection.features)
+          ) {
+            throw new Error("Invalid FeatureCollection");
+          }
+          const prepared = collection.features
+            .map(prepareFeatureForCloud)
+            .filter(Boolean);
+          if (!prepared.length) throw new Error("No valid tree features");
+          await uploadFeaturesToCloud(prepared, "cloudImportComplete");
+        } catch (error) {
+          console.error("GeoJSON cloud import failed:", error);
+          setCloudStatus(
+            "error",
+            "cloudError",
+            "cloudImportInvalid",
+            {},
+            true,
+          );
+        }
+      }
+
       function syncAnnotationSource() {
         const source = map?.getSource("generic-tree-annotations");
         if (source && !map?.getLayer("unclustered-trees")) {
@@ -7346,6 +8296,7 @@
         renderLegend(colorMode);
         applyMapView();
         updateSelectionStatus();
+        renderAnnotationUI();
       }
 
       function syncOsmContextSource() {
@@ -7360,16 +8311,18 @@
 
       function renderAnnotationUI() {
         const count = annotationData.features.length;
+        const editingLocked = cloudConfigured && !cloudUser;
         document.getElementById("annotation-count").textContent = t("annotationsCount", {
           count: integerFormatter.format(count),
         });
 
         const importButton = document.getElementById("import-osm");
+        importButton.hidden = cloudConfigured;
         importButton.disabled = importingOsm;
         importButton.textContent = t(importingOsm ? "importingOsm" : "importOsm");
 
         const placeButton = document.getElementById("place-tree");
-        placeButton.disabled = importingOsm;
+        placeButton.disabled = importingOsm || editingLocked;
         placeButton.classList.toggle("is-active", manualPlacementMode);
         placeButton.textContent = t(
           manualPlacementMode ? "cancelPlacement" : "placeTree",
@@ -7389,7 +8342,7 @@
         const mobileAddLabel = mobileAddButton.querySelector(
           "[data-field-add-label]",
         );
-        mobileAddButton.disabled = importingOsm || locatingTree;
+        mobileAddButton.disabled = importingOsm || locatingTree || editingLocked;
         mobileAddLabel.textContent = t(
           locatingTree
             ? "locatingTree"
@@ -7551,6 +8504,10 @@
         coordinates,
         { detectionMethod = "manual", accuracy = null } = {},
       ) {
+        if (cloudConfigured && !cloudUser) {
+          setCloudStatus("online", "cloudViewOnly", "cloudSignedOut");
+          return;
+        }
         const feature = createAnnotationFeature(coordinates, detectionMethod);
         feature.properties.date_surveyed = localSurveyDate();
         if (detectionMethod === "gps") {
@@ -7563,6 +8520,7 @@
         };
         persistAnnotations();
         syncAnnotationSource();
+        queueCloudOperation("upsert", feature);
         manualPlacementMode = false;
         map.getCanvas().style.cursor = "";
         if (detectionMethod === "manual") clearMobileFieldStatus();
@@ -7574,6 +8532,10 @@
       }
 
       function updateAnnotation(updatedFeature) {
+        if (cloudConfigured && !cloudUser) {
+          setCloudStatus("online", "cloudViewOnly", "cloudSignedOut");
+          return;
+        }
         annotationData = {
           ...annotationData,
           features: annotationData.features.map((feature) =>
@@ -7584,9 +8546,17 @@
         };
         persistAnnotations();
         syncAnnotationSource();
+        queueCloudOperation("upsert", updatedFeature);
       }
 
       function deleteAnnotation(id) {
+        if (cloudConfigured && !cloudUser) {
+          setCloudStatus("online", "cloudViewOnly", "cloudSignedOut");
+          return;
+        }
+        const deletedFeature = annotationData.features.find(
+          (feature) => feature.properties.id === id,
+        );
         annotationData = {
           ...annotationData,
           features: annotationData.features.filter(
@@ -7595,6 +8565,7 @@
         };
         persistAnnotations();
         syncAnnotationSource();
+        if (deletedFeature) queueCloudOperation("delete", deletedFeature);
         if (activePopup) activePopup.remove();
         setAnnotationStatus("annotationDeleted");
       }
@@ -10315,7 +11286,7 @@ out meta geom;`;
               : t("treeBadge", { id: properties.id }),
           ),
         );
-        if (editableFeature) {
+        if (editableFeature && (!cloudConfigured || cloudUser)) {
           const editButton = document.createElement("button");
           editButton.className = "tree-popup-edit-trigger";
           editButton.type = "button";
@@ -11446,6 +12417,7 @@ out meta geom;`;
         }
 
         treeData = await loadTreeData();
+        await initialiseCloudSync();
         renderStats(treeData);
         renderSpeciesChart(treeData);
         renderTreeInsights();
@@ -11486,7 +12458,7 @@ out meta geom;`;
               feature.properties.detection_method ===
               "openstreetmap-overpass",
           );
-          if (!hasOsmBaseline) importOsmBaseline();
+          if (!hasOsmBaseline && !cloudConfigured) importOsmBaseline();
         });
 
         map.on("error", (event) => {
@@ -11552,6 +12524,52 @@ out meta geom;`;
         .getElementById("export-annotations")
         .addEventListener("click", exportAnnotations);
 
+      document
+        .getElementById("cloud-auth-form")
+        .addEventListener("submit", async (event) => {
+          event.preventDefault();
+          if (!cloudAuth) return;
+          const form = event.currentTarget;
+          const email = form.elements.email.value.trim();
+          const password = form.elements.password.value;
+          const signInButton = document.getElementById("cloud-sign-in");
+          signInButton.disabled = true;
+          setCloudStatus("pending", "cloudPending", "cloudWorking");
+          try {
+            await cloudAuth.signInWithEmailAndPassword(email, password);
+            form.reset();
+          } catch (error) {
+            console.warn("Cloud sign-in failed:", error?.code || error);
+            setCloudStatus(
+              "error",
+              "cloudError",
+              "cloudSignInFailed",
+              {},
+              true,
+            );
+          } finally {
+            signInButton.disabled = false;
+          }
+        });
+
+      document.getElementById("cloud-sign-out").addEventListener("click", () => {
+        cloudAuth?.signOut().catch((error) => {
+          console.warn("Cloud sign-out failed:", error?.code || error);
+        });
+      });
+
+      document
+        .getElementById("cloud-upload-local")
+        .addEventListener("click", uploadLocalAnnotations);
+
+      document
+        .getElementById("cloud-import-file")
+        .addEventListener("change", async (event) => {
+          const file = event.currentTarget.files?.[0];
+          await importCloudGeoJson(file);
+          event.currentTarget.value = "";
+        });
+
       document.getElementById("panel-toggle").addEventListener("click", (event) => {
         event.stopPropagation();
         setDashboardCollapsed(
@@ -11570,6 +12588,7 @@ out meta geom;`;
       });
 
       window.addEventListener("resize", () => map?.resize());
+      window.addEventListener("online", () => flushCloudOutbox());
       annotationData = applyCuratedAnnotationCorrections(
         loadStoredAnnotations(),
       );

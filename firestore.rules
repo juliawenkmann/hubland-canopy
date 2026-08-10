@@ -1,0 +1,90 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isEditor() {
+      return request.auth != null &&
+        request.auth.uid == 'REPLACE_WITH_EDITOR_FIREBASE_UID';
+    }
+
+    function shortString(value, maxLength) {
+      return value is string && value.size() <= maxLength;
+    }
+
+    function validPoint(geometry) {
+      return geometry is map &&
+        geometry.keys().hasAll(['type', 'coordinates']) &&
+        geometry.keys().hasOnly(['type', 'coordinates']) &&
+        geometry.type == 'Point' &&
+        geometry.coordinates is list &&
+        geometry.coordinates.size() == 2 &&
+        geometry.coordinates[0] is number &&
+        geometry.coordinates[1] is number &&
+        geometry.coordinates[0] >= 9.9640 &&
+        geometry.coordinates[0] <= 9.9820 &&
+        geometry.coordinates[1] >= 49.7823 &&
+        geometry.coordinates[1] <= 49.7895;
+    }
+
+    function validProperties(properties, treeId) {
+      return properties is map &&
+        properties.keys().hasAll([
+          'id', 'common_name', 'scientific_name', 'genus', 'health',
+          'review_status', 'created_at', 'updated_at'
+        ]) &&
+        properties.id == treeId &&
+        shortString(properties.id, 180) &&
+        shortString(properties.common_name, 200) &&
+        shortString(properties.scientific_name, 300) &&
+        shortString(properties.genus, 120) &&
+        shortString(properties.get('notes', ''), 10000) &&
+        shortString(properties.get('photo_url', ''), 2048) &&
+        properties.health in ['good', 'fair', 'poor', 'dead', 'not_recorded'] &&
+        properties.review_status in ['unreviewed', 'reviewed'] &&
+        shortString(properties.created_at, 40) &&
+        shortString(properties.updated_at, 40);
+    }
+
+    function validTree(treeId) {
+      let data = request.resource.data;
+      return data.keys().hasAll([
+          'schema_version', 'feature', 'deleted_at', 'client_updated_at',
+          'updated_at', 'updated_by'
+        ]) &&
+        data.keys().hasOnly([
+          'schema_version', 'feature', 'deleted_at', 'client_updated_at',
+          'updated_at', 'updated_by'
+        ]) &&
+        data.schema_version == 1 &&
+        data.feature is map &&
+        data.feature.keys().hasAll(['type', 'geometry', 'properties']) &&
+        data.feature.keys().hasOnly(['type', 'geometry', 'properties']) &&
+        data.feature.type == 'Feature' &&
+        validPoint(data.feature.geometry) &&
+        validProperties(data.feature.properties, treeId) &&
+        (data.deleted_at == null || data.deleted_at is timestamp) &&
+        data.client_updated_at is timestamp &&
+        data.client_updated_at <= request.time + duration.value(10, 'm') &&
+        data.updated_at is timestamp &&
+        data.updated_at == request.time &&
+        data.updated_by == request.auth.uid;
+    }
+
+    match /trees/{treeId} {
+      allow read: if true;
+      allow create: if isEditor() && validTree(treeId) &&
+        request.resource.data.deleted_at == null;
+      allow update: if isEditor() && validTree(treeId) &&
+        resource.data.deleted_at == null &&
+        request.resource.data.client_updated_at >=
+          resource.data.client_updated_at &&
+        (request.resource.data.deleted_at == null ||
+          request.resource.data.deleted_at == request.time);
+      allow delete: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
