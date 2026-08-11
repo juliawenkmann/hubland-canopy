@@ -7427,7 +7427,10 @@
       let cloudUser = null;
       let cloudUnsubscribe = null;
       let cloudSnapshotReceived = false;
+      let cloudServerSnapshotReceived = false;
       let cloudFlushPromise = null;
+      let cloudMigrationUploadPromise = null;
+      let cloudMigrationAttempted = false;
       let cloudRecordVersions = new Map();
       let cloudDeletedIds = new Set();
       let cloudStatus = {
@@ -8052,10 +8055,25 @@
         cloudRecordVersions = recordVersions;
         cloudDeletedIds = deletedIds;
         cloudSnapshotReceived = true;
+        if (!snapshot.metadata.fromCache) {
+          cloudServerSnapshotReceived = true;
+        }
+        const displayedFeatures = new Map(
+          activeFeatures.map((feature) => [feature.properties.id, feature]),
+        );
+        loadCloudMigrationData()
+          .features.map(prepareFeatureForCloud)
+          .filter(Boolean)
+          .forEach((feature) => {
+            const id = feature.properties.id;
+            if (!deletedIds.has(id) && !displayedFeatures.has(id)) {
+              displayedFeatures.set(id, feature);
+            }
+          });
         annotationData = {
           ...annotationData,
           name: "Synchronized campus tree annotations",
-          features: activeFeatures,
+          features: [...displayedFeatures.values()],
         };
         persistAnnotations();
         if (map) syncAnnotationSource();
@@ -8071,6 +8089,7 @@
         } else {
           setCloudStatus("online", "cloudViewOnly", "cloudSignedOut");
         }
+        maybeMigrateLocalAnnotations();
       }
 
       async function initialiseCloudSync() {
@@ -8115,6 +8134,7 @@
                 { email: cloudUser.email || "" },
               );
               flushCloudOutbox();
+              maybeMigrateLocalAnnotations();
             } else {
               setCloudStatus("online", "cloudViewOnly", "cloudSignedOut");
             }
@@ -8173,7 +8193,7 @@
         const preparedFeatures = [...preparedById.values()];
         if (!preparedFeatures.length) {
           setCloudStatus("online", "cloudOnline", "cloudEmptyUpload");
-          return { uploaded: 0, conflicts: 0 };
+          return { uploaded: 0, conflicts: 0, total: 0 };
         }
         setCloudStatus("pending", "cloudPending", "cloudWorking");
         let uploaded = 0;
@@ -8264,11 +8284,12 @@
             { count: uploaded },
           );
         }
-        return { uploaded, conflicts };
+        return { uploaded, conflicts, total: preparedFeatures.length };
       }
 
-      async function uploadLocalAnnotations() {
+      async function uploadLocalAnnotations(options = {}) {
         if (!cloudUser) return;
+        const askConfirmation = options?.askConfirmation !== false;
         const migrationData = loadCloudMigrationData();
         const count = migrationData.features.length;
         if (!count) {
@@ -8276,13 +8297,23 @@
           setCloudStatus("online", "cloudOnline", "cloudEmptyUpload");
           return;
         }
-        if (!window.confirm(t("cloudUploadConfirm", { count }))) return;
+        if (
+          askConfirmation &&
+          !window.confirm(t("cloudUploadConfirm", { count }))
+        ) {
+          return;
+        }
         try {
-          await uploadFeaturesToCloud(
+          const result = await uploadFeaturesToCloud(
             migrationData.features,
             "cloudUploadComplete",
           );
-          completeLocalMigration();
+          if (
+            result?.total === count &&
+            result.uploaded + result.conflicts === result.total
+          ) {
+            completeLocalMigration();
+          }
         } catch (error) {
           console.error("Local annotation upload failed:", error);
           setCloudStatus(
@@ -8293,6 +8324,25 @@
             true,
           );
         }
+      }
+
+      function maybeMigrateLocalAnnotations() {
+        if (
+          !cloudUser ||
+          !cloudDb ||
+          !cloudServerSnapshotReceived ||
+          cloudMigrationAttempted ||
+          cloudMigrationUploadPromise ||
+          !loadCloudMigrationData().features.length
+        ) {
+          return;
+        }
+        cloudMigrationAttempted = true;
+        cloudMigrationUploadPromise = uploadLocalAnnotations({
+          askConfirmation: false,
+        }).finally(() => {
+          cloudMigrationUploadPromise = null;
+        });
       }
 
       async function importCloudGeoJson(file) {
