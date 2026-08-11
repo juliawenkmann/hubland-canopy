@@ -1327,6 +1327,16 @@
         font-size: 11px;
       }
 
+      .cloud-auth-buttons {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 7px;
+      }
+
+      .cloud-auth-buttons .annotation-button {
+        min-height: 39px;
+      }
+
       .cloud-sync-user {
         justify-content: space-between;
         color: var(--forest-800);
@@ -3947,7 +3957,12 @@
           grid-template-columns: 1fr;
         }
 
+        .cloud-auth-buttons {
+          grid-template-columns: 1fr;
+        }
+
         .cloud-auth-fields input,
+        .cloud-auth-buttons .annotation-button,
         .cloud-sync-actions .annotation-button {
           min-height: 44px;
           font-size: 16px;
@@ -4458,12 +4473,20 @@
                   required
                 >
               </div>
-              <button
-                class="annotation-button primary"
-                id="cloud-sign-in"
-                type="submit"
-                data-i18n="cloudSignIn"
-              >Sign in &amp; sync</button>
+              <div class="cloud-auth-buttons">
+                <button
+                  class="annotation-button primary"
+                  id="cloud-sign-in"
+                  type="submit"
+                  data-i18n="cloudSignIn"
+                >Sign in &amp; sync</button>
+                <button
+                  class="annotation-button"
+                  id="cloud-reset-password"
+                  type="button"
+                  data-i18n="cloudResetPassword"
+                >Set / reset password</button>
+              </div>
             </form>
             <div class="cloud-sync-user" id="cloud-sync-user" hidden>
               <span id="cloud-user-email"></span>
@@ -6415,6 +6438,7 @@
           cloudEmail: "Email",
           cloudPassword: "Password",
           cloudSignIn: "Sign in & sync",
+          cloudResetPassword: "Set / reset password",
           cloudSignOut: "Sign out",
           cloudUploadLocal: "Upload this device",
           cloudUploadLocalCount: "Upload this device ({count})",
@@ -6430,6 +6454,12 @@
             "Cloud trees are visible. Sign in to add or edit synchronized records.",
           cloudSignedIn: "Signed in as {email}. Changes sync automatically.",
           cloudSignInFailed: "Sign-in failed. Check email and password.",
+          cloudResetEmailRequired: "Enter a valid email address first.",
+          cloudResetSending: "Sending the secure password email…",
+          cloudResetSent:
+            "Check your inbox. Firebase sent a secure link to set or reset your password.",
+          cloudResetFailed:
+            "The password email could not be sent. Check the address and try again.",
           cloudWriteNeedsLogin:
             "Saved on this device. Sign in to synchronize this change.",
           cloudUploadConfirm:
@@ -6803,6 +6833,7 @@
           cloudEmail: "E-Mail",
           cloudPassword: "Passwort",
           cloudSignIn: "Anmelden & synchronisieren",
+          cloudResetPassword: "Passwort setzen / zurücksetzen",
           cloudSignOut: "Abmelden",
           cloudUploadLocal: "Dieses Gerät hochladen",
           cloudUploadLocalCount: "Dieses Gerät hochladen ({count})",
@@ -6820,6 +6851,13 @@
             "Angemeldet als {email}. Änderungen werden automatisch synchronisiert.",
           cloudSignInFailed:
             "Anmeldung fehlgeschlagen. Prüfe E-Mail und Passwort.",
+          cloudResetEmailRequired:
+            "Gib zuerst eine gültige E-Mail-Adresse ein.",
+          cloudResetSending: "Die sichere Passwort-E-Mail wird gesendet…",
+          cloudResetSent:
+            "Prüfe dein Postfach. Firebase hat dir einen sicheren Link zum Setzen oder Zurücksetzen des Passworts gesendet.",
+          cloudResetFailed:
+            "Die Passwort-E-Mail konnte nicht gesendet werden. Prüfe die Adresse und versuche es erneut.",
           cloudWriteNeedsLogin:
             "Auf diesem Gerät gespeichert. Melde dich an, um diese Änderung zu synchronisieren.",
           cloudUploadConfirm:
@@ -12549,6 +12587,57 @@ out meta geom;`;
             );
           } finally {
             signInButton.disabled = false;
+          }
+        });
+
+      document
+        .getElementById("cloud-reset-password")
+        .addEventListener("click", async (event) => {
+          if (!cloudConfigured || !cloudAuth) {
+            setCloudStatus(
+              "error",
+              "cloudError",
+              "cloudReadFailed",
+              {},
+              true,
+            );
+            return;
+          }
+
+          const emailInput = document.getElementById("cloud-email");
+          const email = emailInput.value.trim();
+          emailInput.value = email;
+          if (!email || !emailInput.checkValidity()) {
+            setCloudStatus(
+              "error",
+              "cloudError",
+              "cloudResetEmailRequired",
+              {},
+              true,
+            );
+            emailInput.focus();
+            emailInput.reportValidity();
+            return;
+          }
+
+          const resetButton = event.currentTarget;
+          resetButton.disabled = true;
+          cloudAuth.languageCode = currentLanguage;
+          setCloudStatus("pending", "cloudPending", "cloudResetSending");
+          try {
+            await cloudAuth.sendPasswordResetEmail(email);
+            setCloudStatus("online", "cloudViewOnly", "cloudResetSent");
+          } catch (error) {
+            console.warn("Cloud password email failed:", error?.code || error);
+            setCloudStatus(
+              "error",
+              "cloudError",
+              "cloudResetFailed",
+              {},
+              true,
+            );
+          } finally {
+            resetButton.disabled = false;
           }
         });
 
