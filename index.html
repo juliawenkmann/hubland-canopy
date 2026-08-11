@@ -8187,16 +8187,7 @@
         });
       }
 
-      function restoreLocalTrees() {
-        const recovery = discoverLocalRecoveryCandidates();
-        const count = recovery.features.length;
-        if (!count) {
-          localRecoveryFeedback = { key: "localRecoveryNone", variables: {} };
-          renderLocalRecoveryUI();
-          return;
-        }
-        const formattedCount = integerFormatter?.format(count) || String(count);
-
+      function mergeLocalRecoveryIntoAnnotations(recovery) {
         const merged = new Map();
         annotationData.features
           .map(prepareMigrationFeatureForDisplay)
@@ -8234,9 +8225,33 @@
           console.warn("Could not persist all restored local trees:", error);
         }
         extendProtectedLocalRecovery(restoredCollection);
-
         cloudMigrationAttempted = false;
         cloudRecoveredFeatureCount = recovery.features.length;
+        return restoredCollection;
+      }
+
+      function autoRestoreLocalTreesWhenEmpty() {
+        if (annotationData.features.length) return 0;
+        const recovery = discoverLocalRecoveryCandidates();
+        if (!recovery.features.length) return 0;
+        mergeLocalRecoveryIntoAnnotations(recovery);
+        localRecoveryFeedback = {
+          key: "localRecoveryComplete",
+          variables: { count: recovery.features.length },
+        };
+        return recovery.features.length;
+      }
+
+      function restoreLocalTrees() {
+        const recovery = discoverLocalRecoveryCandidates();
+        const count = recovery.features.length;
+        if (!count) {
+          localRecoveryFeedback = { key: "localRecoveryNone", variables: {} };
+          renderLocalRecoveryUI();
+          return;
+        }
+        const formattedCount = integerFormatter?.format(count) || String(count);
+        mergeLocalRecoveryIntoAnnotations(recovery);
         localRecoveryFeedback = {
           key: "localRecoveryComplete",
           variables: { count: formattedCount },
@@ -13169,6 +13184,7 @@ out meta geom;`;
       annotationData = applyCuratedAnnotationCorrections(
         loadStoredAnnotations(),
       );
+      autoRestoreLocalTreesWhenEmpty();
       persistAnnotations();
       osmContextData = loadStoredOsmContext();
       const cachedOsmTrees = annotationData.features.filter(
