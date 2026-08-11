@@ -1305,6 +1305,48 @@
         color: #934a36;
       }
 
+      .local-recovery {
+        display: grid;
+        gap: 7px;
+        border-top: 1px solid rgba(49, 88, 55, 0.13);
+        padding-top: 10px;
+      }
+
+      .local-recovery-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+
+      .local-recovery-heading strong {
+        color: var(--forest-800);
+        font-size: 11px;
+      }
+
+      .local-recovery-count {
+        flex: 0 0 auto;
+        border-radius: 999px;
+        padding: 3px 7px;
+        color: var(--forest-800);
+        background: rgba(255, 253, 247, 0.86);
+        font-size: 9px;
+        font-weight: 800;
+      }
+
+      .local-recovery-copy,
+      .local-recovery-status {
+        margin: 0;
+        color: var(--muted);
+        font-size: 9px;
+        line-height: 1.45;
+      }
+
+      .local-recovery .annotation-button {
+        width: 100%;
+        min-height: 38px;
+      }
+
       .cloud-auth-form {
         display: grid;
         gap: 8px;
@@ -4520,6 +4562,37 @@
               role="status"
               aria-live="polite"
             ></p>
+            <div class="local-recovery" id="local-recovery">
+              <div class="local-recovery-heading">
+                <strong data-i18n="localRecoveryHeading">Local tree recovery</strong>
+                <span
+                  class="local-recovery-count"
+                  id="local-recovery-count"
+                  aria-live="polite"
+                >0</span>
+              </div>
+              <p
+                class="local-recovery-copy"
+                id="local-recovery-copy"
+                data-i18n="localRecoveryCopy"
+              >
+                Tree Tracker checks only its own saved Hubland copies. Known
+                synchronized deletions stay deleted.
+              </p>
+              <p
+                class="local-recovery-status"
+                id="local-recovery-status"
+                role="status"
+                aria-live="polite"
+              ></p>
+              <button
+                class="annotation-button"
+                id="restore-local-trees"
+                type="button"
+                aria-describedby="local-recovery-copy local-recovery-status"
+                disabled
+              >Restore local trees</button>
+            </div>
           </div>
           <div class="annotation-actions">
             <button
@@ -4655,6 +4728,11 @@
       const CLOUD_MIGRATION_STORAGE_KEY = "hubland-tree-cloud-migration-v1";
       const CLOUD_MIGRATION_STATE_KEY = "hubland-tree-cloud-migration-state-v1";
       const LOCAL_RECOVERY_STORAGE_KEY = "hubland-tree-local-recovery-v1";
+      const LOCAL_TREE_RECOVERY_STORAGE_KEYS = Object.freeze([
+        LOCAL_RECOVERY_STORAGE_KEY,
+        CLOUD_MIGRATION_STORAGE_KEY,
+        ANNOTATION_STORAGE_KEY,
+      ]);
       const CURATED_ANNOTATION_CORRECTIONS = {
         "annotation-1785428693123-qlrkzu": {
           common_name: "Flieder",
@@ -6476,6 +6554,15 @@
             "{uploaded} record(s) synchronized; {count} older offline change(s) skipped because newer synchronized data already exists.",
           cloudReadFailed:
             "The shared records could not be loaded. Cached local records remain available.",
+          localRecoveryHeading: "Local tree recovery",
+          localRecoveryCopy:
+            "Tree Tracker checks only its own saved Hubland copies. Known synchronized deletions stay deleted.",
+          localRecoveryFound: "{count} recoverable local trees found.",
+          localRecoveryNone:
+            "No recoverable local tree copy was found in this browser.",
+          localRecoveryButton: "Restore {count} trees",
+          localRecoveryComplete:
+            "Restored {count} trees from this device. A protected local backup was kept.",
           importOsm: "Load OSM data",
           importingOsm: "Loading OSM…",
           placeTree: "Place tree",
@@ -6877,6 +6964,15 @@
             "{uploaded} Datensatz/Datensätze synchronisiert; {count} ältere Offline-Änderung(en) übersprungen, weil bereits neuere synchronisierte Daten vorliegen.",
           cloudReadFailed:
             "Die gemeinsamen Datensätze konnten nicht geladen werden. Lokal gespeicherte Daten bleiben verfügbar.",
+          localRecoveryHeading: "Lokale Baumdaten wiederherstellen",
+          localRecoveryCopy:
+            "Tree Tracker durchsucht ausschließlich seine eigenen Hubland-Speicherstände. Bekannte Cloud-Löschungen bleiben gelöscht.",
+          localRecoveryFound: "{count} lokal gesicherte Bäume gefunden.",
+          localRecoveryNone:
+            "In diesem Browser wurde keine wiederherstellbare lokale Baumkopie gefunden.",
+          localRecoveryButton: "{count} Bäume wiederherstellen",
+          localRecoveryComplete:
+            "{count} Bäume wurden aus den lokalen Sicherungen wiederhergestellt. Eine geschützte Sicherungskopie bleibt erhalten.",
           importOsm: "OSM-Daten laden",
           importingOsm: "OSM wird geladen…",
           placeTree: "Baum setzen",
@@ -7434,6 +7530,7 @@
       let cloudSnapshotReceived = false;
       let cloudServerSnapshotReceived = false;
       let cloudRecoveredFeatureCount = 0;
+      let localRecoveryFeedback = null;
       let cloudFlushPromise = null;
       let cloudMigrationUploadPromise = null;
       let cloudMigrationAttempted = false;
@@ -7748,6 +7845,7 @@
           migrationCount ? "cloudUploadLocalCount" : "cloudUploadLocal",
           { count: integerFormatter?.format(migrationCount) || migrationCount },
         );
+        renderLocalRecoveryUI();
       }
 
       function loadCloudOutbox() {
@@ -7788,20 +7886,7 @@
       }
 
       function loadCloudMigrationData() {
-        const migrationData = loadStoredPointFeatureCollection(
-          CLOUD_MIGRATION_STORAGE_KEY,
-        );
-        if (migrationData.features.length) {
-          return migrationData;
-        }
-        try {
-          if (localStorage.getItem(CLOUD_MIGRATION_STATE_KEY) === "complete") {
-            return migrationData;
-          }
-          return loadStoredPointFeatureCollection(LOCAL_RECOVERY_STORAGE_KEY);
-        } catch {
-          return migrationData;
-        }
+        return loadStoredPointFeatureCollection(CLOUD_MIGRATION_STORAGE_KEY);
       }
 
       function preserveLocalRecoveryData(collection) {
@@ -7818,19 +7903,14 @@
 
       function captureLocalMigrationData() {
         try {
-          const existingMigrationData = loadCloudMigrationData();
+          const existingMigrationData = loadStoredPointFeatureCollection(
+            CLOUD_MIGRATION_STORAGE_KEY,
+          );
           if (existingMigrationData.features.length) {
             preserveLocalRecoveryData(existingMigrationData);
-            if (!localStorage.getItem(CLOUD_MIGRATION_STORAGE_KEY)) {
-              localStorage.setItem(
-                CLOUD_MIGRATION_STORAGE_KEY,
-                JSON.stringify(existingMigrationData),
-              );
-            }
             localStorage.setItem(CLOUD_MIGRATION_STATE_KEY, "pending");
             return;
           }
-          if (localStorage.getItem(CLOUD_MIGRATION_STATE_KEY)) return;
           if (annotationData.features.length) {
             const migrationData = {
               ...annotationData,
@@ -7838,12 +7918,17 @@
               captured_at: new Date().toISOString(),
             };
             preserveLocalRecoveryData(migrationData);
+            if (
+              localStorage.getItem(CLOUD_MIGRATION_STATE_KEY) === "complete"
+            ) {
+              return;
+            }
             localStorage.setItem(
               CLOUD_MIGRATION_STORAGE_KEY,
               JSON.stringify(migrationData),
             );
             localStorage.setItem(CLOUD_MIGRATION_STATE_KEY, "pending");
-          } else {
+          } else if (!localStorage.getItem(CLOUD_MIGRATION_STATE_KEY)) {
             localStorage.setItem(CLOUD_MIGRATION_STATE_KEY, "complete");
           }
         } catch (error) {
@@ -7938,6 +8023,236 @@
             id: String(feature.properties.id),
           },
         };
+      }
+
+      function isRecoverableLocalTreeFeature(feature) {
+        return ![
+          "satellite-color-texture-v1",
+          "ai-manual-visual-review-v1",
+        ].includes(feature?.properties?.detection_method);
+      }
+
+      function localRecoveryFeatureTimestamp(feature) {
+        const rawValue =
+          feature?.properties?.updated_at ||
+          feature?.properties?.created_at ||
+          feature?.properties?.date_surveyed;
+        const timestamp = rawValue ? Date.parse(rawValue) : Number.NaN;
+        return Number.isFinite(timestamp) ? timestamp : 0;
+      }
+
+      function loadLatestOutboxRecoveryData() {
+        const latestById = new Map();
+        loadCloudOutbox().forEach((entry, index) => {
+          const id = String(entry?.id || entry?.feature?.properties?.id || "");
+          if (!id) return;
+          const rawTimestamp = Date.parse(
+            entry.client_updated_at || entry.queued_at || "",
+          );
+          const timestamp = Number.isFinite(rawTimestamp) ? rawTimestamp : 0;
+          const previous = latestById.get(id);
+          if (
+            !previous ||
+            timestamp > previous.timestamp ||
+            (timestamp === previous.timestamp && index > previous.index)
+          ) {
+            latestById.set(id, { entry, index, timestamp });
+          }
+        });
+
+        const features = [];
+        const deletedIds = new Set();
+        latestById.forEach(({ entry, timestamp }, id) => {
+          if (entry.type === "delete") {
+            deletedIds.add(id);
+            return;
+          }
+          const feature = prepareMigrationFeatureForDisplay(entry.feature);
+          if (feature && isRecoverableLocalTreeFeature(feature)) {
+            features.push({ feature, timestamp });
+          }
+        });
+        return { features, deletedIds };
+      }
+
+      function discoverLocalRecoveryCandidates() {
+        const outboxData = loadLatestOutboxRecoveryData();
+        const deletedIds = new Set([
+          ...cloudDeletedIds,
+          ...outboxData.deletedIds,
+        ]);
+        const candidates = new Map();
+
+        const remember = (rawFeature, priority, timestampOverride = null) => {
+          const feature = prepareMigrationFeatureForDisplay(rawFeature);
+          if (!feature || !isRecoverableLocalTreeFeature(feature)) return;
+          const id = feature.properties.id;
+          if (deletedIds.has(id)) return;
+          const timestamp =
+            timestampOverride ?? localRecoveryFeatureTimestamp(feature);
+          const previous = candidates.get(id);
+          if (
+            !previous ||
+            timestamp > previous.timestamp ||
+            (timestamp === previous.timestamp && priority >= previous.priority)
+          ) {
+            candidates.set(id, { feature, priority, timestamp });
+          }
+        };
+
+        LOCAL_TREE_RECOVERY_STORAGE_KEYS.forEach((storageKey, priority) => {
+          if (!storageKey.startsWith("hubland-")) return;
+          loadStoredPointFeatureCollection(storageKey).features.forEach((feature) =>
+            remember(feature, priority),
+          );
+        });
+        outboxData.features.forEach(({ feature, timestamp }) =>
+          remember(feature, LOCAL_TREE_RECOVERY_STORAGE_KEYS.length, timestamp),
+        );
+
+        return {
+          type: "FeatureCollection",
+          name: "Recoverable local Tree Tracker records",
+          features: [...candidates.values()].map(({ feature }) => feature),
+          deletedIds,
+        };
+      }
+
+      function extendProtectedLocalRecovery(collection) {
+        try {
+          const stored = JSON.parse(
+            localStorage.getItem(LOCAL_RECOVERY_STORAGE_KEY) || "null",
+          );
+          const existing =
+            stored?.type === "FeatureCollection" && Array.isArray(stored.features)
+              ? stored
+              : {
+                  type: "FeatureCollection",
+                  name: "Protected local Tree Tracker recovery copy",
+                  captured_at: new Date().toISOString(),
+                  features: [],
+                };
+          const existingIds = new Set(
+            existing.features
+              .map((feature) => feature?.properties?.id)
+              .filter(Boolean)
+              .map(String),
+          );
+          const additions = collection.features.filter(
+            (feature) => !existingIds.has(String(feature.properties.id)),
+          );
+          if (!additions.length && stored) return;
+          localStorage.setItem(
+            LOCAL_RECOVERY_STORAGE_KEY,
+            JSON.stringify({
+              ...existing,
+              features: [...existing.features, ...additions],
+            }),
+          );
+        } catch (error) {
+          console.warn("Could not extend the protected local recovery copy:", error);
+        }
+      }
+
+      function renderLocalRecoveryUI() {
+        const countElement = document.getElementById("local-recovery-count");
+        const statusElement = document.getElementById("local-recovery-status");
+        const restoreButton = document.getElementById("restore-local-trees");
+        if (!countElement || !statusElement || !restoreButton) return;
+        const count = discoverLocalRecoveryCandidates().features.length;
+        const formattedCount = integerFormatter?.format(count) || String(count);
+        countElement.textContent = formattedCount;
+        statusElement.textContent = localRecoveryFeedback
+          ? t(localRecoveryFeedback.key, localRecoveryFeedback.variables)
+          : t(count ? "localRecoveryFound" : "localRecoveryNone", {
+              count: formattedCount,
+            });
+        restoreButton.textContent = t("localRecoveryButton", {
+          count: formattedCount,
+        });
+        restoreButton.disabled = count === 0;
+      }
+
+      function fitRecoveredTreeLocations(features) {
+        if (!map || !features.length) return;
+        const bounds = new maplibregl.LngLatBounds();
+        features.forEach((feature) => bounds.extend(feature.geometry.coordinates));
+        const mobile = window.matchMedia("(max-width: 760px)").matches;
+        map.fitBounds(bounds, {
+          padding: mobile
+            ? { top: 88, right: 34, bottom: 116, left: 34 }
+            : { top: 86, right: 80, bottom: 72, left: 400 },
+          maxZoom: 18,
+          duration: 950,
+        });
+      }
+
+      function restoreLocalTrees() {
+        const recovery = discoverLocalRecoveryCandidates();
+        const count = recovery.features.length;
+        if (!count) {
+          localRecoveryFeedback = { key: "localRecoveryNone", variables: {} };
+          renderLocalRecoveryUI();
+          return;
+        }
+        const formattedCount = integerFormatter?.format(count) || String(count);
+
+        const merged = new Map();
+        annotationData.features
+          .map(prepareMigrationFeatureForDisplay)
+          .filter(Boolean)
+          .filter((feature) => !recovery.deletedIds.has(feature.properties.id))
+          .forEach((feature) => merged.set(feature.properties.id, feature));
+        recovery.features.forEach((feature) => {
+          const id = feature.properties.id;
+          const hasActiveCloudVersion =
+            cloudRecordVersions.has(id) && !cloudDeletedIds.has(id);
+          if (!hasActiveCloudVersion || !merged.has(id)) merged.set(id, feature);
+        });
+
+        annotationData = applyCuratedAnnotationCorrections({
+          ...annotationData,
+          name: "Restored campus tree annotations",
+          features: [...merged.values()],
+        });
+        const restoredCollection = {
+          ...annotationData,
+          name: "Explicit local recovery pending synchronization",
+          captured_at: new Date().toISOString(),
+        };
+        try {
+          localStorage.setItem(
+            ANNOTATION_STORAGE_KEY,
+            JSON.stringify(annotationData),
+          );
+          localStorage.setItem(
+            CLOUD_MIGRATION_STORAGE_KEY,
+            JSON.stringify(restoredCollection),
+          );
+          localStorage.setItem(CLOUD_MIGRATION_STATE_KEY, "pending");
+        } catch (error) {
+          console.warn("Could not persist all restored local trees:", error);
+        }
+        extendProtectedLocalRecovery(restoredCollection);
+
+        cloudMigrationAttempted = false;
+        cloudRecoveredFeatureCount = recovery.features.length;
+        localRecoveryFeedback = {
+          key: "localRecoveryComplete",
+          variables: { count: formattedCount },
+        };
+        selectedFruitType = null;
+        setDashboardMode("trees");
+        clearTreeFacets();
+        syncAnnotationSource();
+        setAnnotationStatus("localRecoveryComplete", {
+          count: formattedCount,
+        });
+        renderCloudSyncUI();
+        window.requestAnimationFrame(() =>
+          fitRecoveredTreeLocations(recovery.features),
+        );
+        maybeMigrateLocalAnnotations();
       }
 
       function cloudClientDate(value) {
@@ -8151,17 +8466,43 @@
         const displayedFeatures = new Map(
           activeFeatures.map((feature) => [feature.properties.id, feature]),
         );
-        let recoveredFeatureCount = 0;
-        loadCloudMigrationData()
-          .features.map(prepareMigrationFeatureForDisplay)
+        const recoveredFeatures = [];
+        [
+          ...annotationData.features,
+          ...loadCloudMigrationData().features,
+        ]
+          .map(prepareMigrationFeatureForDisplay)
           .filter(Boolean)
+          .filter(isRecoverableLocalTreeFeature)
           .forEach((feature) => {
             const id = feature.properties.id;
             if (!deletedIds.has(id) && !displayedFeatures.has(id)) {
               displayedFeatures.set(id, feature);
-              recoveredFeatureCount += 1;
+              recoveredFeatures.push(feature);
             }
           });
+        if (
+          recoveredFeatures.length &&
+          !loadCloudMigrationData().features.length
+        ) {
+          const recoveredCollection = {
+            type: "FeatureCollection",
+            name: "Recovered local records pending synchronization",
+            captured_at: new Date().toISOString(),
+            features: recoveredFeatures,
+          };
+          try {
+            localStorage.setItem(
+              CLOUD_MIGRATION_STORAGE_KEY,
+              JSON.stringify(recoveredCollection),
+            );
+            localStorage.setItem(CLOUD_MIGRATION_STATE_KEY, "pending");
+          } catch (error) {
+            console.warn("Could not queue recovered local trees:", error);
+          }
+          extendProtectedLocalRecovery(recoveredCollection);
+        }
+        const recoveredFeatureCount = recoveredFeatures.length;
         cloudRecoveredFeatureCount = recoveredFeatureCount;
         annotationData = {
           ...annotationData,
@@ -12795,6 +13136,10 @@ out meta geom;`;
         .addEventListener("click", uploadLocalAnnotations);
 
       document
+        .getElementById("restore-local-trees")
+        .addEventListener("click", restoreLocalTrees);
+
+      document
         .getElementById("cloud-import-file")
         .addEventListener("change", async (event) => {
           const file = event.currentTarget.files?.[0];
@@ -12825,11 +13170,6 @@ out meta geom;`;
         loadStoredAnnotations(),
       );
       persistAnnotations();
-      try {
-        localStorage.removeItem("hubland-deleted-ai-tree-annotations-v1");
-      } catch {
-        // Storage cleanup is optional.
-      }
       osmContextData = loadStoredOsmContext();
       const cachedOsmTrees = annotationData.features.filter(
         (feature) =>
