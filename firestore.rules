@@ -4,7 +4,7 @@ service cloud.firestore {
   match /databases/{database}/documents {
     function isEditor() {
       return request.auth != null &&
-        request.auth.uid == 'REPLACE_WITH_EDITOR_FIREBASE_UID';
+        request.auth.uid == 'D2nbJCfwgPdqvHvNLEAFOa9zpoI3';
     }
 
     function shortString(value, maxLength) {

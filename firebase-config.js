@@ -18,10 +18,10 @@ window.TREE_TRACKER_FIREBASE_CONFIG = treeTrackerUsesLocalEmulators
       appId: "1:1234567890:web:tree-tracker-test",
     }
   : {
-      apiKey: "REPLACE_WITH_FIREBASE_WEB_API_KEY",
-      authDomain: "REPLACE_WITH_PROJECT_ID.firebaseapp.com",
-      projectId: "REPLACE_WITH_PROJECT_ID",
-      storageBucket: "REPLACE_WITH_PROJECT_ID.firebasestorage.app",
-      messagingSenderId: "REPLACE_WITH_MESSAGING_SENDER_ID",
-      appId: "REPLACE_WITH_FIREBASE_APP_ID",
+      apiKey: "AIzaSyBLXamzmh0r7su243uXq1VZH7Qjvq6ZvBE",
+      authDomain: "hubland-tree-tracker.firebaseapp.com",
+      projectId: "hubland-tree-tracker",
+      storageBucket: "hubland-tree-tracker.firebasestorage.app",
+      messagingSenderId: "19123608468",
+      appId: "1:19123608468:web:41d0771570628e476ccd81",
     };
