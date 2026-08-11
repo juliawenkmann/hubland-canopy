@@ -4654,6 +4654,7 @@
       const CLOUD_OUTBOX_STORAGE_KEY = "hubland-tree-cloud-outbox-v1";
       const CLOUD_MIGRATION_STORAGE_KEY = "hubland-tree-cloud-migration-v1";
       const CLOUD_MIGRATION_STATE_KEY = "hubland-tree-cloud-migration-state-v1";
+      const LOCAL_RECOVERY_STORAGE_KEY = "hubland-tree-local-recovery-v1";
       const CURATED_ANNOTATION_CORRECTIONS = {
         "annotation-1785428693123-qlrkzu": {
           common_name: "Flieder",
@@ -6452,6 +6453,8 @@
             "Cloud sync is not configured in this copy. Local editing still works.",
           cloudSignedOut:
             "Cloud trees are visible. Sign in to add or edit synchronized records.",
+          cloudRecoveryReady:
+            "Recovered {count} trees from this device. Sign in once to synchronize all eligible records.",
           cloudSignedIn: "Signed in as {email}. Changes sync automatically.",
           cloudSignInFailed: "Sign-in failed. Check email and password.",
           cloudResetEmailRequired: "Enter a valid email address first.",
@@ -6847,6 +6850,8 @@
             "Die Cloud-Synchronisation ist in dieser Kopie noch nicht konfiguriert. Lokales Bearbeiten funktioniert weiterhin.",
           cloudSignedOut:
             "Cloud-Bäume sind sichtbar. Melde dich an, um synchronisierte Datensätze zu ergänzen oder zu bearbeiten.",
+          cloudRecoveryReady:
+            "{count} Bäume wurden auf diesem Gerät wiederhergestellt. Melde dich einmal an, um alle geeigneten Datensätze zu synchronisieren.",
           cloudSignedIn:
             "Angemeldet als {email}. Änderungen werden automatisch synchronisiert.",
           cloudSignInFailed:
@@ -7428,6 +7433,7 @@
       let cloudUnsubscribe = null;
       let cloudSnapshotReceived = false;
       let cloudServerSnapshotReceived = false;
+      let cloudRecoveredFeatureCount = 0;
       let cloudFlushPromise = null;
       let cloudMigrationUploadPromise = null;
       let cloudMigrationAttempted = false;
@@ -7704,6 +7710,19 @@
         renderCloudSyncUI();
       }
 
+      function setSignedOutCloudStatus() {
+        if (cloudRecoveredFeatureCount) {
+          setCloudStatus(
+            "online",
+            "cloudViewOnly",
+            "cloudRecoveryReady",
+            { count: cloudRecoveredFeatureCount },
+          );
+          return;
+        }
+        setCloudStatus("online", "cloudViewOnly", "cloudSignedOut");
+      }
+
       function renderCloudSyncUI() {
         const badge = document.getElementById("cloud-sync-badge");
         if (!badge) return;
@@ -7748,11 +7767,9 @@
         }
       }
 
-      function loadCloudMigrationData() {
+      function loadStoredPointFeatureCollection(storageKey) {
         try {
-          const stored = JSON.parse(
-            localStorage.getItem(CLOUD_MIGRATION_STORAGE_KEY),
-          );
+          const stored = JSON.parse(localStorage.getItem(storageKey));
           if (stored?.type !== "FeatureCollection" || !Array.isArray(stored.features)) {
             return { type: "FeatureCollection", features: [] };
           }
@@ -7770,17 +7787,60 @@
         }
       }
 
+      function loadCloudMigrationData() {
+        const migrationData = loadStoredPointFeatureCollection(
+          CLOUD_MIGRATION_STORAGE_KEY,
+        );
+        if (migrationData.features.length) {
+          return migrationData;
+        }
+        try {
+          if (localStorage.getItem(CLOUD_MIGRATION_STATE_KEY) === "complete") {
+            return migrationData;
+          }
+          return loadStoredPointFeatureCollection(LOCAL_RECOVERY_STORAGE_KEY);
+        } catch {
+          return migrationData;
+        }
+      }
+
+      function preserveLocalRecoveryData(collection) {
+        try {
+          if (localStorage.getItem(LOCAL_RECOVERY_STORAGE_KEY) !== null) return;
+          localStorage.setItem(
+            LOCAL_RECOVERY_STORAGE_KEY,
+            JSON.stringify(collection),
+          );
+        } catch (error) {
+          console.warn("Could not preserve the local recovery data:", error);
+        }
+      }
+
       function captureLocalMigrationData() {
         try {
+          const existingMigrationData = loadCloudMigrationData();
+          if (existingMigrationData.features.length) {
+            preserveLocalRecoveryData(existingMigrationData);
+            if (!localStorage.getItem(CLOUD_MIGRATION_STORAGE_KEY)) {
+              localStorage.setItem(
+                CLOUD_MIGRATION_STORAGE_KEY,
+                JSON.stringify(existingMigrationData),
+              );
+            }
+            localStorage.setItem(CLOUD_MIGRATION_STATE_KEY, "pending");
+            return;
+          }
           if (localStorage.getItem(CLOUD_MIGRATION_STATE_KEY)) return;
           if (annotationData.features.length) {
+            const migrationData = {
+              ...annotationData,
+              name: "Pre-cloud device migration backup",
+              captured_at: new Date().toISOString(),
+            };
+            preserveLocalRecoveryData(migrationData);
             localStorage.setItem(
               CLOUD_MIGRATION_STORAGE_KEY,
-              JSON.stringify({
-                ...annotationData,
-                name: "Pre-cloud device migration backup",
-                captured_at: new Date().toISOString(),
-              }),
+              JSON.stringify(migrationData),
             );
             localStorage.setItem(CLOUD_MIGRATION_STATE_KEY, "pending");
           } else {
@@ -7846,6 +7906,36 @@
             review_status: reviewStatus,
             created_at: String(feature.properties.created_at || now).slice(0, 40),
             updated_at: String(feature.properties.updated_at || now).slice(0, 40),
+          },
+        };
+      }
+
+      function prepareMigrationFeatureForDisplay(feature) {
+        if (
+          feature?.type !== "Feature" ||
+          feature.geometry?.type !== "Point" ||
+          !Array.isArray(feature.geometry.coordinates) ||
+          feature.geometry.coordinates.length !== 2 ||
+          !feature.properties?.id
+        ) {
+          return null;
+        }
+        const coordinates = feature.geometry.coordinates.map(Number);
+        if (
+          !coordinates.every(Number.isFinite) ||
+          coordinates[0] < -180 ||
+          coordinates[0] > 180 ||
+          coordinates[1] < -90 ||
+          coordinates[1] > 90
+        ) {
+          return null;
+        }
+        return {
+          ...feature,
+          geometry: { ...feature.geometry, coordinates },
+          properties: {
+            ...feature.properties,
+            id: String(feature.properties.id),
           },
         };
       }
@@ -8016,7 +8106,7 @@
           return;
         }
         if (!cloudUser) {
-          setCloudStatus("online", "cloudViewOnly", "cloudSignedOut");
+          setSignedOutCloudStatus();
           return;
         }
         setCloudStatus(
@@ -8061,15 +8151,18 @@
         const displayedFeatures = new Map(
           activeFeatures.map((feature) => [feature.properties.id, feature]),
         );
+        let recoveredFeatureCount = 0;
         loadCloudMigrationData()
-          .features.map(prepareFeatureForCloud)
+          .features.map(prepareMigrationFeatureForDisplay)
           .filter(Boolean)
           .forEach((feature) => {
             const id = feature.properties.id;
             if (!deletedIds.has(id) && !displayedFeatures.has(id)) {
               displayedFeatures.set(id, feature);
+              recoveredFeatureCount += 1;
             }
           });
+        cloudRecoveredFeatureCount = recoveredFeatureCount;
         annotationData = {
           ...annotationData,
           name: "Synchronized campus tree annotations",
@@ -8087,7 +8180,7 @@
             { email: cloudUser.email || "" },
           );
         } else {
-          setCloudStatus("online", "cloudViewOnly", "cloudSignedOut");
+          setSignedOutCloudStatus();
         }
         maybeMigrateLocalAnnotations();
       }
@@ -8136,7 +8229,7 @@
               flushCloudOutbox();
               maybeMigrateLocalAnnotations();
             } else {
-              setCloudStatus("online", "cloudViewOnly", "cloudSignedOut");
+              setSignedOutCloudStatus();
             }
           });
 
