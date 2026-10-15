@@ -151,7 +151,8 @@ const I18N = {
     cloudEmail: "Email",
     cloudPassword: "Password",
     cloudSignIn: "Sign in",
-    cloudResetPassword: "Set / reset password",
+    cloudCreateAccount: "Create account",
+    cloudResetPassword: "Forgot password?",
     cloudSignOut: "Sign out",
     cloudImportGeoJson: "Import GeoJSON",
     cloudLocalOnly: "Local only",
@@ -163,11 +164,19 @@ const I18N = {
       "Cloud sync is not configured in this copy. Local editing still works.",
     cloudSignedOut: "Sign in to add or edit trees.",
     cloudSignedIn: "Signed in as {email}. Changes sync automatically.",
-    cloudSignInFailed: "Sign-in failed. Check email and password.",
+    cloudSignInFailed:
+      "Wrong email or password, or no account yet. New here? Use Create account.",
+    cloudEmailInUse: "This email already has an account. Sign in, or use Forgot password?",
+    cloudWeakPassword: "Choose a password with at least 6 characters.",
+    cloudTooManyAttempts: "Too many attempts. Wait a minute, then try again.",
+    cloudSignupDisabled:
+      "Creating accounts is switched off in Firebase (Authentication → Settings → User actions).",
+    cloudCreateFailed: "The account could not be created. Check your connection and try again.",
+    cloudNotEditor: "You're signed in, but this account isn't allowed to edit trees.",
     cloudResetEmailRequired: "Enter a valid email address first.",
     cloudResetSending: "Sending the secure password email…",
     cloudResetSent:
-      "Check your inbox. Firebase sent a secure link to set or reset your password.",
+      "If this email has an account, a reset link is on its way. Nothing after a few minutes? Use Create account.",
     cloudResetFailed:
       "The password email could not be sent. Check the address and try again.",
     cloudWriteNeedsLogin:
@@ -455,7 +464,8 @@ const I18N = {
     cloudEmail: "E-Mail",
     cloudPassword: "Passwort",
     cloudSignIn: "Anmelden",
-    cloudResetPassword: "Passwort setzen / zurücksetzen",
+    cloudCreateAccount: "Konto erstellen",
+    cloudResetPassword: "Passwort vergessen?",
     cloudSignOut: "Abmelden",
     cloudImportGeoJson: "GeoJSON importieren",
     cloudLocalOnly: "Nur lokal",
@@ -469,12 +479,21 @@ const I18N = {
     cloudSignedIn:
       "Angemeldet als {email}. Änderungen werden automatisch synchronisiert.",
     cloudSignInFailed:
-      "Anmeldung fehlgeschlagen. Prüfe E-Mail und Passwort.",
+      "E-Mail oder Passwort falsch – oder noch kein Konto. Neu hier? „Konto erstellen“ nutzen.",
+    cloudEmailInUse:
+      "Für diese E-Mail gibt es schon ein Konto. Melde dich an oder nutze „Passwort vergessen?“.",
+    cloudWeakPassword: "Wähle ein Passwort mit mindestens 6 Zeichen.",
+    cloudTooManyAttempts: "Zu viele Versuche. Warte kurz und versuche es dann erneut.",
+    cloudSignupDisabled:
+      "Das Erstellen von Konten ist in Firebase ausgeschaltet (Authentication → Settings → User actions).",
+    cloudCreateFailed:
+      "Das Konto konnte nicht erstellt werden. Prüfe die Verbindung und versuche es erneut.",
+    cloudNotEditor: "Du bist angemeldet, aber dieses Konto darf keine Bäume bearbeiten.",
     cloudResetEmailRequired:
       "Gib zuerst eine gültige E-Mail-Adresse ein.",
     cloudResetSending: "Die sichere Passwort-E-Mail wird gesendet…",
     cloudResetSent:
-      "Prüfe dein Postfach. Firebase hat dir einen sicheren Link zum Setzen oder Zurücksetzen des Passworts gesendet.",
+      "Falls es für diese E-Mail ein Konto gibt, ist ein Link unterwegs. Nach ein paar Minuten nichts da? „Konto erstellen“ nutzen.",
     cloudResetFailed:
       "Die Passwort-E-Mail konnte nicht gesendet werden. Prüfe die Adresse und versuche es erneut.",
     cloudWriteNeedsLogin:

@@ -162,7 +162,8 @@ async function flushCloudOutboxNow() {
     }
   } catch (error) {
     console.error("Cloud sync write failed:", error);
-    setCloudStatus("error", "cloudError", "cloudReadFailed", {}, true);
+    const messageKey = error?.code === "permission-denied" ? "cloudNotEditor" : "cloudReadFailed";
+    setCloudStatus("error", "cloudError", messageKey, {}, true);
     return false;
   }
   if (conflicts) {

@@ -2,9 +2,12 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+    // The one person allowed to add and edit trees.
     function isEditor() {
-      return request.auth != null &&
-        request.auth.uid == 'D2nbJCfwgPdqvHvNLEAFOa9zpoI3';
+      return request.auth != null && (
+        request.auth.token.email == 'juliawenkmann@gmail.com' ||
+        request.auth.uid == 'D2nbJCfwgPdqvHvNLEAFOa9zpoI3'
+      );
     }
 
     function shortString(value, maxLength) {

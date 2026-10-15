@@ -1252,6 +1252,23 @@ body.food-mode .account-toggle {
   grid-template-columns: 1fr;
 }
 
+.account-panel .cloud-auth-buttons {
+  grid-template-columns: 1fr 1fr;
+}
+
+.text-button {
+  justify-self: start;
+  border: 0;
+  padding: 4px 0;
+  color: var(--forest-700);
+  background: none;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .annotation-editor {
   max-height: min(76vh, 680px);
   overflow-x: hidden;
@@ -3346,6 +3363,11 @@ body.food-mode .more-information-body .source-link {
 }
 
 @media (max-width: 760px) {
+  .text-button {
+    min-height: 32px;
+    font-size: 14px;
+  }
+
   .account-panel {
     top: calc(max(8px, env(safe-area-inset-top)) + 68px);
     right: 8px;

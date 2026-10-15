@@ -151,85 +151,12 @@ document
   .getElementById("export-annotations")
   .addEventListener("click", exportAnnotations);
 
-document
-  .getElementById("cloud-auth-form")
-  .addEventListener("submit", async (event) => {
-    event.preventDefault();
-    if (!cloudAuth) return;
-    const form = event.currentTarget;
-    const email = form.elements.email.value.trim();
-    const password = form.elements.password.value;
-    const signInButton = document.getElementById("cloud-sign-in");
-    signInButton.disabled = true;
-    setCloudStatus("pending", "cloudPending", "cloudWorking");
-    try {
-      await cloudAuth.signInWithEmailAndPassword(email, password);
-      form.reset();
-      setAccountPanelOpen(false);
-    } catch (error) {
-      console.warn("Cloud sign-in failed:", error?.code || error);
-      setCloudStatus(
-        "error",
-        "cloudError",
-        "cloudSignInFailed",
-        {},
-        true,
-      );
-    } finally {
-      signInButton.disabled = false;
-    }
-  });
-
-document
-  .getElementById("cloud-reset-password")
-  .addEventListener("click", async (event) => {
-    if (!cloudConfigured || !cloudAuth) {
-      setCloudStatus(
-        "error",
-        "cloudError",
-        "cloudReadFailed",
-        {},
-        true,
-      );
-      return;
-    }
-
-    const emailInput = document.getElementById("cloud-email");
-    const email = emailInput.value.trim();
-    emailInput.value = email;
-    if (!email || !emailInput.checkValidity()) {
-      setCloudStatus(
-        "error",
-        "cloudError",
-        "cloudResetEmailRequired",
-        {},
-        true,
-      );
-      emailInput.focus();
-      emailInput.reportValidity();
-      return;
-    }
-
-    const resetButton = event.currentTarget;
-    resetButton.disabled = true;
-    cloudAuth.languageCode = currentLanguage;
-    setCloudStatus("pending", "cloudPending", "cloudResetSending");
-    try {
-      await cloudAuth.sendPasswordResetEmail(email);
-      setCloudStatus("online", "cloudViewOnly", "cloudResetSent");
-    } catch (error) {
-      console.warn("Cloud password email failed:", error?.code || error);
-      setCloudStatus(
-        "error",
-        "cloudError",
-        "cloudResetFailed",
-        {},
-        true,
-      );
-    } finally {
-      resetButton.disabled = false;
-    }
-  });
+document.getElementById("cloud-auth-form").addEventListener("submit", (event) => {
+  event.preventDefault();
+  signIn();
+});
+document.getElementById("cloud-create-account").addEventListener("click", createAccount);
+document.getElementById("cloud-reset-password").addEventListener("click", sendPasswordReset);
 
 document.getElementById("cloud-sign-out").addEventListener("click", () => {
   cloudAuth?.signOut().catch((error) => {
