@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Builds "Tree Tracker.app" (like FocusFrog: a launcher that starts a small local
-# server and opens the app in its own Chrome window), installs it in
+# server and opens the app in your browser), installs it in
 # ~/Applications and pins it to the Dock. Re-run after changing the code.
 set -euo pipefail
 
@@ -81,12 +81,7 @@ if ! current; then
   fi
 fi
 
-# Its own window, without tabs or address bar; any browser if Chrome is missing.
-if [[ -d "/Applications/Google Chrome.app" ]]; then
-  /usr/bin/open -na "Google Chrome" --args --app="$URL"
-else
-  /usr/bin/open "$URL"
-fi
+/usr/bin/open "$URL"
 LAUNCHER
 chmod +x "$BUNDLE/Contents/MacOS/TreeTracker"
 

@@ -32,7 +32,7 @@ uploads a file of trees; *Export GeoJSON* in the dashboard downloads them all.
 
 Installs **Tree Tracker** in `~/Applications` and the Dock. Clicking it starts a
 small local server (`scripts/serve.mjs`, port 27190, needs Node.js) and opens
-the app in its own Chrome window. It doesn't start at login. It uses the same
+the app in your browser, like FocusFrog. It doesn't start at login. It uses the same
 cloud as the phone, so sign in once there too. Re-run the script after
 changing the code.
 
