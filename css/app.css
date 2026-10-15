@@ -466,7 +466,9 @@ button {
 }
 
 .tree-filter-toggle,
+.unknown-trees-toggle,
 .tree-filter-clear {
+  white-space: nowrap;
   min-height: 36px;
   border: 1px solid rgba(41, 76, 56, 0.16);
   border-radius: 999px;
@@ -479,10 +481,33 @@ button {
   font-weight: 850;
 }
 
-.tree-filter-toggle {
+.tree-filter-toggle,
+.unknown-trees-toggle {
   display: inline-flex;
   align-items: center;
   gap: 7px;
+}
+
+/* Sits next to Filters; Clear all stays on the right. */
+.unknown-trees-toggle {
+  margin-right: auto;
+}
+
+.unknown-trees-toggle::before {
+  content: "?";
+  font-size: 12px;
+  line-height: 1;
+}
+
+.unknown-trees-toggle[aria-pressed="true"] {
+  border-color: var(--forest-800);
+  color: white;
+  background: var(--forest-800);
+}
+
+.unknown-trees-toggle[aria-pressed="true"] .tree-filter-count {
+  color: var(--forest-800);
+  background: white;
 }
 
 .tree-filter-toggle::before {
@@ -3082,6 +3107,7 @@ body.food-mode .more-information-body .source-link {
   }
 
   .tree-filter-toggle,
+  .unknown-trees-toggle,
   .tree-filter-clear {
     min-height: 42px;
     padding: 8px 13px;

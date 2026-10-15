@@ -103,6 +103,13 @@ function renderTreeFacets() {
       : "";
     badge.dataset.count = String(activeCount);
   }
+  const unknownCount = allFeatures.filter((feature) => !treeTypeKey(feature)).length;
+  const unknownBadge = document.getElementById("unknown-trees-count");
+  unknownBadge.textContent = integerFormatter.format(unknownCount);
+  unknownBadge.dataset.count = String(unknownCount);
+  document
+    .getElementById("unknown-trees-filter")
+    .setAttribute("aria-pressed", String(singleTreeFacetValue("species") === "not_recorded"));
   const clearButton = document.getElementById("clear-tree-filters");
   if (clearButton) clearButton.disabled = activeCount === 0;
   const toggle = document.getElementById("tree-filter-toggle");

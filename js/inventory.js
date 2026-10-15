@@ -95,7 +95,7 @@ function treeFacetValue(feature, facet) {
 }
 
 function treeFacetLabel(facet, value) {
-  if (value === "not_recorded") return t("notRecorded");
+  if (value === "not_recorded") return t(facet === "species" ? "unknownType" : "notRecorded");
   if (facet === "species") return localizedCommonName(value);
   if (facet === "health") return healthLabel(value);
   if (facet === "forms") return localizedTreeType(value);

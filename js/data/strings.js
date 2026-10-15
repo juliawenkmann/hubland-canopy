@@ -194,6 +194,8 @@ const I18N = {
     annotationReady: "Trees you add are saved automatically.",
     placementHint: "Move the map until the cross sits on the tree, then tap Save here.",
     placementSave: "Save here",
+    unknownType: "Unknown type",
+    unknownShort: "Unknown",
     gpsAccuracy: "GPS ±{accuracy} m",
     placementOutside: "The cross is outside the campus boundary.",
     manualAdded: "Generic tree added. Complete its information in the popup.",
@@ -510,6 +512,8 @@ const I18N = {
     placementHint:
       "Verschiebe die Karte, bis das Kreuz auf dem Baum liegt, dann „Hier speichern“.",
     placementSave: "Hier speichern",
+    unknownType: "Unbekannte Art",
+    unknownShort: "Unbekannt",
     gpsAccuracy: "GPS ±{accuracy} m",
     placementOutside: "Das Kreuz liegt außerhalb der Campusgrenze.",
     manualAdded:
