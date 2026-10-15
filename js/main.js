@@ -164,13 +164,15 @@ document.getElementById("cloud-sign-out").addEventListener("click", () => {
   });
 });
 
-document
-  .getElementById("cloud-import-file")
-  .addEventListener("change", async (event) => {
-    const input = event.currentTarget;
-    await importCloudGeoJson(input.files?.[0]);
-    input.value = "";
-  });
+document.getElementById("import-geojson").addEventListener("click", () => {
+  if (!requireSignIn()) document.getElementById("cloud-import-file").click();
+});
+
+document.getElementById("cloud-import-file").addEventListener("change", async (event) => {
+  const input = event.currentTarget;
+  await importCloudGeoJson(input.files?.[0]);
+  input.value = "";
+});
 
 document.getElementById("panel-toggle").addEventListener("click", (event) => {
   event.stopPropagation();

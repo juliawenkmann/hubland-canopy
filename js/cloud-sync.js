@@ -41,7 +41,6 @@ function renderCloudSyncUI() {
   message.classList.toggle("is-error", cloudStatus.isError);
   document.getElementById("cloud-auth-form").hidden = !cloudConfigured || Boolean(cloudUser);
   document.getElementById("cloud-sync-user").hidden = !cloudUser;
-  document.getElementById("cloud-sync-actions").hidden = !cloudUser;
   document.getElementById("cloud-user-email").textContent = cloudUser?.email || "";
   renderAccountButton();
 }
@@ -275,7 +274,7 @@ async function importCloudGeoJson(file) {
     if (!features.length) throw new Error("No valid tree features");
   } catch (error) {
     console.error("GeoJSON import failed:", error);
-    setCloudStatus("error", "cloudError", "cloudImportInvalid", {}, true);
+    setAnnotationStatus("cloudImportInvalid", {}, true);
     return;
   }
   const imported = new Map(features.map((feature) => [feature.properties.id, feature]));
@@ -288,10 +287,11 @@ async function importCloudGeoJson(file) {
   };
   persistAnnotations();
   syncAnnotationSource();
+  setAnnotationStatus("cloudWorking");
   queueCloudOperations("upsert", features);
-  if ((await flushCloudOutbox()) && !loadCloudOutbox().length && cloudStatus.state !== "error") {
-    setCloudStatus("online", "cloudOnline", "cloudImportComplete", {
-      count: integerFormatter.format(features.length),
-    });
+  if ((await flushCloudOutbox()) && !loadCloudOutbox().length) {
+    setAnnotationStatus("cloudImportComplete", { count: integerFormatter.format(features.length) });
+  } else {
+    setAnnotationStatus(cloudStatus.messageKey, cloudStatus.variables, true);
   }
 }

@@ -171,17 +171,6 @@
           data-i18n="cloudSignOut"
         >Sign out</button>
       </div>
-      <div class="cloud-sync-actions" id="cloud-sync-actions" hidden>
-        <label class="annotation-button" for="cloud-import-file">
-          <span data-i18n="cloudImportGeoJson">Import GeoJSON</span>
-        </label>
-        <input
-          class="cloud-file-input"
-          id="cloud-import-file"
-          type="file"
-          accept=".geojson,.json,application/geo+json,application/json"
-        >
-      </div>
       <p
         class="cloud-sync-message"
         id="cloud-sync-message"
@@ -529,10 +518,22 @@
             >Place tree</button>
             <button
               class="annotation-button"
+              id="import-geojson"
+              type="button"
+              data-i18n="cloudImportGeoJson"
+            >Import GeoJSON</button>
+            <button
+              class="annotation-button"
               id="export-annotations"
               type="button"
               data-i18n="exportGeoJson"
             >Export GeoJSON</button>
+            <input
+              class="cloud-file-input"
+              id="cloud-import-file"
+              type="file"
+              accept=".geojson,.json,application/geo+json,application/json"
+            >
           </div>
           <p
             class="annotation-status"

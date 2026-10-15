@@ -8,9 +8,10 @@ through Firebase.
 
 ## Using it
 
-1. Open the live URL and tap the **lock** in the top bar to sign in. Do this once
-   per device. Only the editor account in `firebase/firestore.rules` can add or
-   edit trees; everyone else sees a read-only map.
+1. Open the live URL and tap the **lock** in the top bar to sign in (or *Create
+   account* the first time). Do this once per device. Only the editor account in
+   `firebase/firestore.rules` can add or edit trees; everyone else sees a
+   read-only map.
 2. On the phone, add it to the home screen so it opens full screen:
    - iPhone: Safari → Share → *Add to Home Screen*. The home-screen app has its
      own storage, so sign in once more inside it.
@@ -21,8 +22,8 @@ through Firebase.
    - No signal is fine: the app opens offline, keeps what you map and uploads it
      when you're back online. Map imagery you've already viewed is cached.
 
-**Import / export:** with the lock panel open and signed in, *Import GeoJSON*
-uploads a file of trees; *Export GeoJSON* in the dashboard downloads them all.
+**Import / export:** *Import GeoJSON* and *Export GeoJSON* sit under "Your
+trees" in the dashboard. Import needs you to be signed in.
 
 ### Mac app
 

@@ -961,6 +961,10 @@ body.food-mode .maplibregl-popup-content {
   gap: 7px;
 }
 
+#place-tree {
+  grid-column: 1 / -1;
+}
+
 .annotation-button {
   min-height: 36px;
   border: 1px solid rgba(41, 76, 56, 0.16);
@@ -1027,8 +1031,7 @@ body.food-mode .maplibregl-popup-content {
 }
 
 .cloud-sync-heading,
-.cloud-sync-user,
-.cloud-sync-actions {
+.cloud-sync-user {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1129,14 +1132,6 @@ body.food-mode .maplibregl-popup-content {
   font-weight: 750;
 }
 
-.cloud-sync-actions {
-  flex-wrap: wrap;
-}
-
-.cloud-sync-actions .annotation-button {
-  flex: 1 1 128px;
-}
-
 .cloud-file-input {
   position: absolute;
   width: 1px;
@@ -1148,8 +1143,6 @@ body.food-mode .maplibregl-popup-content {
 
 .cloud-auth-form[hidden],
 .cloud-sync-user[hidden],
-.cloud-sync-actions[hidden],
-.cloud-sync-actions [hidden],
 .account-panel[hidden],
 .account-toggle[hidden],
 #import-osm[hidden] {
@@ -3304,8 +3297,7 @@ body.food-mode .more-information-body .source-link {
   }
 
   .cloud-auth-fields input,
-  .cloud-auth-buttons .annotation-button,
-  .cloud-sync-actions .annotation-button {
+  .cloud-auth-buttons .annotation-button {
     min-height: 44px;
     font-size: 16px;
   }
