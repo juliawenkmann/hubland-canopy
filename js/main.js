@@ -111,10 +111,9 @@ document
   .getElementById("clear-tree-filters")
   .addEventListener("click", clearTreeFacets);
 
-// Only trees nobody has identified yet; tap again for all trees.
-document
-  .getElementById("unknown-trees-filter")
-  .addEventListener("click", () => setTreeTypeFilter("not_recorded"));
+QUICK_FILTERS.forEach(({ id, facet, value }) => {
+  document.getElementById(id).addEventListener("click", () => toggleOnlyFacetValue(facet, value));
+});
 
 document
   .getElementById("tree-species-search")

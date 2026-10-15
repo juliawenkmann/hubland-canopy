@@ -257,21 +257,39 @@
                 ></span>
               </button>
               <button
-                class="unknown-trees-toggle"
-                id="unknown-trees-filter"
-                type="button"
-                aria-pressed="false"
-              >
-                <span data-i18n="unknownShort">Unknown</span>
-                <span class="tree-filter-count" id="unknown-trees-count"></span>
-              </button>
-              <button
                 class="tree-filter-clear"
                 id="clear-tree-filters"
                 type="button"
                 data-i18n="clearAllFilters"
                 disabled
               >Clear all</button>
+            </div>
+            <div
+              class="quick-filters"
+              role="group"
+              aria-label="Quick filters"
+              data-i18n-aria-label="quickFilters"
+            >
+              <button
+                class="quick-filter"
+                id="unknown-trees-filter"
+                type="button"
+                aria-pressed="false"
+                data-icon="?"
+              >
+                <span data-i18n="unknownShort">Unknown</span>
+                <span class="tree-filter-count"></span>
+              </button>
+              <button
+                class="quick-filter"
+                id="review-trees-filter"
+                type="button"
+                aria-pressed="false"
+                data-icon="⚑"
+              >
+                <span data-i18n="needsReview">Needs review</span>
+                <span class="tree-filter-count"></span>
+              </button>
             </div>
             <div class="tree-filter-panel" id="tree-filter-panel" hidden>
               <div
@@ -313,6 +331,15 @@
                   </span>
                 </summary>
                 <div class="facet-options" data-facet-options="health"></div>
+              </details>
+              <details class="filter-facet" data-tree-facet="review">
+                <summary>
+                  <span class="filter-facet-title">
+                    <span data-i18n="reviewStatus">Review status</span>
+                    <span class="facet-selected-count" data-facet-count="review"></span>
+                  </span>
+                </summary>
+                <div class="facet-options" data-facet-options="review"></div>
               </details>
               <details class="filter-facet" data-tree-facet="forms">
                 <summary>

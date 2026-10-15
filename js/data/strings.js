@@ -196,6 +196,8 @@ const I18N = {
     placementSave: "Save here",
     unknownType: "Unknown type",
     unknownShort: "Unknown",
+    needsReview: "Needs review",
+    quickFilters: "Quick filters",
     gpsAccuracy: "GPS ±{accuracy} m",
     placementOutside: "The cross is outside the campus boundary.",
     manualAdded: "Generic tree added. Complete its information in the popup.",
@@ -514,6 +516,8 @@ const I18N = {
     placementSave: "Hier speichern",
     unknownType: "Unbekannte Art",
     unknownShort: "Unbekannt",
+    needsReview: "Zu prüfen",
+    quickFilters: "Schnellfilter",
     gpsAccuracy: "GPS ±{accuracy} m",
     placementOutside: "Das Kreuz liegt außerhalb der Campusgrenze.",
     manualAdded:

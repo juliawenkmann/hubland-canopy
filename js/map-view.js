@@ -179,11 +179,12 @@ function updateSelectionStatus() {
 }
 
 function setTreeTypeFilter(treeType) {
-  const alreadyOnlySelected =
-    treeType && treeFacetSelection.species.size === 1 && treeFacetSelection.species.has(treeType);
-  treeFacetSelection.species.clear();
-  if (treeType && !alreadyOnlySelected) treeFacetSelection.species.add(treeType);
-  refreshTreeFilterResults();
+  if (treeType) {
+    toggleOnlyFacetValue("species", treeType);
+  } else {
+    treeFacetSelection.species.clear();
+    refreshTreeFilterResults();
+  }
 }
 
 function setColorMode(mode) {

@@ -3,6 +3,19 @@
  */
 "use strict";
 
+// One-tap filters above the Filters panel; each toggles "only this value".
+const QUICK_FILTERS = [
+  { id: "unknown-trees-filter", facet: "species", value: "not_recorded" },
+  { id: "review-trees-filter", facet: "review", value: "unreviewed" },
+];
+
+function toggleOnlyFacetValue(facet, value) {
+  const alreadyOnly = singleTreeFacetValue(facet) === value;
+  treeFacetSelection[facet].clear();
+  if (!alreadyOnly) treeFacetSelection[facet].add(value);
+  refreshTreeFilterResults();
+}
+
 function renderTreeFacetOptions(facet, allFeatures) {
   const container = document.querySelector(
     `[data-facet-options="${facet}"]`,
@@ -103,13 +116,14 @@ function renderTreeFacets() {
       : "";
     badge.dataset.count = String(activeCount);
   }
-  const unknownCount = allFeatures.filter((feature) => !treeTypeKey(feature)).length;
-  const unknownBadge = document.getElementById("unknown-trees-count");
-  unknownBadge.textContent = integerFormatter.format(unknownCount);
-  unknownBadge.dataset.count = String(unknownCount);
-  document
-    .getElementById("unknown-trees-filter")
-    .setAttribute("aria-pressed", String(singleTreeFacetValue("species") === "not_recorded"));
+  QUICK_FILTERS.forEach(({ id, facet, value }) => {
+    const button = document.getElementById(id);
+    const count = allFeatures.filter((feature) => treeFacetValue(feature, facet) === value).length;
+    const badge = button.querySelector(".tree-filter-count");
+    badge.textContent = integerFormatter.format(count);
+    badge.dataset.count = String(count);
+    button.setAttribute("aria-pressed", String(singleTreeFacetValue(facet) === value));
+  });
   const clearButton = document.getElementById("clear-tree-filters");
   if (clearButton) clearButton.disabled = activeCount === 0;
   const toggle = document.getElementById("tree-filter-toggle");

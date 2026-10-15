@@ -27,6 +27,7 @@ const treeFacetSelection = {
   species: new Set(),
   genera: new Set(),
   health: new Set(),
+  review: new Set(),
   forms: new Set(),
   sources: new Set(),
 };

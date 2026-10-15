@@ -466,7 +466,7 @@ button {
 }
 
 .tree-filter-toggle,
-.unknown-trees-toggle,
+.quick-filter,
 .tree-filter-clear {
   white-space: nowrap;
   min-height: 36px;
@@ -482,30 +482,32 @@ button {
 }
 
 .tree-filter-toggle,
-.unknown-trees-toggle {
+.quick-filter {
   display: inline-flex;
   align-items: center;
   gap: 7px;
 }
 
-/* Sits next to Filters; Clear all stays on the right. */
-.unknown-trees-toggle {
-  margin-right: auto;
+.quick-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
 }
 
-.unknown-trees-toggle::before {
-  content: "?";
+.quick-filter::before {
+  content: attr(data-icon);
   font-size: 12px;
   line-height: 1;
 }
 
-.unknown-trees-toggle[aria-pressed="true"] {
+.quick-filter[aria-pressed="true"] {
   border-color: var(--forest-800);
   color: white;
   background: var(--forest-800);
 }
 
-.unknown-trees-toggle[aria-pressed="true"] .tree-filter-count {
+.quick-filter[aria-pressed="true"] .tree-filter-count {
   color: var(--forest-800);
   background: white;
 }
@@ -3107,7 +3109,7 @@ body.food-mode .more-information-body .source-link {
   }
 
   .tree-filter-toggle,
-  .unknown-trees-toggle,
+  .quick-filter,
   .tree-filter-clear {
     min-height: 42px;
     padding: 8px 13px;

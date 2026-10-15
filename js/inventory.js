@@ -89,6 +89,9 @@ function treeFacetValue(feature, facet) {
     return feature?.properties?.genus || "not_recorded";
   }
   if (facet === "health") return treeHealthKey(feature);
+  if (facet === "review") {
+    return feature?.properties?.review_status === "reviewed" ? "reviewed" : "unreviewed";
+  }
   if (facet === "forms") return treeFormKey(feature);
   if (facet === "sources") return treeSourceKey(feature);
   return "not_recorded";
@@ -100,6 +103,7 @@ function treeFacetLabel(facet, value) {
   if (facet === "health") return healthLabel(value);
   if (facet === "forms") return localizedTreeType(value);
   if (facet === "sources") return treeSourceLabel(value);
+  if (facet === "review") return t(value);
   return value;
 }
 
@@ -108,6 +112,7 @@ function treeFacetDefinitions() {
     { key: "species", labelKey: "filterTreeSpecies" },
     { key: "genera", labelKey: "filterGenus" },
     { key: "health", labelKey: "filterCondition" },
+    { key: "review", labelKey: "reviewStatus" },
     { key: "forms", labelKey: "filterGrowthForm" },
     { key: "sources", labelKey: "filterDataSource" },
   ];
@@ -160,6 +165,7 @@ function treeFacetValues(facet, allFeatures) {
   treeFacetSelection[facet].forEach((value) => values.add(value));
   const fixedOrder = {
     health: ["good", "fair", "poor", "dead", "not_recorded"],
+    review: ["unreviewed", "reviewed"],
     forms: ["Laubbaum", "Strauch", "Obstbaum-Fundort", "not_recorded"],
     sources: ["manual", "openstreetmap", "campus"],
   }[facet];
