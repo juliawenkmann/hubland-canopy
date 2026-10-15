@@ -95,3 +95,4 @@ curl -X POST -H 'Authorization: Bearer owner' -H 'Content-Type: application/json
 - Campus boundary and part of the tree baseline: © OpenStreetMap contributors (ODbL 1.0)
 - Fruit locations: [mundraub.org](https://mundraub.org)
 - Aerial imagery: DOP40 © Bayerische Vermessungsverwaltung (CC BY 4.0)
+- Lebensbaum and Blasenbaum plates: Pierre-Joseph Redouté, *Traité des arbres et arbustes* (1800–1819), public domain; scans by the New York Public Library via Wikimedia Commons

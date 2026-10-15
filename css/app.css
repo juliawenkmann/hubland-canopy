@@ -2139,6 +2139,19 @@ body.food-mode .maplibregl-popup-content {
   background-size: cover;
 }
 
+/* Redouté, Traité des arbres et arbustes (1800–1819), public domain. */
+.botanical-thuja-occidentalis-plate {
+  background-image: url("../assets/plates/thuja-occidentalis.webp");
+  background-position: center;
+  background-size: contain; /* whole plant, tall plates */
+}
+
+.botanical-koelreuteria-paniculata-plate {
+  background-image: url("../assets/plates/koelreuteria-paniculata.webp");
+  background-position: center;
+  background-size: contain; /* whole plant, tall plates */
+}
+
 .botanical-prunus-avium-plate {
   background-image: url("../assets/plates/prunus-avium.webp");
   background-position: center;

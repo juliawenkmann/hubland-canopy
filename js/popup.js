@@ -156,6 +156,12 @@ function buildBotanicalPlate(properties, displayName) {
   const isYew =
     catalogMatch?.id === "european-yew" ||
     /eibe|european\s+yew|taxus\s+baccata/.test(botanicalIdentity);
+  const isArborvitae =
+    catalogMatch?.id === "arborvitae" ||
+    /lebensbaum|arborvitae|thuja/.test(botanicalIdentity);
+  const isGoldenRainTree =
+    catalogMatch?.id === "golden-rain-tree" ||
+    /blasenbaum|golden\s+rain\s+tree|koelreuteria/.test(botanicalIdentity);
   const isWildCherry =
     catalogMatch?.id === "wild-cherry" ||
     /vogelkirsche|wild\s+cherry|prunus\s+avium/.test(botanicalIdentity);
@@ -246,6 +252,8 @@ function buildBotanicalPlate(properties, displayName) {
     [isEmpressTree, "botanical-paulownia-tomentosa-plate"],
     [isBlackElder, "botanical-sambucus-nigra-plate"],
     [isYew, "botanical-taxus-baccata-plate"],
+    [isArborvitae, "botanical-thuja-occidentalis-plate"],
+    [isGoldenRainTree, "botanical-koelreuteria-paniculata-plate"],
     [isWildCherry, "botanical-prunus-avium-plate"],
     [isBlackthorn, "botanical-prunus-spinosa-plate"],
     [isWildRose, "botanical-rosa-wild-plate"],
