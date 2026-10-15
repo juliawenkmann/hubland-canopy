@@ -651,6 +651,8 @@ const COMMON_NAME_EN = {
   Blauglockenbaum: "Empress tree",
   Holunder: "Black elder",
   Eibe: "European yew",
+  Lebensbaum: "Arborvitae",
+  Blasenbaum: "Golden rain tree",
   "Feld-Ahorn": "Field maple",
   "Ahornblättrige Platane": "London plane tree",
   "Rot-Ahorn": "Red maple",

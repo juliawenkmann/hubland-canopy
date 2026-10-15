@@ -19,6 +19,7 @@ const GENUS_COLORS = {
   Fraxinus: "#597b78",
   Gleditsia: "#b6943d",
   Ginkgo: "#b59b3c",
+  Koelreuteria: "#d6a826",
   Malus: "#d25353",
   Mespilus: "#936a4f",
   Morus: "#70435f",
@@ -35,6 +36,7 @@ const GENUS_COLORS = {
   Sambucus: "#6d665f",
   Sorbus: "#b35c45",
   Taxus: "#486b52",
+  Thuja: "#7f9b3b",
   Tilia: "#4f7f52",
   Ulmus: "#66784f",
 };

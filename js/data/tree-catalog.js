@@ -40,6 +40,13 @@ const TREE_IDENTIFICATION_CATALOG = [
     tree_type: "Laubbaum",
   },
   {
+    id: "golden-rain-tree",
+    common_name: "Blasenbaum",
+    scientific_name: "Koelreuteria paniculata",
+    genus: "Koelreuteria",
+    tree_type: "Laubbaum",
+  },
+  {
     id: "empress-tree",
     common_name: "Blauglockenbaum",
     scientific_name: "Paulownia tomentosa",
@@ -52,6 +59,13 @@ const TREE_IDENTIFICATION_CATALOG = [
     scientific_name: "Sambucus nigra",
     genus: "Sambucus",
     tree_type: "Strauch",
+  },
+  {
+    id: "arborvitae",
+    common_name: "Lebensbaum",
+    scientific_name: "Thuja sp.",
+    genus: "Thuja",
+    tree_type: "Nadelbaum",
   },
   {
     id: "european-yew",
