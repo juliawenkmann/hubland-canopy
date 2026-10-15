@@ -174,7 +174,6 @@ const I18N = {
     cloudCreateFailed: "The account could not be created. Check your connection and try again.",
     cloudNotEditor: "You're signed in, but this account isn't allowed to edit trees.",
     cloudResetEmailRequired: "Enter a valid email address first.",
-    cloudResetSending: "Sending the secure password email…",
     cloudResetSent:
       "If this email has an account, a reset link is on its way. Nothing after a few minutes? Use Create account.",
     cloudResetFailed:
@@ -189,24 +188,22 @@ const I18N = {
     cloudReadFailed:
       "The shared records could not be loaded. Cached local records remain available.",
     placeTree: "Place tree",
-    cancelPlacement: "Cancel placement",
+    cancelPlacement: "Cancel",
     exportGeoJson: "Export GeoJSON",
     annotationsCount: "{count} annotations",
     annotationReady: "Trees you add are saved automatically.",
-    placementHint: "Click an empty position on the map to add a generic tree.",
-    placementCancelled: "Manual placement cancelled.",
-    placementOutside: "Place annotations inside the drawn campus boundary.",
+    placementHint: "Move the map until the cross sits on the tree, then tap Save here.",
+    placementSave: "Save here",
+    gpsAccuracy: "GPS ±{accuracy} m",
+    placementOutside: "The cross is outside the campus boundary.",
     manualAdded: "Generic tree added. Complete its information in the popup.",
     quickAddTree: "Track tree",
     quickAddTreeAria: "Track a new tree at my current location",
     locatingTree: "Finding GPS position…",
-    tapTreeLocation: "Tap tree location",
     gpsAdded:
       "GPS location captured (±{accuracy} m). Complete the tree information.",
     gpsFallback:
-      "Your position could not be determined. Tap the tree location on the map.",
-    gpsOutside:
-      "Your position is outside Hubland Nord. Tap a location inside the campus boundary.",
+      "No GPS position. Move the map until the cross sits on the tree.",
     shareExportTitle: "Tree Tracker field data",
     shareExportText: "Exported tree records from Tree Tracker.",
     exportEmpty: "There are no annotations to export yet.",
@@ -491,7 +488,6 @@ const I18N = {
     cloudNotEditor: "Du bist angemeldet, aber dieses Konto darf keine Bäume bearbeiten.",
     cloudResetEmailRequired:
       "Gib zuerst eine gültige E-Mail-Adresse ein.",
-    cloudResetSending: "Die sichere Passwort-E-Mail wird gesendet…",
     cloudResetSent:
       "Falls es für diese E-Mail ein Konto gibt, ist ein Link unterwegs. Nach ein paar Minuten nichts da? „Konto erstellen“ nutzen.",
     cloudResetFailed:
@@ -507,27 +503,24 @@ const I18N = {
     cloudReadFailed:
       "Die gemeinsamen Datensätze konnten nicht geladen werden. Lokal gespeicherte Daten bleiben verfügbar.",
     placeTree: "Baum setzen",
-    cancelPlacement: "Setzen abbrechen",
+    cancelPlacement: "Abbrechen",
     exportGeoJson: "GeoJSON exportieren",
     annotationsCount: "{count} Annotationen",
     annotationReady: "Neue Bäume werden automatisch gespeichert.",
     placementHint:
-      "Klicke auf eine freie Kartenposition, um einen generischen Baum hinzuzufügen.",
-    placementCancelled: "Manuelles Setzen abgebrochen.",
-    placementOutside:
-      "Setze Annotationen innerhalb der eingezeichneten Campusgrenze.",
+      "Verschiebe die Karte, bis das Kreuz auf dem Baum liegt, dann „Hier speichern“.",
+    placementSave: "Hier speichern",
+    gpsAccuracy: "GPS ±{accuracy} m",
+    placementOutside: "Das Kreuz liegt außerhalb der Campusgrenze.",
     manualAdded:
       "Generischer Baum hinzugefügt. Ergänze seine Informationen im Popup.",
     quickAddTree: "Baum erfassen",
     quickAddTreeAria: "Neuen Baum an meinem aktuellen Standort erfassen",
     locatingTree: "GPS-Standort wird gesucht…",
-    tapTreeLocation: "Baumstandort antippen",
     gpsAdded:
       "GPS-Standort erfasst (±{accuracy} m). Ergänze jetzt die Baumdaten.",
     gpsFallback:
-      "Dein Standort konnte nicht bestimmt werden. Tippe den Baumstandort auf der Karte an.",
-    gpsOutside:
-      "Dein Standort liegt außerhalb von Hubland Nord. Tippe einen Standort innerhalb der Campusgrenze an.",
+      "Kein GPS-Standort. Verschiebe die Karte, bis das Kreuz auf dem Baum liegt.",
     shareExportTitle: "Tree-Tracker-Felddaten",
     shareExportText: "Exportierte Baumdatensätze aus Tree Tracker.",
     exportEmpty: "Es gibt noch keine Annotationen zum Exportieren.",

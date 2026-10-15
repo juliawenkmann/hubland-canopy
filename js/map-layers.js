@@ -89,6 +89,22 @@ function addMapLayers() {
   map.addSource("trees", { type: "geojson", data: empty, cluster: true, clusterMaxZoom: 16, clusterRadius: 42 });
   map.addSource("fruit", { type: "geojson", data: empty, cluster: true, clusterMaxZoom: 14, clusterRadius: 46 });
 
+  map.addSource("gps", { type: "geojson", data: empty });
+  map.addLayer({
+    id: "gps-accuracy",
+    type: "fill",
+    source: "gps",
+    filter: ["==", ["geometry-type"], "Polygon"],
+    paint: { "fill-color": "#2f7de1", "fill-opacity": 0.14, "fill-outline-color": "#2f7de1" },
+  });
+  map.addLayer({
+    id: "gps-dot",
+    type: "circle",
+    source: "gps",
+    filter: ["==", ["geometry-type"], "Point"],
+    paint: { "circle-radius": 7, "circle-color": "#2f7de1", "circle-stroke-color": "#ffffff", "circle-stroke-width": 2.5 },
+  });
+
   addClusterLayers("tree", "trees", ["step", ["get", "point_count"], "#4d724c", 12, "#315837", 35, "#18321f"]);
   addPointLayers("tree", "trees", {
     "circle-radius": ["interpolate", ["linear"], ["zoom"], 14, 6, 18, 10],
@@ -106,6 +122,10 @@ function addMapLayers() {
     "circle-stroke-width": 2.2,
     "circle-stroke-color": "#fff8ef",
   });
+
+  // Your own position stays on top of the tree markers.
+  map.moveLayer("gps-accuracy");
+  map.moveLayer("gps-dot");
 
   [
     ["tree-clusters", "trees"],
@@ -134,20 +154,7 @@ function addMapLayers() {
       if (!manualPlacementMode) map.getCanvas().style.cursor = "pointer";
     });
     map.on("mouseleave", layer, () => {
-      map.getCanvas().style.cursor = manualPlacementMode ? "crosshair" : "";
+      map.getCanvas().style.cursor = "";
     });
-  });
-
-  map.on("click", (event) => {
-    if (!manualPlacementMode) return;
-    if (map.queryRenderedFeatures(event.point, { layers: ["tree-clusters", "tree-targets"] }).length) {
-      return;
-    }
-    const coordinates = [event.lngLat.lng, event.lngLat.lat];
-    if (!pointInCampus(coordinates)) {
-      setAnnotationStatus("placementOutside", {}, true);
-      return;
-    }
-    addManualAnnotation(coordinates);
   });
 }

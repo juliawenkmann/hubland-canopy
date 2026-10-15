@@ -63,6 +63,9 @@ async function initialise() {
   }
   applyLanguage({ refreshDynamic: false });
 
+  map.on("dragstart", noteManualMapMove);
+  map.on("zoomstart", noteManualMapMove);
+  map.on("move", renderPlacement);
   map.on("load", () => {
     addMapLayers();
     applyMapView();
@@ -118,9 +121,13 @@ document
 document.getElementById("fit-trees").addEventListener("click", () => fitAllTrees());
 
 document.getElementById("place-tree").addEventListener("click", () => {
-  if (!manualPlacementMode && requireSignIn()) return;
-  setManualPlacement(!manualPlacementMode);
+  if (manualPlacementMode) stopPlacement();
+  else startPlacement({ followGps: false });
 });
+
+document.getElementById("placement-cancel").addEventListener("click", stopPlacement);
+document.getElementById("placement-save").addEventListener("click", savePlacement);
+window.addEventListener("pagehide", stopPlacement); // never leave GPS running
 
 document.getElementById("account-toggle").addEventListener("click", () => {
   setAccountPanelOpen(!accountPanelIsOpen());

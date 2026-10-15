@@ -40,14 +40,7 @@ function renderAnnotationUI() {
   const mobileAddLabel = mobileAddButton.querySelector(
     "[data-field-add-label]",
   );
-  mobileAddButton.disabled = locatingTree;
-  mobileAddLabel.textContent = t(
-    locatingTree
-      ? "locatingTree"
-      : manualPlacementMode
-        ? "tapTreeLocation"
-        : "quickAddTree",
-  );
+  mobileAddLabel.textContent = t(manualPlacementMode ? "cancelPlacement" : "quickAddTree");
   mobileAddButton.setAttribute("aria-label", t("quickAddTreeAria"));
 }
 
@@ -116,9 +109,6 @@ function addManualAnnotation(
   persistAnnotations();
   syncAnnotationSource();
   queueCloudOperation("upsert", feature);
-  manualPlacementMode = false;
-  map.getCanvas().style.cursor = "";
-  if (detectionMethod === "manual") clearMobileFieldStatus();
   setAnnotationStatus(
     detectionMethod === "gps" ? "gpsAdded" : "manualAdded",
     detectionMethod === "gps" ? { accuracy } : {},

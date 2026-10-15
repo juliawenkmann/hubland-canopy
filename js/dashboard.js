@@ -261,10 +261,7 @@ function updateDashboardModeUI() {
 
 function setDashboardMode(mode) {
   dashboardMode = mode === "food" ? "food" : "trees";
-  if (dashboardMode === "food" && manualPlacementMode) {
-    manualPlacementMode = false;
-    if (map) map.getCanvas().style.cursor = "";
-  }
+  if (dashboardMode === "food") stopPlacement();
   updateDashboardModeUI();
   renderTreeInsights();
   renderFruitDashboard();

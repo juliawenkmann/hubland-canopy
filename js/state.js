@@ -41,7 +41,6 @@ let activePopupRestoresPanel = false;
 let annotationData = { type: "FeatureCollection", features: [] };
 let annotationStatus = { key: "annotationReady", variables: {}, isError: false };
 let manualPlacementMode = false;
-let locatingTree = false;
 let mobileFieldStatusTimer = null;
 let cloudConfigured = false;
 let cloudDb = null;

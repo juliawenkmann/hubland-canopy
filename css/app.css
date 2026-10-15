@@ -1249,6 +1249,90 @@ body.food-mode .account-toggle {
   grid-template-columns: 1fr 1fr;
 }
 
+/* Placing a tree: a cross in the middle of the map and a save bar. */
+.placement {
+  position: fixed;
+  z-index: 6;
+  inset: 0;
+  pointer-events: none;
+}
+
+.placement-cross {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 48px;
+  height: 48px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, transparent 0 4px, #fffdf7 4px 6px, transparent 6.5px);
+  filter: drop-shadow(0 0 1px rgba(24, 50, 31, 0.95)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+}
+
+.placement-cross::before,
+.placement-cross::after {
+  position: absolute;
+  content: "";
+}
+
+.placement-cross::before {
+  top: 0;
+  bottom: 0;
+  left: calc(50% - 1px);
+  width: 2px;
+  background: linear-gradient(#fffdf7 0 35%, transparent 35% 65%, #fffdf7 65%);
+}
+
+.placement-cross::after {
+  top: calc(50% - 1px);
+  right: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #fffdf7 0 35%, transparent 35% 65%, #fffdf7 65%);
+}
+
+.placement-bar {
+  position: absolute;
+  bottom: max(20px, env(safe-area-inset-bottom));
+  left: 50%;
+  display: grid;
+  width: min(420px, calc(100vw - 32px));
+  gap: 10px;
+  border: 1px solid rgba(76, 82, 58, 0.22);
+  border-radius: 18px;
+  padding: 12px;
+  background: rgba(251, 247, 235, 0.98);
+  box-shadow: var(--card-shadow);
+  pointer-events: auto;
+  transform: translateX(-50%);
+}
+
+.placement-hint {
+  margin: 0;
+  color: var(--forest-900);
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+.placement-hint.is-error {
+  color: #934a36;
+}
+
+.placement-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.placement-buttons .annotation-button {
+  min-height: 42px;
+  font-size: 12px;
+}
+
+body.is-placing .map-actions {
+  display: none;
+}
+
 .text-button {
   justify-self: start;
   border: 0;
@@ -3368,6 +3452,19 @@ body.food-mode .more-information-body .source-link {
 }
 
 @media (max-width: 760px) {
+  body.is-placing .dashboard {
+    display: none;
+  }
+
+  .placement-hint {
+    font-size: 15px;
+  }
+
+  .placement-buttons .annotation-button {
+    min-height: 52px;
+    font-size: 17px;
+  }
+
   .text-button {
     min-height: 32px;
     font-size: 14px;
