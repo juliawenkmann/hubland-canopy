@@ -111,8 +111,8 @@ document
   .getElementById("clear-tree-filters")
   .addEventListener("click", clearTreeFacets);
 
-QUICK_FILTERS.forEach(({ id, facet, value }) => {
-  document.getElementById(id).addEventListener("click", () => toggleOnlyFacetValue(facet, value));
+QUICK_FILTERS.forEach((filter) => {
+  document.getElementById(filter.id).addEventListener("click", () => toggleQuickFilter(filter));
 });
 
 document

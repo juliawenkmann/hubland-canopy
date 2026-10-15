@@ -3,16 +3,22 @@
  */
 "use strict";
 
-// One-tap filters above the Filters panel; each toggles "only this value".
+// One-tap filters above the Filters panel; each toggles "only these values".
 const QUICK_FILTERS = [
-  { id: "unknown-trees-filter", facet: "species", value: "not_recorded" },
-  { id: "review-trees-filter", facet: "review", value: "unreviewed" },
+  { id: "unknown-trees-filter", facet: "species", values: ["not_recorded"] },
+  { id: "review-trees-filter", facet: "review", values: ["unreviewed"] },
+  { id: "poor-health-filter", facet: "health", values: ["poor", "dead"] },
 ];
 
-function toggleOnlyFacetValue(facet, value) {
-  const alreadyOnly = singleTreeFacetValue(facet) === value;
-  treeFacetSelection[facet].clear();
-  if (!alreadyOnly) treeFacetSelection[facet].add(value);
+function quickFilterActive({ facet, values }) {
+  const selected = treeFacetSelection[facet];
+  return selected.size === values.length && values.every((value) => selected.has(value));
+}
+
+function toggleQuickFilter(filter) {
+  const active = quickFilterActive(filter);
+  treeFacetSelection[filter.facet].clear();
+  if (!active) filter.values.forEach((value) => treeFacetSelection[filter.facet].add(value));
   refreshTreeFilterResults();
 }
 
@@ -116,13 +122,15 @@ function renderTreeFacets() {
       : "";
     badge.dataset.count = String(activeCount);
   }
-  QUICK_FILTERS.forEach(({ id, facet, value }) => {
-    const button = document.getElementById(id);
-    const count = allFeatures.filter((feature) => treeFacetValue(feature, facet) === value).length;
+  QUICK_FILTERS.forEach((filter) => {
+    const button = document.getElementById(filter.id);
+    const count = allFeatures.filter((feature) =>
+      filter.values.includes(treeFacetValue(feature, filter.facet)),
+    ).length;
     const badge = button.querySelector(".tree-filter-count");
     badge.textContent = integerFormatter.format(count);
     badge.dataset.count = String(count);
-    button.setAttribute("aria-pressed", String(singleTreeFacetValue(facet) === value));
+    button.setAttribute("aria-pressed", String(quickFilterActive(filter)));
   });
   const clearButton = document.getElementById("clear-tree-filters");
   if (clearButton) clearButton.disabled = activeCount === 0;

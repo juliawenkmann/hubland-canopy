@@ -180,7 +180,7 @@ function updateSelectionStatus() {
 
 function setTreeTypeFilter(treeType) {
   if (treeType) {
-    toggleOnlyFacetValue("species", treeType);
+    toggleQuickFilter({ facet: "species", values: [treeType] });
   } else {
     treeFacetSelection.species.clear();
     refreshTreeFilterResults();

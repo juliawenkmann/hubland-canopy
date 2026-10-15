@@ -84,6 +84,9 @@ function applyLanguage({ refreshDynamic = true } = {}) {
   document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
     element.setAttribute("placeholder", t(element.dataset.i18nPlaceholder));
   });
+  document.querySelectorAll("[data-i18n-title]").forEach((element) => {
+    element.setAttribute("title", t(element.dataset.i18nTitle));
+  });
 
   const languageToggle = document.getElementById("language-toggle");
   languageToggle.dataset.language = currentLanguage;
