@@ -4,3 +4,9 @@ node_modules/
 # Firebase CLI and emulator output
 .firebase/
 *-debug.log
+
+# Local tool settings
+.claude/
+
+# Source artwork; the app uses assets/logo.webp and assets/icons/ made from it
+assets/tree-tracker-logo.png
