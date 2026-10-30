@@ -9,7 +9,11 @@ function pointInCampus(coordinates) {
   // Hubland Süd is currently an additional visual campus boundary only.
   const ring = CAMPUS_BOUNDARY.features[0].geometry.coordinates[0];
   let inside = false;
-  for (let index = 0, previous = ring.length - 1; index < ring.length; previous = index++) {
+  for (
+    let index = 0, previous = ring.length - 1;
+    index < ring.length;
+    previous = index++
+  ) {
     const [xi, yi] = ring[index];
     const [xj, yj] = ring[previous];
     const intersects =
@@ -45,9 +49,7 @@ function treeTypeKey(feature) {
 
 function treeHealthKey(feature) {
   const health = feature?.properties?.health;
-  return ["good", "fair", "poor", "dead"].includes(health)
-    ? health
-    : "good";
+  return ["good", "fair", "poor", "dead"].includes(health) ? health : "good";
 }
 
 function treeFormKey(feature) {
@@ -64,10 +66,7 @@ function treeSourceKey(feature) {
   ) {
     return "openstreetmap";
   }
-  if (
-    method === "manual" ||
-    properties.data_source === "generic_annotation"
-  ) {
+  if (method === "manual" || properties.data_source === "generic_annotation") {
     return "manual";
   }
   return "campus";
@@ -90,7 +89,9 @@ function treeFacetValue(feature, facet) {
   }
   if (facet === "health") return treeHealthKey(feature);
   if (facet === "review") {
-    return feature?.properties?.review_status === "reviewed" ? "reviewed" : "unreviewed";
+    return feature?.properties?.review_status === "reviewed"
+      ? "reviewed"
+      : "unreviewed";
   }
   if (facet === "forms") return treeFormKey(feature);
   if (facet === "sources") return treeSourceKey(feature);
@@ -98,7 +99,8 @@ function treeFacetValue(feature, facet) {
 }
 
 function treeFacetLabel(facet, value) {
-  if (value === "not_recorded") return t(facet === "species" ? "unknownType" : "notRecorded");
+  if (value === "not_recorded")
+    return t(facet === "species" ? "unknownType" : "notRecorded");
   if (facet === "species") return localizedCommonName(value);
   if (facet === "health") return healthLabel(value);
   if (facet === "forms") return localizedTreeType(value);

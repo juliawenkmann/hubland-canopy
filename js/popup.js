@@ -16,9 +16,12 @@ function hasRecordedValue(value) {
 
 function formatRecordedNumber(value, unit, maximumFractionDigits = 1) {
   if (!hasRecordedValue(value)) return t("notRecorded");
-  return `${new Intl.NumberFormat(currentLanguage === "de" ? "de-DE" : "en-GB", {
-    maximumFractionDigits,
-  }).format(Number(value))} ${unit}`;
+  return `${new Intl.NumberFormat(
+    currentLanguage === "de" ? "de-DE" : "en-GB",
+    {
+      maximumFractionDigits,
+    },
+  ).format(Number(value))} ${unit}`;
 }
 
 function appendBenefit(container, label, value) {
@@ -68,8 +71,7 @@ function buildBotanicalPlate(properties, displayName) {
       .filter(Boolean)
       .some(
         (name) =>
-          String(name).trim().toLocaleLowerCase("de") ===
-          normalizedCommonName,
+          String(name).trim().toLocaleLowerCase("de") === normalizedCommonName,
       );
     const scientificNameMatches = [
       entry.scientific_name,
@@ -93,20 +95,19 @@ function buildBotanicalPlate(properties, displayName) {
     .filter(Boolean)
     .join(" ")
     .toLocaleLowerCase("de");
-  const isRedMirabelle =
-    /rot(?:e)?\s+mirabell|red\s+mirabell/.test(botanicalIdentity);
-  const isCherryLaurel =
-    /kirschlorbeer|cherry\s+laurel|laurocerasus/.test(
-      botanicalIdentity,
-    );
+  const isRedMirabelle = /rot(?:e)?\s+mirabell|red\s+mirabell/.test(
+    botanicalIdentity,
+  );
+  const isCherryLaurel = /kirschlorbeer|cherry\s+laurel|laurocerasus/.test(
+    botanicalIdentity,
+  );
   const isBlackLocust =
     /akazie|robinie|black\s+locust|robinia\s+pseudoacacia/.test(
       botanicalIdentity,
     );
-  const isBlueSpruce =
-    /blaufichte|blue\s+spruce|picea\s+pungens/.test(
-      botanicalIdentity,
-    );
+  const isBlueSpruce = /blaufichte|blue\s+spruce|picea\s+pungens/.test(
+    botanicalIdentity,
+  );
   const isNorwaySpruce =
     catalogMatch?.id === "norway-spruce" ||
     normalizedCommonName === "fichte" ||
@@ -115,10 +116,10 @@ function buildBotanicalPlate(properties, displayName) {
   const isScotsPine =
     catalogMatch?.id === "scots-pine" ||
     /kiefer|scots\s+pine|pinus\s+sylvestris/.test(botanicalIdentity);
-  const isOak =
-    /eiche|pedunculate\s+oak|quercus\s+robur/.test(botanicalIdentity);
-  const isRowan =
-    /eberesche|rowan|sorbus\s+aucuparia/.test(botanicalIdentity);
+  const isOak = /eiche|pedunculate\s+oak|quercus\s+robur/.test(
+    botanicalIdentity,
+  );
+  const isRowan = /eberesche|rowan|sorbus\s+aucuparia/.test(botanicalIdentity);
   const isWhitebeam =
     catalogMatch?.id === "common-whitebeam" ||
     /mehlbeere|whitebeam|sorbus\s+aria/.test(botanicalIdentity);
@@ -129,19 +130,13 @@ function buildBotanicalPlate(properties, displayName) {
     /acer\s+platanoides/.test(botanicalIdentity);
   const isJapaneseMaple =
     catalogMatch?.id === "japanese-maple" ||
-    /fächerahorn|japanese\s+maple|acer\s+palmatum/.test(
-      botanicalIdentity,
-    );
+    /fächerahorn|japanese\s+maple|acer\s+palmatum/.test(botanicalIdentity);
   const isServiceberry =
     catalogMatch?.id === "serviceberry" ||
-    /felsenbirne|serviceberry|amelanchier\s+lamarckii/.test(
-      botanicalIdentity,
-    );
+    /felsenbirne|serviceberry|amelanchier\s+lamarckii/.test(botanicalIdentity);
   const isCornelianCherry =
     catalogMatch?.id === "cornelian-cherry" ||
-    /kornelkirsche|cornelian\s+cherry|cornus\s+mas/.test(
-      botanicalIdentity,
-    );
+    /kornelkirsche|cornelian\s+cherry|cornus\s+mas/.test(botanicalIdentity);
   const isGinkgo =
     catalogMatch?.id === "ginkgo" ||
     /ginkgo|ginko|ginkgo\s+biloba/.test(botanicalIdentity);
@@ -194,8 +189,9 @@ function buildBotanicalPlate(properties, displayName) {
     /götterbaum|tree\s+of\s+heaven|ailanthus\s+altissima/.test(
       botanicalIdentity,
     );
-  const isAspen =
-    /espe|european\s+aspen|populus\s+tremula/.test(botanicalIdentity);
+  const isAspen = /espe|european\s+aspen|populus\s+tremula/.test(
+    botanicalIdentity,
+  );
   const isPoplar =
     catalogMatch?.id === "poplar" ||
     normalizedCommonName === "pappel" ||
@@ -206,15 +202,13 @@ function buildBotanicalPlate(properties, displayName) {
     normalizedCommonName === "erle" ||
     normalizedCommonName === "alder" ||
     /alnus\s+glutinosa/.test(botanicalIdentity);
-  const isBeech =
-    /buche|european\s+beech|fagus\s+sylvatica/.test(botanicalIdentity);
-  const isElm =
-    /ulme|wych\s+elm|ulmus\s+glabra/.test(botanicalIdentity);
+  const isBeech = /buche|european\s+beech|fagus\s+sylvatica/.test(
+    botanicalIdentity,
+  );
+  const isElm = /ulme|wych\s+elm|ulmus\s+glabra/.test(botanicalIdentity);
   const fruitPlate = /mirabell|syriaca/.test(botanicalIdentity)
     ? "mirabelle"
-    : /kirsch|cherry|prunus\s+(avium|cerasus)/.test(
-          botanicalIdentity,
-        )
+    : /kirsch|cherry|prunus\s+(avium|cerasus)/.test(botanicalIdentity)
       ? "cherry"
       : /birn|pear|pyrus/.test(botanicalIdentity)
         ? "pear"
@@ -302,9 +296,7 @@ function buildTreePopup(properties, coordinates) {
   const isFoodOrFlower =
     properties.edible === true ||
     properties.flowering === true ||
-    FRUIT_CATALOG.some(
-      (fruit) => fruit.category === properties.fruit_category,
-    );
+    FRUIT_CATALOG.some((fruit) => fruit.category === properties.fruit_category);
   const seasonalEntry = FRUIT_CATALOG.find(
     (fruit) => fruit.category === properties.fruit_category,
   );
@@ -360,9 +352,7 @@ function buildTreePopup(properties, coordinates) {
   [
     properties.genus,
     localizedTreeType(properties.tree_type),
-    isFoodOrFlower
-      ? localizedCommonName(properties.fruit_category)
-      : null,
+    isFoodOrFlower ? localizedCommonName(properties.fruit_category) : null,
   ]
     .filter(
       (value) =>
@@ -443,18 +433,10 @@ function buildTreePopup(properties, coordinates) {
       t("trunkGirth"),
       formatRecordedNumber(properties.trunk_circumference_cm, "cm"),
     ],
-    [
-      t("trunkDiameter"),
-      formatRecordedNumber(properties.dbh_cm, "cm"),
-    ],
+    [t("trunkDiameter"), formatRecordedNumber(properties.dbh_cm, "cm")],
     [t("height"), formatRecordedNumber(properties.height_m, "m")],
-    [
-      t("canopySpread"),
-      formatRecordedNumber(properties.canopy_spread_m, "m"),
-    ],
-  ].forEach(([label, value]) =>
-    appendBenefit(measurementRows, label, value),
-  );
+    [t("canopySpread"), formatRecordedNumber(properties.canopy_spread_m, "m")],
+  ].forEach(([label, value]) => appendBenefit(measurementRows, label, value));
   measurements.appendChild(measurementRows);
   moreBody.appendChild(measurements);
 
@@ -487,10 +469,7 @@ function buildTreePopup(properties, coordinates) {
   const ecologyRows = document.createElement("div");
   ecologyRows.className = "benefits";
   [
-    [
-      t("co2Stored"),
-      formatRecordedNumber(properties.co2_stored_kg, "kg", 0),
-    ],
+    [t("co2Stored"), formatRecordedNumber(properties.co2_stored_kg, "kg", 0)],
     [
       t("co2PerYear"),
       formatRecordedNumber(
@@ -534,57 +513,59 @@ function buildTreePopup(properties, coordinates) {
   let sourceRows;
   if (isMundraub) {
     sourceRows = [
-        [
-          t("mundraubId"),
-          String(properties.source_id || properties.id || t("notRecorded")),
-        ],
-        [t("fruitCategory"), localizedCommonName(properties.fruit_category)],
-        [t("derivedGenus"), properties.genus],
-        [t("botanicalGroup"), properties.scientific_name],
-        [t("taxonomyNote"), t("taxonomyDerived")],
-        [t("measurements"), t("notRecorded")],
-        [t("health"), t("notRecorded")],
-        [t("photo"), t("noPhoto")],
-        [t("source"), properties.source_name],
-        [t("retrieved"), formatDate(properties.source_updated)],
-        [t("coordinates"), coordinateValue],
-      ];
+      [
+        t("mundraubId"),
+        String(properties.source_id || properties.id || t("notRecorded")),
+      ],
+      [t("fruitCategory"), localizedCommonName(properties.fruit_category)],
+      [t("derivedGenus"), properties.genus],
+      [t("botanicalGroup"), properties.scientific_name],
+      [t("taxonomyNote"), t("taxonomyDerived")],
+      [t("measurements"), t("notRecorded")],
+      [t("health"), t("notRecorded")],
+      [t("photo"), t("noPhoto")],
+      [t("source"), properties.source_name],
+      [t("retrieved"), formatDate(properties.source_updated)],
+      [t("coordinates"), coordinateValue],
+    ];
   } else {
     sourceRows = [
-        [t("treeId"), String(properties.id)],
-        [t("commonName"), displayName],
-        [t("scientificName"), properties.scientific_name || t("notRecorded")],
-        [
-          t("scientificSynonym"),
-          properties.scientific_synonym || t("notRecorded"),
-        ],
-        [t("genus"), properties.genus || t("notRecorded")],
-        [
-          t("health"),
-          healthValue === "not_recorded"
-            ? t("notRecorded")
-            : healthLabel(healthValue),
-        ],
-        [t("surveyed"), formatDate(properties.date_surveyed)],
-        [
-          t("annotationMethod"),
-          properties.detection_method === "openstreetmap-overpass"
-            ? t("methodOsm")
-            : t("methodManual"),
-        ],
-        [
-          t("reviewStatus"),
-          properties.review_status
-            ? t(properties.review_status)
-            : t("notRecorded"),
-        ],
-        [t("notes"), properties.notes || t("notRecorded")],
-        [t("source"), properties.source_name || t("notRecorded")],
-        [t("licence"), properties.source_license || t("notRecorded")],
-        [t("coordinates"), coordinateValue],
-      ];
+      [t("treeId"), String(properties.id)],
+      [t("commonName"), displayName],
+      [t("scientificName"), properties.scientific_name || t("notRecorded")],
+      [
+        t("scientificSynonym"),
+        properties.scientific_synonym || t("notRecorded"),
+      ],
+      [t("genus"), properties.genus || t("notRecorded")],
+      [
+        t("health"),
+        healthValue === "not_recorded"
+          ? t("notRecorded")
+          : healthLabel(healthValue),
+      ],
+      [t("surveyed"), formatDate(properties.date_surveyed)],
+      [
+        t("annotationMethod"),
+        properties.detection_method === "openstreetmap-overpass"
+          ? t("methodOsm")
+          : t("methodManual"),
+      ],
+      [
+        t("reviewStatus"),
+        properties.review_status
+          ? t(properties.review_status)
+          : t("notRecorded"),
+      ],
+      [t("notes"), properties.notes || t("notRecorded")],
+      [t("source"), properties.source_name || t("notRecorded")],
+      [t("licence"), properties.source_license || t("notRecorded")],
+      [t("coordinates"), coordinateValue],
+    ];
   }
-  sourceRows.forEach(([label, value]) => appendRecordRow(recordRows, label, value));
+  sourceRows.forEach(([label, value]) =>
+    appendRecordRow(recordRows, label, value),
+  );
   record.appendChild(recordRows);
   moreBody.appendChild(record);
 
@@ -663,9 +644,7 @@ function popupSafeArea() {
       mapRectangle.top + 14,
       (brandRectangle?.bottom || mapRectangle.top) + 12,
     ),
-    bottom: mobile
-      ? mapRectangle.bottom - 88
-      : mapRectangle.bottom - 18,
+    bottom: mobile ? mapRectangle.bottom - 88 : mapRectangle.bottom - 18,
   };
 }
 
@@ -721,8 +700,7 @@ function showTreePopup(feature) {
   const inheritedPanelRestore = activePopupRestoresPanel;
   activePopupRestoresPanel = false;
   if (activePopup) activePopup.remove();
-  const shouldRestorePanel =
-    inheritedPanelRestore || prepareViewportForPopup();
+  const shouldRestorePanel = inheritedPanelRestore || prepareViewportForPopup();
   activeAnnotationId = null;
   activePopupFeature = {
     properties: { ...feature.properties },

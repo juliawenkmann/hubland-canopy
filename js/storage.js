@@ -12,9 +12,10 @@ function readStoredTrees(storageKey) {
             feature?.geometry?.type === "Point" &&
             feature.properties?.id &&
             // Machine-detected candidates from an early experiment, never real trees.
-            !["satellite-color-texture-v1", "ai-manual-visual-review-v1"].includes(
-              feature.properties.detection_method,
-            ),
+            ![
+              "satellite-color-texture-v1",
+              "ai-manual-visual-review-v1",
+            ].includes(feature.properties.detection_method),
         )
       : [];
   } catch {
@@ -26,20 +27,27 @@ function readStoredTrees(storageKey) {
 function loadStoredAnnotations() {
   const trees = new Map();
   const deleted = new Set(
-    loadCloudOutbox().filter((entry) => entry.type === "delete").map((entry) => entry.id),
+    loadCloudOutbox()
+      .filter((entry) => entry.type === "delete")
+      .map((entry) => entry.id),
   );
-  [ANNOTATION_STORAGE_KEY, ...LEGACY_TREE_STORAGE_KEYS].forEach((storageKey) => {
-    readStoredTrees(storageKey).forEach((feature) => {
-      const id = String(feature.properties.id);
-      if (!trees.has(id) && !deleted.has(id)) trees.set(id, feature);
-    });
-  });
+  [ANNOTATION_STORAGE_KEY, ...LEGACY_TREE_STORAGE_KEYS].forEach(
+    (storageKey) => {
+      readStoredTrees(storageKey).forEach((feature) => {
+        const id = String(feature.properties.id);
+        if (!trees.has(id) && !deleted.has(id)) trees.set(id, feature);
+      });
+    },
+  );
   return { type: "FeatureCollection", features: [...trees.values()] };
 }
 
 function persistAnnotations() {
   try {
-    localStorage.setItem(ANNOTATION_STORAGE_KEY, JSON.stringify(annotationData));
+    localStorage.setItem(
+      ANNOTATION_STORAGE_KEY,
+      JSON.stringify(annotationData),
+    );
   } catch (error) {
     console.warn("Could not persist annotations:", error);
   }

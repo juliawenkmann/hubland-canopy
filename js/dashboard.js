@@ -56,17 +56,14 @@ function renderStats() {
   document.getElementById("total-trees").textContent = integerFormatter.format(
     stats.totalTrees,
   );
-  document.getElementById("species-count").textContent = integerFormatter.format(
-    stats.speciesCount,
-  );
+  document.getElementById("species-count").textContent =
+    integerFormatter.format(stats.speciesCount);
   document.getElementById("average-height").textContent =
     stats.averageHeight === null
       ? "—"
       : decimalFormatter.format(stats.averageHeight);
   document.getElementById("total-canopy").textContent =
-    stats.canopyArea === null
-      ? "—"
-      : integerFormatter.format(stats.canopyArea);
+    stats.canopyArea === null ? "—" : integerFormatter.format(stats.canopyArea);
 }
 
 function renderSpeciesChart() {
@@ -228,16 +225,10 @@ function renderTreeInsights() {
 }
 
 function updateDashboardModeUI() {
-  document.body.classList.toggle(
-    "food-mode",
-    dashboardMode === "food",
-  );
+  document.body.classList.toggle("food-mode", dashboardMode === "food");
   document
     .querySelector('meta[name="theme-color"]')
-    ?.setAttribute(
-      "content",
-      dashboardMode === "food" ? "#f5e8df" : "#f2f0e4",
-    );
+    ?.setAttribute("content", dashboardMode === "food" ? "#f5e8df" : "#f2f0e4");
   document.querySelectorAll("[data-dashboard-mode]").forEach((button) => {
     const active = button.dataset.dashboardMode === dashboardMode;
     button.setAttribute("aria-selected", String(active));

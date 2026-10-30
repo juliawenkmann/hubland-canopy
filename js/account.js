@@ -52,7 +52,8 @@ function renderAccountButton() {
 
 // The form's values, or null (after showing what's missing) if they're invalid.
 function accountFormValues({ needsPassword = true } = {}) {
-  const { email, password } = document.getElementById("cloud-auth-form").elements;
+  const { email, password } =
+    document.getElementById("cloud-auth-form").elements;
   email.value = email.value.trim();
   const invalid = [email, ...(needsPassword ? [password] : [])].find(
     (field) => !field.checkValidity(),
@@ -73,7 +74,13 @@ async function runAccountAction(action, fallbackKey) {
     await action();
   } catch (error) {
     console.warn("Account action failed:", error?.code || error);
-    setCloudStatus("error", "cloudError", AUTH_ERROR_KEYS[error?.code] || fallbackKey, {}, true);
+    setCloudStatus(
+      "error",
+      "cloudError",
+      AUTH_ERROR_KEYS[error?.code] || fallbackKey,
+      {},
+      true,
+    );
   } finally {
     buttons.forEach((button) => (button.disabled = false));
   }
@@ -93,7 +100,10 @@ function createAccount() {
   const values = accountFormValues();
   if (!values) return;
   runAccountAction(async () => {
-    await cloudAuth.createUserWithEmailAndPassword(values.email, values.password);
+    await cloudAuth.createUserWithEmailAndPassword(
+      values.email,
+      values.password,
+    );
     document.getElementById("cloud-auth-form").reset();
     setAccountPanelOpen(false);
   }, "cloudCreateFailed");

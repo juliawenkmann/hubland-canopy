@@ -21,9 +21,12 @@ function setAnnotationStatus(key, variables = {}, isError = false) {
 
 function renderAnnotationUI() {
   const count = annotationData.features.length;
-  document.getElementById("annotation-count").textContent = t("annotationsCount", {
-    count: integerFormatter.format(count),
-  });
+  document.getElementById("annotation-count").textContent = t(
+    "annotationsCount",
+    {
+      count: integerFormatter.format(count),
+    },
+  );
 
   const placeButton = document.getElementById("place-tree");
   placeButton.classList.toggle("is-active", manualPlacementMode);
@@ -40,7 +43,9 @@ function renderAnnotationUI() {
   const mobileAddLabel = mobileAddButton.querySelector(
     "[data-field-add-label]",
   );
-  mobileAddLabel.textContent = t(manualPlacementMode ? "cancelPlacement" : "quickAddTree");
+  mobileAddLabel.textContent = t(
+    manualPlacementMode ? "cancelPlacement" : "quickAddTree",
+  );
   mobileAddButton.setAttribute("aria-label", t("quickAddTreeAria"));
 }
 

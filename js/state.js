@@ -40,7 +40,11 @@ let activePopupFeature = null;
 let activeAnnotationId = null;
 let activePopupRestoresPanel = false;
 let annotationData = { type: "FeatureCollection", features: [] };
-let annotationStatus = { key: "annotationReady", variables: {}, isError: false };
+let annotationStatus = {
+  key: "annotationReady",
+  variables: {},
+  isError: false,
+};
 let manualPlacementMode = false;
 let mobileFieldStatusTimer = null;
 let cloudConfigured = false;

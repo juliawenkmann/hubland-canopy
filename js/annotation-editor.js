@@ -36,8 +36,7 @@ function optionalFormNumber(form, name) {
 
 function buildAnnotationEditor(feature) {
   const properties = feature.properties;
-  const isOsm =
-    properties.detection_method === "openstreetmap-overpass";
+  const isOsm = properties.detection_method === "openstreetmap-overpass";
   const root = document.createElement("article");
   root.className = "annotation-editor";
   root.setAttribute("aria-label", t("annotationTitle"));
@@ -70,22 +69,13 @@ function buildAnnotationEditor(feature) {
     const osmRecord = document.createElement("dl");
     osmRecord.className = "tree-record";
     [
-      [
-        t("osmElement"),
-        `node/${properties.osm_id || t("notRecorded")}`,
-      ],
-      [
-        t("osmLeafType"),
-        properties.osm_leaf_type || t("notRecorded"),
-      ],
+      [t("osmElement"), `node/${properties.osm_id || t("notRecorded")}`],
+      [t("osmLeafType"), properties.osm_leaf_type || t("notRecorded")],
       [
         t("osmMappedCount"),
         integerFormatter.format(properties.osm_tree_count_estimate || 1),
       ],
-      [
-        t("osmDescriptionTag"),
-        properties.osm_description || t("notRecorded"),
-      ],
+      [t("osmDescriptionTag"), properties.osm_description || t("notRecorded")],
       [
         t("osmUpdated"),
         properties.osm_timestamp
@@ -169,11 +159,7 @@ function buildAnnotationEditor(feature) {
   presetField.classList.add("annotation-preset-field");
   form.append(
     presetField,
-    popupText(
-      "annotation-preset-hint",
-      t("treeSelectionHint"),
-      "p",
-    ),
+    popupText("annotation-preset-hint", t("treeSelectionHint"), "p"),
     treeTypeInput,
     edibleInput,
     floweringInput,
@@ -270,14 +256,12 @@ function buildAnnotationEditor(feature) {
     }
     form.elements.common_name.value = preset.common_name;
     form.elements.scientific_name.value = preset.scientific_name;
-    form.elements.scientific_synonym.value =
-      preset.scientific_synonym || "";
+    form.elements.scientific_synonym.value = preset.scientific_synonym || "";
     form.elements.genus.value = preset.genus;
     form.elements.tree_type.value = preset.tree_type;
     form.elements.edible.value = preset.edible ? "true" : "false";
     form.elements.flowering.value = preset.flowering ? "true" : "false";
-    form.elements.fruit_category.value =
-      preset.fruit_category || "";
+    form.elements.fruit_category.value = preset.fruit_category || "";
   });
 
   const healthSelect = document.createElement("select");
@@ -400,14 +384,12 @@ function buildAnnotationEditor(feature) {
         ...properties,
         common_name: form.elements.common_name.value.trim(),
         scientific_name: form.elements.scientific_name.value.trim(),
-        scientific_synonym:
-          form.elements.scientific_synonym.value.trim(),
+        scientific_synonym: form.elements.scientific_synonym.value.trim(),
         genus: form.elements.genus.value.trim(),
         tree_type: form.elements.tree_type.value || null,
         edible: form.elements.edible.value === "true",
         flowering: form.elements.flowering.value === "true",
-        fruit_category:
-          form.elements.fruit_category.value.trim() || null,
+        fruit_category: form.elements.fruit_category.value.trim() || null,
         trunk_circumference_cm: optionalFormNumber(
           form,
           "trunk_circumference_cm",
@@ -448,8 +430,7 @@ function openAnnotationEditor(feature) {
   const inheritedPanelRestore = activePopupRestoresPanel;
   activePopupRestoresPanel = false;
   if (activePopup) activePopup.remove();
-  const shouldRestorePanel =
-    inheritedPanelRestore || prepareViewportForPopup();
+  const shouldRestorePanel = inheritedPanelRestore || prepareViewportForPopup();
   activeAnnotationId = feature.properties.id;
   activePopupFeature = null;
   const popup = new maplibregl.Popup({

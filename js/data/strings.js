@@ -166,13 +166,16 @@ const I18N = {
     cloudSignedIn: "Signed in as {email}. Changes sync automatically.",
     cloudSignInFailed:
       "Wrong email or password, or no account yet. New here? Use Create account.",
-    cloudEmailInUse: "This email already has an account. Sign in, or use Forgot password?",
+    cloudEmailInUse:
+      "This email already has an account. Sign in, or use Forgot password?",
     cloudWeakPassword: "Choose a password with at least 6 characters.",
     cloudTooManyAttempts: "Too many attempts. Wait a minute, then try again.",
     cloudSignupDisabled:
       "Creating accounts is switched off in Firebase (Authentication → Settings → User actions).",
-    cloudCreateFailed: "The account could not be created. Check your connection and try again.",
-    cloudNotEditor: "You're signed in, but this account isn't allowed to edit trees.",
+    cloudCreateFailed:
+      "The account could not be created. Check your connection and try again.",
+    cloudNotEditor:
+      "You're signed in, but this account isn't allowed to edit trees.",
     cloudResetEmailRequired: "Enter a valid email address first.",
     cloudResetSent:
       "If this email has an account, a reset link is on its way. Nothing after a few minutes? Use Create account.",
@@ -192,7 +195,8 @@ const I18N = {
     exportGeoJson: "Export GeoJSON",
     annotationsCount: "{count} annotations",
     annotationReady: "Trees you add are saved automatically.",
-    placementHint: "Move the map until the cross sits on the tree, then tap Save here.",
+    placementHint:
+      "Move the map until the cross sits on the tree, then tap Save here.",
     placementSave: "Save here",
     unknownType: "Unknown type",
     unknownShort: "Unknown",
@@ -259,7 +263,8 @@ const I18N = {
     campusBoundarySouth: "Campus Hubland South",
     healthDataNote:
       "Health assessments are not included in the published source data.",
-    legendSummary: "{mode} color legend: {items}, Hubland North and South campus boundaries",
+    legendSummary:
+      "{mode} color legend: {items}, Hubland North and South campus boundaries",
     healthGood: "Good",
     healthFair: "Fair",
     healthPoor: "Poor",
@@ -326,7 +331,8 @@ const I18N = {
       "Interaktive Baumkarte mit aktueller OpenStreetMap-Basisschicht und bearbeitbaren Baumdatensätzen für den Campus Hubland Nord in Würzburg.",
     mapAria: "Interaktive Baumkarte des Campus",
     brandAria: "Tree Tracker, Campus Hubland Nord in Würzburg",
-    dashboardAria: "Übersicht der Campusbäume sowie der Obst- und Blütenlandschaft",
+    dashboardAria:
+      "Übersicht der Campusbäume sowie der Obst- und Blütenlandschaft",
     switchToGerman: "Zu Deutsch wechseln",
     switchToEnglish: "Zu Englisch wechseln",
     dashboardSection: "Bereich der Übersicht",
@@ -486,14 +492,15 @@ const I18N = {
     cloudEmailInUse:
       "Für diese E-Mail gibt es schon ein Konto. Melde dich an oder nutze „Passwort vergessen?“.",
     cloudWeakPassword: "Wähle ein Passwort mit mindestens 6 Zeichen.",
-    cloudTooManyAttempts: "Zu viele Versuche. Warte kurz und versuche es dann erneut.",
+    cloudTooManyAttempts:
+      "Zu viele Versuche. Warte kurz und versuche es dann erneut.",
     cloudSignupDisabled:
       "Das Erstellen von Konten ist in Firebase ausgeschaltet (Authentication → Settings → User actions).",
     cloudCreateFailed:
       "Das Konto konnte nicht erstellt werden. Prüfe die Verbindung und versuche es erneut.",
-    cloudNotEditor: "Du bist angemeldet, aber dieses Konto darf keine Bäume bearbeiten.",
-    cloudResetEmailRequired:
-      "Gib zuerst eine gültige E-Mail-Adresse ein.",
+    cloudNotEditor:
+      "Du bist angemeldet, aber dieses Konto darf keine Bäume bearbeiten.",
+    cloudResetEmailRequired: "Gib zuerst eine gültige E-Mail-Adresse ein.",
     cloudResetSent:
       "Falls es für diese E-Mail ein Konto gibt, ist ein Link unterwegs. Nach ein paar Minuten nichts da? „Konto erstellen“ nutzen.",
     cloudResetFailed:
@@ -583,7 +590,8 @@ const I18N = {
     campusBoundarySouth: "Campus Hubland Süd",
     healthDataNote:
       "Zustandsbewertungen sind in den veröffentlichten Quelldaten nicht enthalten.",
-    legendSummary: "Farblegende nach {mode}: {items}, Campusgrenzen Hubland Nord und Süd",
+    legendSummary:
+      "Farblegende nach {mode}: {items}, Campusgrenzen Hubland Nord und Süd",
     healthGood: "Gut",
     healthFair: "Mittel",
     healthPoor: "Schlecht",
@@ -591,7 +599,8 @@ const I18N = {
     healthNotRecorded: "Nicht erfasst",
     detailsAria: "Details zu {name}",
     photoAlt: "{name} auf dem Campus",
-    botanicalIllustrationAlt: "Wissenschaftliche botanische Illustration von {name}",
+    botanicalIllustrationAlt:
+      "Wissenschaftliche botanische Illustration von {name}",
     identificationPending: "Botanische Bestimmung noch offen",
     campusLocation: "Campus Hubland Nord",
     moreInformation: "Mehr Informationen",

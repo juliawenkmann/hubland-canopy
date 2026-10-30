@@ -10,10 +10,18 @@ const CLOUD_BATCH_SIZE = 20;
 
 function firebaseConfigIsReady() {
   const config = window.TREE_TRACKER_FIREBASE_CONFIG;
-  return Boolean(window.firebase?.initializeApp && config?.apiKey && config?.projectId);
+  return Boolean(
+    window.firebase?.initializeApp && config?.apiKey && config?.projectId,
+  );
 }
 
-function setCloudStatus(state, badgeKey, messageKey, variables = {}, isError = false) {
+function setCloudStatus(
+  state,
+  badgeKey,
+  messageKey,
+  variables = {},
+  isError = false,
+) {
   cloudStatus = { state, badgeKey, messageKey, variables, isError };
   renderCloudSyncUI();
 }
@@ -39,9 +47,11 @@ function renderCloudSyncUI() {
   const message = document.getElementById("cloud-sync-message");
   message.textContent = t(cloudStatus.messageKey, cloudStatus.variables);
   message.classList.toggle("is-error", cloudStatus.isError);
-  document.getElementById("cloud-auth-form").hidden = !cloudConfigured || Boolean(cloudUser);
+  document.getElementById("cloud-auth-form").hidden =
+    !cloudConfigured || Boolean(cloudUser);
   document.getElementById("cloud-sync-user").hidden = !cloudUser;
-  document.getElementById("cloud-user-email").textContent = cloudUser?.email || "";
+  document.getElementById("cloud-user-email").textContent =
+    cloudUser?.email || "";
   renderAccountButton();
 }
 
@@ -72,8 +82,11 @@ function prepareFeatureForCloud(feature) {
       genus: text(properties.genus, 120),
       notes: text(properties.notes, 10000),
       photo_url: text(properties.photo_url, 2048),
-      health: Object.hasOwn(HEALTH_COLORS, properties.health) ? properties.health : "good",
-      review_status: properties.review_status === "reviewed" ? "reviewed" : "unreviewed",
+      health: Object.hasOwn(HEALTH_COLORS, properties.health)
+        ? properties.health
+        : "good",
+      review_status:
+        properties.review_status === "reviewed" ? "reviewed" : "unreviewed",
       created_at: text(properties.created_at || now, 40),
       updated_at: text(properties.updated_at || now, 40),
     },
@@ -83,17 +96,23 @@ function prepareFeatureForCloud(feature) {
 function queueCloudOperations(type, features) {
   if (!cloudConfigured) return;
   const queuedAt = new Date().toISOString();
-  const entries = features.map(prepareFeatureForCloud).filter(Boolean).map((feature) => ({
-    operation_id: `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
-    type,
-    id: feature.properties.id,
-    feature,
-    queued_at: queuedAt,
-    client_updated_at: queuedAt,
-  }));
+  const entries = features
+    .map(prepareFeatureForCloud)
+    .filter(Boolean)
+    .map((feature) => ({
+      operation_id: `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
+      type,
+      id: feature.properties.id,
+      feature,
+      queued_at: queuedAt,
+      client_updated_at: queuedAt,
+    }));
   if (!entries.length) return;
   const ids = new Set(entries.map((entry) => entry.id));
-  persistCloudOutbox([...loadCloudOutbox().filter((entry) => !ids.has(entry.id)), ...entries]);
+  persistCloudOutbox([
+    ...loadCloudOutbox().filter((entry) => !ids.has(entry.id)),
+    ...entries,
+  ]);
   if (cloudUser) flushCloudOutbox();
   else setIdleCloudStatus();
 }
@@ -110,7 +129,9 @@ function cloudDocumentData(entry) {
     feature: entry.feature,
     deleted_at: entry.type === "delete" ? FieldValue.serverTimestamp() : null,
     client_updated_at: Timestamp.fromDate(
-      Number.isNaN(clientDate.getTime()) || clientDate > new Date() ? new Date() : clientDate,
+      Number.isNaN(clientDate.getTime()) || clientDate > new Date()
+        ? new Date()
+        : clientDate,
     ),
     updated_at: FieldValue.serverTimestamp(),
     updated_by: cloudUser.uid,
@@ -125,7 +146,8 @@ async function cloudWriteIsStale(reference, entry) {
     const remote = current.data();
     return (
       Boolean(remote.deleted_at) ||
-      (remote.client_updated_at?.toMillis?.() || 0) > Date.parse(entry.client_updated_at)
+      (remote.client_updated_at?.toMillis?.() || 0) >
+        Date.parse(entry.client_updated_at)
     );
   } catch {
     return false;
@@ -136,12 +158,16 @@ async function cloudWriteIsStale(reference, entry) {
 async function writeOutboxEntry(entry) {
   const reference = cloudDb.collection("trees").doc(entry.id);
   try {
-    if (entry.type === "delete") await reference.update(cloudDocumentData(entry));
+    if (entry.type === "delete")
+      await reference.update(cloudDocumentData(entry));
     else await reference.set(cloudDocumentData(entry));
     return "done";
   } catch (error) {
     if (entry.type === "delete" && error?.code === "not-found") return "done";
-    if (error?.code === "permission-denied" && (await cloudWriteIsStale(reference, entry))) {
+    if (
+      error?.code === "permission-denied" &&
+      (await cloudWriteIsStale(reference, entry))
+    ) {
       return "conflict";
     }
     throw error;
@@ -157,16 +183,27 @@ async function flushCloudOutboxNow() {
       const results = await Promise.all(batch.map(writeOutboxEntry));
       conflicts += results.filter((result) => result === "conflict").length;
       const written = new Set(batch.map((entry) => entry.operation_id));
-      persistCloudOutbox(loadCloudOutbox().filter((entry) => !written.has(entry.operation_id)));
+      persistCloudOutbox(
+        loadCloudOutbox().filter((entry) => !written.has(entry.operation_id)),
+      );
     }
   } catch (error) {
     console.error("Cloud sync write failed:", error);
-    const messageKey = error?.code === "permission-denied" ? "cloudNotEditor" : "cloudReadFailed";
+    const messageKey =
+      error?.code === "permission-denied"
+        ? "cloudNotEditor"
+        : "cloudReadFailed";
     setCloudStatus("error", "cloudError", messageKey, {}, true);
     return false;
   }
   if (conflicts) {
-    setCloudStatus("error", "cloudError", "cloudConflict", { count: conflicts, uploaded: 0 }, true);
+    setCloudStatus(
+      "error",
+      "cloudError",
+      "cloudConflict",
+      { count: conflicts, uploaded: 0 },
+      true,
+    );
   } else {
     setIdleCloudStatus();
   }
@@ -194,9 +231,14 @@ function applyCloudSnapshot(snapshot) {
     if (feature) cloudTrees.set(documentSnapshot.id, feature);
   });
   const localOnly = annotationData.features.filter(
-    (feature) => !cloudTrees.has(feature.properties.id) && !deletedIds.has(feature.properties.id),
+    (feature) =>
+      !cloudTrees.has(feature.properties.id) &&
+      !deletedIds.has(feature.properties.id),
   );
-  annotationData = { ...annotationData, features: [...cloudTrees.values(), ...localOnly] };
+  annotationData = {
+    ...annotationData,
+    features: [...cloudTrees.values(), ...localOnly],
+  };
   persistAnnotations();
   if (map) syncAnnotationSource();
 
@@ -231,11 +273,13 @@ async function initialiseCloudSync() {
       cloudAuth.useEmulator("http://127.0.0.1:9099", { disableWarnings: true });
       cloudDb.useEmulator("127.0.0.1", 8080);
     }
-    await cloudDb.enablePersistence({ synchronizeTabs: true }).catch((error) => {
-      if (!["failed-precondition", "unimplemented"].includes(error?.code)) {
-        console.warn("Firestore persistence unavailable:", error);
-      }
-    });
+    await cloudDb
+      .enablePersistence({ synchronizeTabs: true })
+      .catch((error) => {
+        if (!["failed-precondition", "unimplemented"].includes(error?.code)) {
+          console.warn("Firestore persistence unavailable:", error);
+        }
+      });
 
     cloudAuth.onAuthStateChanged((user) => {
       cloudUser = user || null;
@@ -270,18 +314,24 @@ async function importCloudGeoJson(file) {
   let features;
   try {
     const collection = JSON.parse(await file.text());
-    features = (collection?.features || []).map(prepareFeatureForCloud).filter(Boolean);
+    features = (collection?.features || [])
+      .map(prepareFeatureForCloud)
+      .filter(Boolean);
     if (!features.length) throw new Error("No valid tree features");
   } catch (error) {
     console.error("GeoJSON import failed:", error);
     setAnnotationStatus("cloudImportInvalid", {}, true);
     return;
   }
-  const imported = new Map(features.map((feature) => [feature.properties.id, feature]));
+  const imported = new Map(
+    features.map((feature) => [feature.properties.id, feature]),
+  );
   annotationData = {
     ...annotationData,
     features: [
-      ...annotationData.features.filter((feature) => !imported.has(feature.properties.id)),
+      ...annotationData.features.filter(
+        (feature) => !imported.has(feature.properties.id),
+      ),
       ...imported.values(),
     ],
   };
@@ -290,7 +340,9 @@ async function importCloudGeoJson(file) {
   setAnnotationStatus("cloudWorking");
   queueCloudOperations("upsert", features);
   if ((await flushCloudOutbox()) && !loadCloudOutbox().length) {
-    setAnnotationStatus("cloudImportComplete", { count: integerFormatter.format(features.length) });
+    setAnnotationStatus("cloudImportComplete", {
+      count: integerFormatter.format(features.length),
+    });
   } else {
     setAnnotationStatus(cloudStatus.messageKey, cloudStatus.variables, true);
   }

@@ -52,12 +52,17 @@ async function initialise() {
   });
 
   map.addControl(
-    new maplibregl.NavigationControl({ visualizePitch: true, showCompass: true }),
+    new maplibregl.NavigationControl({
+      visualizePitch: true,
+      showCompass: true,
+    }),
     "top-right",
   );
   if (window.matchMedia("(max-width: 760px)").matches) {
     // On phones the expanded credits sit under the field buttons; the (i) still opens them.
-    const attribution = map.getContainer().querySelector(".maplibregl-ctrl-attrib");
+    const attribution = map
+      .getContainer()
+      .querySelector(".maplibregl-ctrl-attrib");
     attribution?.classList.remove("maplibregl-compact-show");
     attribution?.removeAttribute("open");
   }
@@ -79,7 +84,9 @@ async function initialise() {
 }
 
 document.querySelectorAll("[data-color-mode]").forEach((button) => {
-  button.addEventListener("click", () => setColorMode(button.dataset.colorMode));
+  button.addEventListener("click", () =>
+    setColorMode(button.dataset.colorMode),
+  );
 });
 
 document.querySelectorAll("[data-dashboard-mode]").forEach((button) => {
@@ -112,7 +119,9 @@ document
   .addEventListener("click", clearTreeFacets);
 
 QUICK_FILTERS.forEach((filter) => {
-  document.getElementById(filter.id).addEventListener("click", () => toggleQuickFilter(filter));
+  document
+    .getElementById(filter.id)
+    .addEventListener("click", () => toggleQuickFilter(filter));
 });
 
 document
@@ -122,15 +131,21 @@ document
     renderTreeFacetOptions("species", campusTreeInventoryFeatures());
   });
 
-document.getElementById("fit-trees").addEventListener("click", () => fitAllTrees());
+document
+  .getElementById("fit-trees")
+  .addEventListener("click", () => fitAllTrees());
 
 document.getElementById("place-tree").addEventListener("click", () => {
   if (manualPlacementMode) stopPlacement();
   else startPlacement({ followGps: false });
 });
 
-document.getElementById("placement-cancel").addEventListener("click", stopPlacement);
-document.getElementById("placement-save").addEventListener("click", savePlacement);
+document
+  .getElementById("placement-cancel")
+  .addEventListener("click", stopPlacement);
+document
+  .getElementById("placement-save")
+  .addEventListener("click", savePlacement);
 window.addEventListener("pagehide", stopPlacement); // never leave GPS running
 
 document.getElementById("account-toggle").addEventListener("click", () => {
@@ -162,12 +177,18 @@ document
   .getElementById("export-annotations")
   .addEventListener("click", exportAnnotations);
 
-document.getElementById("cloud-auth-form").addEventListener("submit", (event) => {
-  event.preventDefault();
-  signIn();
-});
-document.getElementById("cloud-create-account").addEventListener("click", createAccount);
-document.getElementById("cloud-reset-password").addEventListener("click", sendPasswordReset);
+document
+  .getElementById("cloud-auth-form")
+  .addEventListener("submit", (event) => {
+    event.preventDefault();
+    signIn();
+  });
+document
+  .getElementById("cloud-create-account")
+  .addEventListener("click", createAccount);
+document
+  .getElementById("cloud-reset-password")
+  .addEventListener("click", sendPasswordReset);
 
 document.getElementById("cloud-sign-out").addEventListener("click", () => {
   cloudAuth?.signOut().catch((error) => {
@@ -179,17 +200,17 @@ document.getElementById("import-geojson").addEventListener("click", () => {
   if (!requireSignIn()) document.getElementById("cloud-import-file").click();
 });
 
-document.getElementById("cloud-import-file").addEventListener("change", async (event) => {
-  const input = event.currentTarget;
-  await importCloudGeoJson(input.files?.[0]);
-  input.value = "";
-});
+document
+  .getElementById("cloud-import-file")
+  .addEventListener("change", async (event) => {
+    const input = event.currentTarget;
+    await importCloudGeoJson(input.files?.[0]);
+    input.value = "";
+  });
 
 document.getElementById("panel-toggle").addEventListener("click", (event) => {
   event.stopPropagation();
-  setDashboardCollapsed(
-    !document.body.classList.contains("panel-collapsed"),
-  );
+  setDashboardCollapsed(!document.body.classList.contains("panel-collapsed"));
 });
 
 document.getElementById("panel-header").addEventListener("click", (event) => {
@@ -211,7 +232,10 @@ initialise().catch((error) => {
   showFatalError(error.message || t("unexpectedError"));
 });
 
-if ("serviceWorker" in navigator && window.location.protocol.startsWith("http")) {
+if (
+  "serviceWorker" in navigator &&
+  window.location.protocol.startsWith("http")
+) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("./sw.js").catch((error) => {
       console.warn("Offline support unavailable:", error);

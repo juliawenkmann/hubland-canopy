@@ -5,8 +5,20 @@
  */
 "use strict";
 
-const TREE_LAYERS = ["tree-cluster-halo", "tree-clusters", "tree-cluster-count", "tree-points", "tree-targets"];
-const FRUIT_LAYERS = ["fruit-cluster-halo", "fruit-clusters", "fruit-cluster-count", "fruit-points", "fruit-targets"];
+const TREE_LAYERS = [
+  "tree-cluster-halo",
+  "tree-clusters",
+  "tree-cluster-count",
+  "tree-points",
+  "tree-targets",
+];
+const FRUIT_LAYERS = [
+  "fruit-cluster-halo",
+  "fruit-clusters",
+  "fruit-cluster-count",
+  "fruit-points",
+  "fruit-targets",
+];
 
 function addClusterLayers(prefix, source, color) {
   const clustered = ["has", "point_count"];
@@ -49,7 +61,13 @@ function addClusterLayers(prefix, source, color) {
 
 function addPointLayers(prefix, source, paint) {
   const single = ["!", ["has", "point_count"]];
-  map.addLayer({ id: `${prefix}-points`, type: "circle", source, filter: single, paint });
+  map.addLayer({
+    id: `${prefix}-points`,
+    type: "circle",
+    source,
+    filter: single,
+    paint,
+  });
   map.addLayer({
     id: `${prefix}-targets`,
     type: "circle",
@@ -66,12 +84,21 @@ function addMapLayers() {
     attribution:
       'Campus boundary &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>',
   });
-  const southOr = (south, north) => ["match", ["get", "campus_area"], "south", south, north];
+  const southOr = (south, north) => [
+    "match",
+    ["get", "campus_area"],
+    "south",
+    south,
+    north,
+  ];
   map.addLayer({
     id: "campus-boundary-fill",
     type: "fill",
     source: "campus-boundary",
-    paint: { "fill-color": southOr("#d3a66c", "#8dd08b"), "fill-opacity": 0.12 },
+    paint: {
+      "fill-color": southOr("#d3a66c", "#8dd08b"),
+      "fill-opacity": 0.12,
+    },
   });
   map.addLayer({
     id: "campus-boundary-outline",
@@ -86,8 +113,20 @@ function addMapLayers() {
   });
 
   const empty = { type: "FeatureCollection", features: [] };
-  map.addSource("trees", { type: "geojson", data: empty, cluster: true, clusterMaxZoom: 16, clusterRadius: 42 });
-  map.addSource("fruit", { type: "geojson", data: empty, cluster: true, clusterMaxZoom: 14, clusterRadius: 46 });
+  map.addSource("trees", {
+    type: "geojson",
+    data: empty,
+    cluster: true,
+    clusterMaxZoom: 16,
+    clusterRadius: 42,
+  });
+  map.addSource("fruit", {
+    type: "geojson",
+    data: empty,
+    cluster: true,
+    clusterMaxZoom: 14,
+    clusterRadius: 46,
+  });
 
   map.addSource("gps", { type: "geojson", data: empty });
   map.addLayer({
@@ -95,24 +134,46 @@ function addMapLayers() {
     type: "fill",
     source: "gps",
     filter: ["==", ["geometry-type"], "Polygon"],
-    paint: { "fill-color": "#2f7de1", "fill-opacity": 0.14, "fill-outline-color": "#2f7de1" },
+    paint: {
+      "fill-color": "#2f7de1",
+      "fill-opacity": 0.14,
+      "fill-outline-color": "#2f7de1",
+    },
   });
   map.addLayer({
     id: "gps-dot",
     type: "circle",
     source: "gps",
     filter: ["==", ["geometry-type"], "Point"],
-    paint: { "circle-radius": 7, "circle-color": "#2f7de1", "circle-stroke-color": "#ffffff", "circle-stroke-width": 2.5 },
+    paint: {
+      "circle-radius": 7,
+      "circle-color": "#2f7de1",
+      "circle-stroke-color": "#ffffff",
+      "circle-stroke-width": 2.5,
+    },
   });
 
-  addClusterLayers("tree", "trees", ["step", ["get", "point_count"], "#4d724c", 12, "#315837", 35, "#18321f"]);
+  addClusterLayers("tree", "trees", [
+    "step",
+    ["get", "point_count"],
+    "#4d724c",
+    12,
+    "#315837",
+    35,
+    "#18321f",
+  ]);
   addPointLayers("tree", "trees", {
     "circle-radius": ["interpolate", ["linear"], ["zoom"], 14, 6, 18, 10],
     "circle-color": treeColorExpression(),
     "circle-opacity": 0.94,
     "circle-stroke-color": "#fbf7e8",
     // Reviewed trees get a heavier ring.
-    "circle-stroke-width": ["case", ["==", ["get", "review_status"], "reviewed"], 3, 1.6],
+    "circle-stroke-width": [
+      "case",
+      ["==", ["get", "review_status"], "reviewed"],
+      3,
+      1.6,
+    ],
   });
   addClusterLayers("fruit", "fruit", "#8d6046");
   addPointLayers("fruit", "fruit", {
@@ -134,7 +195,9 @@ function addMapLayers() {
     map.on("click", layer, async (event) => {
       if (manualPlacementMode) return;
       const cluster = event.features[0];
-      const zoom = await map.getSource(source).getClusterExpansionZoom(cluster.properties.cluster_id);
+      const zoom = await map
+        .getSource(source)
+        .getClusterExpansionZoom(cluster.properties.cluster_id);
       map.easeTo({ center: cluster.geometry.coordinates, zoom, duration: 650 });
     });
   });
@@ -145,16 +208,20 @@ function addMapLayers() {
     map.on("click", layer, (event) => {
       if (manualPlacementMode) return;
       const id = closestTreeFromEvent(event)?.properties.id;
-      const feature = features().find((item) => String(item.properties.id) === String(id));
+      const feature = features().find(
+        (item) => String(item.properties.id) === String(id),
+      );
       if (feature) showTreePopup(feature);
     });
   });
-  ["tree-clusters", "tree-targets", "fruit-clusters", "fruit-targets"].forEach((layer) => {
-    map.on("mouseenter", layer, () => {
-      if (!manualPlacementMode) map.getCanvas().style.cursor = "pointer";
-    });
-    map.on("mouseleave", layer, () => {
-      map.getCanvas().style.cursor = "";
-    });
-  });
+  ["tree-clusters", "tree-targets", "fruit-clusters", "fruit-targets"].forEach(
+    (layer) => {
+      map.on("mouseenter", layer, () => {
+        if (!manualPlacementMode) map.getCanvas().style.cursor = "pointer";
+      });
+      map.on("mouseleave", layer, () => {
+        map.getCanvas().style.cursor = "";
+      });
+    },
+  );
 }

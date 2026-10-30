@@ -18,7 +18,9 @@ function t(key, variables = {}) {
 
 function updateFormatters() {
   const locale = currentLanguage === "de" ? "de-DE" : "en-GB";
-  integerFormatter = new Intl.NumberFormat(locale, { maximumFractionDigits: 0 });
+  integerFormatter = new Intl.NumberFormat(locale, {
+    maximumFractionDigits: 0,
+  });
   decimalFormatter = new Intl.NumberFormat(locale, {
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
@@ -74,7 +76,8 @@ function applyLanguage({ refreshDynamic = true } = {}) {
   updateFormatters();
   document.documentElement.lang = currentLanguage;
   document.title = t("pageTitle");
-  document.querySelector('meta[name="description"]').content = t("metaDescription");
+  document.querySelector('meta[name="description"]').content =
+    t("metaDescription");
   document.querySelectorAll("[data-i18n]").forEach((element) => {
     element.textContent = t(element.dataset.i18n);
   });

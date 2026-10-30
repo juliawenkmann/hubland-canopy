@@ -31,7 +31,12 @@ body {
   color: var(--ink);
   background: var(--sage-100);
   font-family:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
     sans-serif;
   -webkit-font-smoothing: antialiased;
 }
@@ -49,7 +54,11 @@ button {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(circle at 65% 35%, rgba(255, 255, 255, 0.8), transparent 32%),
+    radial-gradient(
+      circle at 65% 35%,
+      rgba(255, 255, 255, 0.8),
+      transparent 32%
+    ),
     #dfe7da;
 }
 
@@ -129,7 +138,11 @@ button {
   padding: 24px 24px 19px;
   color: white;
   background:
-    radial-gradient(circle at 82% 6%, rgba(133, 169, 119, 0.32), transparent 28%),
+    radial-gradient(
+      circle at 82% 6%,
+      rgba(133, 169, 119, 0.32),
+      transparent 28%
+    ),
     linear-gradient(145deg, #294c38 0%, #1d3428 100%);
 }
 
@@ -825,7 +838,11 @@ body.food-mode {
 
 body.food-mode #map {
   background:
-    radial-gradient(circle at 65% 35%, rgba(255, 247, 242, 0.82), transparent 32%),
+    radial-gradient(
+      circle at 65% 35%,
+      rgba(255, 247, 242, 0.82),
+      transparent 32%
+    ),
     #ead8d0;
 }
 
@@ -1291,8 +1308,14 @@ body.food-mode .account-toggle {
   width: 48px;
   height: 48px;
   transform: translate(-50%, -50%);
-  background: radial-gradient(circle, transparent 0 4px, #fffdf7 4px 6px, transparent 6.5px);
-  filter: drop-shadow(0 0 1px rgba(24, 50, 31, 0.95)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+  background: radial-gradient(
+    circle,
+    transparent 0 4px,
+    #fffdf7 4px 6px,
+    transparent 6.5px
+  );
+  filter: drop-shadow(0 0 1px rgba(24, 50, 31, 0.95))
+    drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
 }
 
 .placement-cross::before,
@@ -1314,7 +1337,12 @@ body.food-mode .account-toggle {
   right: 0;
   left: 0;
   height: 2px;
-  background: linear-gradient(90deg, #fffdf7 0 35%, transparent 35% 65%, #fffdf7 65%);
+  background: linear-gradient(
+    90deg,
+    #fffdf7 0 35%,
+    transparent 35% 65%,
+    #fffdf7 65%
+  );
 }
 
 .placement-bar {
@@ -1842,7 +1870,11 @@ body.is-placing .map-actions {
 /* Botanical field-guide theme inspired by the supplied Tree Tracker reference. */
 body {
   background:
-    radial-gradient(circle at 18% 14%, rgba(255, 255, 255, 0.66), transparent 28%),
+    radial-gradient(
+      circle at 18% 14%,
+      rgba(255, 255, 255, 0.66),
+      transparent 28%
+    ),
     #e9e5d8;
 }
 
@@ -1859,7 +1891,11 @@ body {
   border-color: rgba(76, 82, 58, 0.22);
   border-radius: 22px;
   background:
-    radial-gradient(circle at 12% 0%, rgba(116, 137, 94, 0.09), transparent 24%),
+    radial-gradient(
+      circle at 12% 0%,
+      rgba(116, 137, 94, 0.09),
+      transparent 24%
+    ),
     rgba(251, 247, 235, 0.97);
   box-shadow: 0 12px 34px rgba(37, 43, 29, 0.14);
   backdrop-filter: blur(10px);
@@ -1921,7 +1957,11 @@ body.food-mode .dashboard-header {
   color: var(--ink);
   border-bottom: 1px solid var(--paper-line);
   background:
-    radial-gradient(circle at 93% 7%, rgba(112, 135, 88, 0.12), transparent 28%),
+    radial-gradient(
+      circle at 93% 7%,
+      rgba(112, 135, 88, 0.12),
+      transparent 28%
+    ),
     linear-gradient(145deg, #fffdf7 0%, #f5f1e5 100%);
 }
 
@@ -1941,7 +1981,11 @@ body.food-mode .dashboard-header {
 .dashboard-scroll {
   padding: 21px 20px 24px;
   background:
-    radial-gradient(circle at 100% 100%, rgba(111, 130, 87, 0.06), transparent 30%),
+    radial-gradient(
+      circle at 100% 100%,
+      rgba(111, 130, 87, 0.06),
+      transparent 30%
+    ),
     rgba(251, 247, 235, 0.68);
   scrollbar-color: rgba(64, 84, 55, 0.25) transparent;
 }
@@ -2122,7 +2166,11 @@ body.food-mode .maplibregl-popup-content {
   height: 228px;
   border-bottom: 1px solid var(--paper-line);
   background:
-    radial-gradient(circle at 82% 18%, rgba(105, 130, 85, 0.22), transparent 26%),
+    radial-gradient(
+      circle at 82% 18%,
+      rgba(105, 130, 85, 0.22),
+      transparent 26%
+    ),
     linear-gradient(145deg, #eef0df, #dfe5d1);
 }
 
@@ -2750,7 +2798,11 @@ body.food-mode .maplibregl-ctrl-group {
 
 body.food-mode .dashboard-header {
   background:
-    radial-gradient(circle at 93% 7%, rgba(184, 102, 75, 0.11), transparent 28%),
+    radial-gradient(
+      circle at 93% 7%,
+      rgba(184, 102, 75, 0.11),
+      transparent 28%
+    ),
     linear-gradient(145deg, #fffaf2 0%, #f6ece2 100%);
 }
 
@@ -2787,7 +2839,6 @@ body.food-mode .more-information-body .source-link {
 }
 
 @media (max-width: 760px) {
-
   .dashboard-mode-switch {
     width: auto;
     margin-left: auto;
@@ -2887,7 +2938,6 @@ body.food-mode .more-information-body .source-link {
 }
 
 @media (max-width: 390px) {
-
   .dashboard-mode-switch {
     min-width: 118px;
   }
@@ -2999,13 +3049,21 @@ body.food-mode .more-information-body .source-link {
     min-height: 64px;
     padding: 0;
     border-bottom: 1px solid var(--paper-line);
-    background: linear-gradient(180deg, rgba(255, 253, 247, 0.98), rgba(246, 242, 230, 0.96));
+    background: linear-gradient(
+      180deg,
+      rgba(255, 253, 247, 0.98),
+      rgba(246, 242, 230, 0.96)
+    );
     cursor: pointer;
     touch-action: manipulation;
   }
 
   body.food-mode .dashboard-header {
-    background: linear-gradient(180deg, rgba(255, 250, 244, 0.98), rgba(247, 234, 224, 0.96));
+    background: linear-gradient(
+      180deg,
+      rgba(255, 250, 244, 0.98),
+      rgba(247, 234, 224, 0.96)
+    );
   }
 
   .dashboard-header::before {
@@ -3039,14 +3097,22 @@ body.food-mode .more-information-body .source-link {
   .dashboard-scroll {
     padding: 10px 16px max(28px, calc(env(safe-area-inset-bottom) + 20px));
     background:
-      radial-gradient(circle at 100% 100%, rgba(111, 130, 87, 0.06), transparent 34%),
+      radial-gradient(
+        circle at 100% 100%,
+        rgba(111, 130, 87, 0.06),
+        transparent 34%
+      ),
       var(--cream);
     scroll-padding: 16px 0 28px;
   }
 
   body.food-mode .dashboard-scroll {
     background:
-      radial-gradient(circle at 100% 100%, rgba(164, 73, 63, 0.07), transparent 34%),
+      radial-gradient(
+        circle at 100% 100%,
+        rgba(164, 73, 63, 0.07),
+        transparent 34%
+      ),
       var(--cream);
   }
 

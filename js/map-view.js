@@ -16,18 +16,20 @@ function renderLegend(mode) {
   const entries =
     mode === "genus"
       ? [
-          ...statisticalFeatures.reduce((species, feature) => {
-            const key = treeTypeKey(feature) || "not_recorded";
-            if (!species.has(key)) {
-              species.set(key, {
-                key,
-                label: treeFacetLabel("species", key),
-                color:
-                  GENUS_COLORS[feature.properties.genus] || COLOR_FALLBACK,
-              });
-            }
-            return species;
-          }, new Map()).values(),
+          ...statisticalFeatures
+            .reduce((species, feature) => {
+              const key = treeTypeKey(feature) || "not_recorded";
+              if (!species.has(key)) {
+                species.set(key, {
+                  key,
+                  label: treeFacetLabel("species", key),
+                  color:
+                    GENUS_COLORS[feature.properties.genus] || COLOR_FALLBACK,
+                });
+              }
+              return species;
+            }, new Map())
+            .values(),
         ].sort((first, second) =>
           first.label.localeCompare(
             second.label,
@@ -142,7 +144,12 @@ function renderLegend(mode) {
 }
 
 function matchColorExpression(property, colors) {
-  return ["match", ["get", property], ...Object.entries(colors).flat(), COLOR_FALLBACK];
+  return [
+    "match",
+    ["get", property],
+    ...Object.entries(colors).flat(),
+    COLOR_FALLBACK,
+  ];
 }
 
 function treeColorExpression() {
@@ -158,24 +165,36 @@ function applyMapView() {
   const treesMode = dashboardMode === "trees";
   map.getSource("trees").setData({
     type: "FeatureCollection",
-    features: treesMode ? annotationData.features.filter(treeMatchesSelection) : [],
+    features: treesMode
+      ? annotationData.features.filter(treeMatchesSelection)
+      : [],
   });
-  map.getSource("fruit").setData({ type: "FeatureCollection", features: visibleFruitFeatures() });
+  map
+    .getSource("fruit")
+    .setData({ type: "FeatureCollection", features: visibleFruitFeatures() });
   map.setPaintProperty("tree-points", "circle-color", treeColorExpression());
   map.setPaintProperty(
     "fruit-clusters",
     "circle-color",
-    FRUIT_CATALOG.find((fruit) => fruit.id === selectedFruitType)?.color || "#8d6046",
+    FRUIT_CATALOG.find((fruit) => fruit.id === selectedFruitType)?.color ||
+      "#8d6046",
   );
-  TREE_LAYERS.forEach((layer) => map.setLayoutProperty(layer, "visibility", treesMode ? "visible" : "none"));
-  FRUIT_LAYERS.forEach((layer) => map.setLayoutProperty(layer, "visibility", treesMode ? "none" : "visible"));
+  TREE_LAYERS.forEach((layer) =>
+    map.setLayoutProperty(layer, "visibility", treesMode ? "visible" : "none"),
+  );
+  FRUIT_LAYERS.forEach((layer) =>
+    map.setLayoutProperty(layer, "visibility", treesMode ? "none" : "visible"),
+  );
 }
 
 function updateSelectionStatus() {
   if (dashboardMode === "food") return;
-  document.getElementById("color-description").textContent = hasActiveTreeFilters()
-    ? t("selectedFilters", { count: integerFormatter.format(activeTreeFilterCount()) })
-    : t(colorMode === "genus" ? "byGenus" : "health");
+  document.getElementById("color-description").textContent =
+    hasActiveTreeFilters()
+      ? t("selectedFilters", {
+          count: integerFormatter.format(activeTreeFilterCount()),
+        })
+      : t(colorMode === "genus" ? "byGenus" : "health");
 }
 
 function setTreeTypeFilter(treeType) {
@@ -190,7 +209,10 @@ function setTreeTypeFilter(treeType) {
 function setColorMode(mode) {
   colorMode = mode;
   document.querySelectorAll("[data-color-mode]").forEach((button) => {
-    button.setAttribute("aria-pressed", String(button.dataset.colorMode === mode));
+    button.setAttribute(
+      "aria-pressed",
+      String(button.dataset.colorMode === mode),
+    );
   });
   updateSelectionStatus();
   renderLegend(mode);
@@ -200,12 +222,19 @@ function setColorMode(mode) {
 function fitAllTrees(options = {}) {
   if (!map) return;
   const bounds = new maplibregl.LngLatBounds();
-  const visible = dashboardMode === "food" ? visibleFruitFeatures() : filteredTreeInventoryFeatures();
+  const visible =
+    dashboardMode === "food"
+      ? visibleFruitFeatures()
+      : filteredTreeInventoryFeatures();
   visible.forEach((feature) => bounds.extend(feature.geometry.coordinates));
-  CAMPUS_BOUNDARY.features[0].geometry.coordinates[0].forEach((point) => bounds.extend(point));
+  CAMPUS_BOUNDARY.features[0].geometry.coordinates[0].forEach((point) =>
+    bounds.extend(point),
+  );
   const mobile = window.matchMedia("(max-width: 760px)").matches;
   const mapBottom = map.getContainer().getBoundingClientRect().bottom;
-  const dashboardTop = document.querySelector(".dashboard")?.getBoundingClientRect().top || mapBottom;
+  const dashboardTop =
+    document.querySelector(".dashboard")?.getBoundingClientRect().top ||
+    mapBottom;
   const bottom = document.body.classList.contains("panel-collapsed")
     ? 92
     : Math.ceil(Math.max(110, mapBottom - dashboardTop + 18));

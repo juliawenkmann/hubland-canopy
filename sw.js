@@ -24,7 +24,10 @@ async function shellUrls() {
   const html = await response.text();
   const urls = new Set(["./"]);
   for (const [, url] of html.matchAll(/(?:src|href)="([^"#]+)"/g)) {
-    if (!/^(https?:|data:|mailto:)/.test(url) || CDN_HOSTS.some((host) => url.includes(`//${host}/`))) {
+    if (
+      !/^(https?:|data:|mailto:)/.test(url) ||
+      CDN_HOSTS.some((host) => url.includes(`//${host}/`))
+    ) {
       urls.add(url);
     }
   }
@@ -53,7 +56,8 @@ self.addEventListener("activate", (event) => {
     (async () => {
       const keep = new Set([SHELL_CACHE, ASSET_CACHE, TILE_CACHE]);
       for (const key of await caches.keys()) {
-        if (key.startsWith("tree-tracker-") && !keep.has(key)) await caches.delete(key);
+        if (key.startsWith("tree-tracker-") && !keep.has(key))
+          await caches.delete(key);
       }
       await self.clients.claim();
     })(),

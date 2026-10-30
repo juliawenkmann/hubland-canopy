@@ -35,9 +35,7 @@ function fruitSeasonDescription(fruit) {
 
 function fruitAndFlowerCategory(feature) {
   const properties = feature?.properties || {};
-  const knownCategories = new Set(
-    FRUIT_CATALOG.map((fruit) => fruit.category),
-  );
+  const knownCategories = new Set(FRUIT_CATALOG.map((fruit) => fruit.category));
   const recordedCategory = String(properties.fruit_category || "").trim();
   if (knownCategories.has(recordedCategory)) return recordedCategory;
 
@@ -69,20 +67,14 @@ function fruitAndFlowerCategory(feature) {
     ["Flieder", /flieder|lilac|syringa/],
   ];
   return (
-    categoryMatchers.find(([, matcher]) => matcher.test(identity))?.[0] ||
-    null
+    categoryMatchers.find(([, matcher]) => matcher.test(identity))?.[0] || null
   );
 }
 
 function foodAndFlowerFeatures() {
-  const knownCategories = new Set(
-    FRUIT_CATALOG.map((fruit) => fruit.category),
-  );
+  const knownCategories = new Set(FRUIT_CATALOG.map((fruit) => fruit.category));
   const uniqueFeatures = new Map();
-  [
-    ...treeData.features,
-    ...annotationData.features,
-  ].forEach((feature) => {
+  [...treeData.features, ...annotationData.features].forEach((feature) => {
     const category = fruitAndFlowerCategory(feature);
     const isFlowering =
       feature.properties.flowering === true ||
@@ -122,9 +114,7 @@ function eligibleFruitCatalog() {
 
 function mapFruitCatalog() {
   if (selectedFruitType) {
-    return FRUIT_CATALOG.filter(
-      (fruit) => fruit.id === selectedFruitType,
-    );
+    return FRUIT_CATALOG.filter((fruit) => fruit.id === selectedFruitType);
   }
   return FRUIT_CATALOG;
 }
@@ -258,8 +248,7 @@ function renderFruitDashboard() {
         ripeList.appendChild(groupHeading);
       }
       const count = mappedFeatures.filter(
-        (feature) =>
-          feature.properties.fruit_category === fruit.category,
+        (feature) => feature.properties.fruit_category === fruit.category,
       ).length;
       const card = document.createElement("article");
       card.className = "season-card";
@@ -299,8 +288,7 @@ function renderFruitDashboard() {
     totals[category] = (totals[category] || 0) + 1;
     return totals;
   }, {});
-  const fruitRows = FRUIT_CATALOG
-    .filter((fruit) => fruitCounts[fruit.category])
+  const fruitRows = FRUIT_CATALOG.filter((fruit) => fruitCounts[fruit.category])
     .map((fruit) => ({
       label: fruitLabel(fruit),
       count: fruitCounts[fruit.category],

@@ -12,25 +12,29 @@ const QUICK_FILTERS = [
 
 function quickFilterActive({ facet, values }) {
   const selected = treeFacetSelection[facet];
-  return selected.size === values.length && values.every((value) => selected.has(value));
+  return (
+    selected.size === values.length &&
+    values.every((value) => selected.has(value))
+  );
 }
 
 function toggleQuickFilter(filter) {
   const active = quickFilterActive(filter);
   treeFacetSelection[filter.facet].clear();
-  if (!active) filter.values.forEach((value) => treeFacetSelection[filter.facet].add(value));
+  if (!active)
+    filter.values.forEach((value) =>
+      treeFacetSelection[filter.facet].add(value),
+    );
   refreshTreeFilterResults();
 }
 
 function renderTreeFacetOptions(facet, allFeatures) {
-  const container = document.querySelector(
-    `[data-facet-options="${facet}"]`,
-  );
+  const container = document.querySelector(`[data-facet-options="${facet}"]`);
   if (!container) return;
   const counts = treeFacetCounts(facet, allFeatures);
-  const normalizedSearch = treeSpeciesSearch.trim().toLocaleLowerCase(
-    currentLanguage === "de" ? "de" : "en",
-  );
+  const normalizedSearch = treeSpeciesSearch
+    .trim()
+    .toLocaleLowerCase(currentLanguage === "de" ? "de" : "en");
   const values = treeFacetValues(facet, allFeatures).filter((value) => {
     if (facet !== "species" || !normalizedSearch) return true;
     return treeFacetLabel(facet, value)
@@ -87,7 +91,9 @@ function renderActiveTreeFilters() {
       close.textContent = "×";
       close.setAttribute("aria-hidden", "true");
       chip.append(text, close);
-      chip.addEventListener("click", () => setTreeFacetValue(key, value, false));
+      chip.addEventListener("click", () =>
+        setTreeFacetValue(key, value, false),
+      );
       container.appendChild(chip);
     });
   });
@@ -117,9 +123,7 @@ function renderTreeFacets() {
   const activeCount = activeTreeFilterCount();
   const badge = document.getElementById("tree-filter-count");
   if (badge) {
-    badge.textContent = activeCount
-      ? integerFormatter.format(activeCount)
-      : "";
+    badge.textContent = activeCount ? integerFormatter.format(activeCount) : "";
     badge.dataset.count = String(activeCount);
   }
   QUICK_FILTERS.forEach((filter) => {

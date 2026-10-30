@@ -23,10 +23,15 @@ http
     const { pathname } = new URL(request.url, "http://localhost");
     if (pathname === "/healthz") {
       response.writeHead(200, { "Content-Type": "application/json" });
-      response.end(JSON.stringify({ app: "TreeTracker", build, pid: process.pid }));
+      response.end(
+        JSON.stringify({ app: "TreeTracker", build, pid: process.pid }),
+      );
       return;
     }
-    const file = path.join(root, decodeURIComponent(pathname).replace(/\/$/, "/index.html"));
+    const file = path.join(
+      root,
+      decodeURIComponent(pathname).replace(/\/$/, "/index.html"),
+    );
     if (!file.startsWith(root + path.sep)) {
       response.writeHead(403).end();
       return;
