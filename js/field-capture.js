@@ -33,6 +33,14 @@ function placementCenter() {
   return [center.lng, center.lat];
 }
 
+// Middle of Campus Hubland Nord, where a placement starts if the view is elsewhere.
+function campusCenter() {
+  const ring = CAMPUS_BOUNDARY.features[0].geometry.coordinates[0];
+  return [0, 1].map(
+    (axis) => ring.reduce((sum, point) => sum + point[axis], 0) / ring.length,
+  );
+}
+
 function renderPlacement() {
   if (!placement) return;
   const outside = !pointInCampus(placementCenter());
@@ -43,7 +51,9 @@ function renderPlacement() {
       : placement.followGps && !placement.fix && !placement.moved
         ? t("locatingTree")
         : t("placementHint");
-  const accuracy = placement.fix ? ` · ${t("gpsAccuracy", { accuracy: placement.fix.accuracy })}` : "";
+  const accuracy = placement.fix
+    ? ` · ${t("gpsAccuracy", { accuracy: placement.fix.accuracy })}`
+    : "";
   const hintElement = document.getElementById("placement-hint");
   hintElement.textContent = hint + accuracy;
   hintElement.classList.toggle("is-error", outside);
@@ -62,15 +72,25 @@ function showGpsPosition(fix) {
   const ring = Array.from({ length: 49 }, (_, index) => {
     const angle = (index / 48) * 2 * Math.PI;
     return [
-      lng + (fix.accuracy * Math.cos(angle)) / (111320 * Math.cos((lat * Math.PI) / 180)),
+      lng +
+        (fix.accuracy * Math.cos(angle)) /
+          (111320 * Math.cos((lat * Math.PI) / 180)),
       lat + (fix.accuracy * Math.sin(angle)) / 110540,
     ];
   });
   source.setData({
     type: "FeatureCollection",
     features: [
-      { type: "Feature", geometry: { type: "Polygon", coordinates: [ring] }, properties: {} },
-      { type: "Feature", geometry: { type: "Point", coordinates: fix.coordinates }, properties: {} },
+      {
+        type: "Feature",
+        geometry: { type: "Polygon", coordinates: [ring] },
+        properties: {},
+      },
+      {
+        type: "Feature",
+        geometry: { type: "Point", coordinates: fix.coordinates },
+        properties: {},
+      },
     ],
   });
 }
@@ -78,9 +98,16 @@ function showGpsPosition(fix) {
 function startPlacement({ followGps }) {
   if (placement || requireSignIn()) return;
   if (dashboardMode !== "trees") setDashboardMode("trees");
-  if (window.matchMedia("(max-width: 760px)").matches) setDashboardCollapsed(true);
+  if (window.matchMedia("(max-width: 760px)").matches)
+    setDashboardCollapsed(true);
   activePopup?.remove();
-  placement = { followGps, watchId: null, fix: null, moved: false, gpsFailed: false };
+  placement = {
+    followGps,
+    watchId: null,
+    fix: null,
+    moved: false,
+    gpsFailed: false,
+  };
   manualPlacementMode = true;
   document.body.classList.add("is-placing");
   document.getElementById("placement").hidden = false;
@@ -95,7 +122,11 @@ function startPlacement({ followGps }) {
         placement.gpsFailed = false;
         showGpsPosition(placement.fix);
         if (!placement.moved) {
-          map.easeTo({ center: placement.fix.coordinates, zoom: PLACEMENT_ZOOM, duration: 600 });
+          map.easeTo({
+            center: placement.fix.coordinates,
+            zoom: PLACEMENT_ZOOM,
+            duration: 600,
+          });
         }
         renderPlacement();
       },
@@ -108,7 +139,13 @@ function startPlacement({ followGps }) {
     );
   } else {
     placement.gpsFailed = followGps;
-    map.easeTo({ zoom: Math.max(map.getZoom(), PLACEMENT_ZOOM - 1), duration: 500 });
+    map.easeTo({
+      center: pointInCampus(placementCenter())
+        ? placementCenter()
+        : campusCenter(),
+      zoom: Math.max(map.getZoom(), PLACEMENT_ZOOM - 1),
+      duration: 500,
+    });
   }
   renderPlacement();
   renderAnnotationUI();
@@ -116,7 +153,8 @@ function startPlacement({ followGps }) {
 
 function stopPlacement() {
   if (!placement) return;
-  if (placement.watchId !== null) navigator.geolocation.clearWatch(placement.watchId);
+  if (placement.watchId !== null)
+    navigator.geolocation.clearWatch(placement.watchId);
   placement = null;
   manualPlacementMode = false;
   document.body.classList.remove("is-placing");
@@ -132,7 +170,10 @@ function savePlacement() {
   const fromGps = placement.followGps && placement.fix && !placement.moved;
   const accuracy = placement.fix?.accuracy ?? null;
   stopPlacement();
-  addManualAnnotation(coordinates, fromGps ? { detectionMethod: "gps", accuracy } : {});
+  addManualAnnotation(
+    coordinates,
+    fromGps ? { detectionMethod: "gps", accuracy } : {},
+  );
   if (fromGps) setMobileFieldStatus("gpsAdded", { accuracy });
 }
 
