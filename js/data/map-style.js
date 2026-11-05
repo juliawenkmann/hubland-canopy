@@ -62,11 +62,11 @@ const GENUS_COLORS = {
 };
 
 const HEALTH_COLORS = {
-  good: "#3f7f51",
+  good: "#3f8a52",
   fair: "#d0a438",
-  poor: "#c96e3f",
-  dead: "#766c64",
-  not_recorded: "#a19d8c",
+  poor: "#bd4b3b",
+  dead: "#57504a",
+  not_recorded: "#aaa694",
 };
 
 const SATELLITE_STYLE = {

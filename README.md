@@ -22,6 +22,8 @@ in sync through Firebase.
   you type yourself join the matching type.
 - **Colour by species or health**, with quick filters for trees of **unknown
   type**, trees that **need review** and trees in **poor health**.
+- **Statistics**: how many trees are identified and reviewed, tree types with
+  their subtypes, and ring charts of growth form and health.
 - **Botanical plates** in each tree's popup, and a **Fruit & flowers** mode with
   a seasonal calendar.
 - English and German, installable as a home-screen app and as a Mac app.
@@ -30,9 +32,9 @@ in sync through Firebase.
 | --- | --- | --- |
 | ![Dashboard with statistics and filters next to the map](docs/screenshots/laptop.webp) | ![Phone view with the Track tree button](docs/screenshots/phone.webp) | ![Cross in the map centre, GPS accuracy and Save here](docs/screenshots/placement.webp) |
 
-| Tree details | Fruit & flowers |
-| --- | --- |
-| ![Tree popup with a botanical plate of a linden](docs/screenshots/popup.webp) | ![Fruit and flower locations with the seasonal calendar](docs/screenshots/fruit.webp) |
+| Tree details | Fruit & flowers | Statistics |
+| --- | --- | --- |
+| ![Tree popup with a botanical plate of a linden](docs/screenshots/popup.webp) | ![Fruit and flower locations with the seasonal calendar](docs/screenshots/fruit.webp) | ![Mapping progress ring and tree types with subtypes](docs/screenshots/stats.webp) |
 
 ## Using it
 
@@ -63,7 +65,7 @@ changing the code.
 index.html              page markup
 css/app.css             styles
 js/
-  data/                 tree catalogue, fruit locations, UI text (EN/DE), map style
+  data/                 tree types and subtypes, fruit locations, UI text (EN/DE), map style
   state.js              shared app state and storage keys
   storage.js            this device's copy of the trees and the upload outbox
   cloud-sync.js         Firestore sync through the outbox
@@ -73,7 +75,8 @@ js/
   map-view.js           colours, legend, what the map shows
   inventory.js          campus scoping and filter values
   filters.js            filter panel and quick filters
-  dashboard.js          statistics and charts
+  dashboard.js          dashboard panel, Trees tab charts
+  stats.js              Statistics tab
   fruit.js              Fruit & flowers mode
   popup.js              tree popups and botanical plates
   annotation-editor.js  the edit form

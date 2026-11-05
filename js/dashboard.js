@@ -222,6 +222,7 @@ function renderHealthSummary() {
 function renderTreeInsights() {
   if (!integerFormatter) return;
   renderHealthSummary();
+  if (dashboardMode === "stats") renderStatistics();
 }
 
 function updateDashboardModeUI() {
@@ -251,8 +252,8 @@ function updateDashboardModeUI() {
 }
 
 function setDashboardMode(mode) {
-  dashboardMode = mode === "food" ? "food" : "trees";
-  if (dashboardMode === "food") stopPlacement();
+  dashboardMode = ["food", "stats"].includes(mode) ? mode : "trees";
+  if (dashboardMode !== "trees") stopPlacement();
   updateDashboardModeUI();
   renderTreeInsights();
   renderFruitDashboard();

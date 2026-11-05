@@ -163,7 +163,7 @@ function treeColorExpression() {
 
 function applyMapView() {
   if (!map?.getSource("trees")) return;
-  const treesMode = dashboardMode === "trees";
+  const treesMode = dashboardMode !== "food";
   map.getSource("trees").setData({
     type: "FeatureCollection",
     features: treesMode

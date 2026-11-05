@@ -72,6 +72,16 @@
           data-dashboard-mode="food"
           data-i18n="foodMode"
         >Fruit &amp; flowers</button>
+        <button
+          class="dashboard-mode-button"
+          id="stats-mode-tab"
+          type="button"
+          role="tab"
+          aria-controls="stats-dashboard"
+          aria-selected="false"
+          data-dashboard-mode="stats"
+          data-i18n="statsMode"
+        >Stats</button>
       </nav>
       <button
         class="language-toggle"
@@ -542,6 +552,65 @@
           </section>
         </div>
 
+        <div
+          class="dashboard-view"
+          id="stats-dashboard"
+          role="tabpanel"
+          aria-labelledby="stats-mode-tab"
+          data-dashboard-panel="stats"
+          hidden
+        >
+          <section class="section" aria-labelledby="progress-heading">
+            <div class="section-heading">
+              <h2 id="progress-heading" data-i18n="progressHeading">
+                Mapping progress
+              </h2>
+              <span data-i18n="liveTotals">Within campus boundary</span>
+            </div>
+            <div class="progress-hero" id="progress-hero" role="img"></div>
+            <div class="stats-grid">
+              <article class="stat-card">
+                <span class="stat-icon" aria-hidden="true">⌘</span>
+                <strong class="stat-value" id="stats-types-count">—</strong>
+                <span class="stat-label" data-i18n="typesMapped">types mapped</span>
+              </article>
+              <article class="stat-card">
+                <span class="stat-icon" aria-hidden="true">+</span>
+                <strong class="stat-value" id="stats-added-week">—</strong>
+                <span class="stat-label" data-i18n="addedThisWeek">
+                  added in the last 7 days
+                </span>
+              </article>
+            </div>
+          </section>
+
+          <section class="section" aria-labelledby="types-heading">
+            <div class="section-heading">
+              <h2 id="types-heading" data-i18n="typesHeading">Tree types</h2>
+              <span id="types-unknown-count">—</span>
+            </div>
+            <div class="type-breakdown" id="type-breakdown"></div>
+          </section>
+
+          <section class="section" aria-labelledby="forms-heading">
+            <div class="section-heading">
+              <h2 id="forms-heading" data-i18n="formsHeading">Growth form</h2>
+              <span data-i18n="formsHint">Trees with a known type</span>
+            </div>
+            <div class="ring-chart" id="form-chart" role="img"></div>
+          </section>
+
+          <section class="section" aria-labelledby="health-chart-heading">
+            <div class="section-heading">
+              <h2 id="health-chart-heading" data-i18n="healthOverview">
+                Tree health
+              </h2>
+              <span id="health-chart-count">—</span>
+            </div>
+            <div class="ring-chart" id="health-chart" role="img"></div>
+          </section>
+        </div>
+
         <section
           class="section"
           aria-labelledby="annotations-heading"
@@ -678,6 +747,7 @@
     <script defer src="js/inventory.js"></script>
     <script defer src="js/filters.js"></script>
     <script defer src="js/dashboard.js"></script>
+    <script defer src="js/stats.js"></script>
     <script defer src="js/fruit.js"></script>
     <script defer src="js/map-view.js"></script>
     <script defer src="js/annotations.js"></script>
