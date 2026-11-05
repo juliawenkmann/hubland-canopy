@@ -244,7 +244,7 @@ function renderTypeBreakdown(features) {
       names: new Map(),
       genus: treeGenus(feature.properties),
     };
-    const name = feature.properties.common_name.trim();
+    const name = String(feature.properties.common_name || "").trim() || group;
     entry.count += 1;
     entry.names.set(name, (entry.names.get(name) || 0) + 1);
     groups.set(group, entry);
