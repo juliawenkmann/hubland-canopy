@@ -46,14 +46,8 @@ function fieldWasUsed(name, properties) {
   );
 }
 
-function searchKey(text) {
-  return String(text || "")
-    .toLocaleLowerCase("de")
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "");
-}
-
-// Catalogue types plus names you typed yourself on earlier trees.
+// Catalogue types plus names you typed yourself on earlier trees; your own
+// names join the group of a type they contain ("Säulen-Hainbuche").
 function typeChoices() {
   const choices = [...TREE_IDENTIFICATION_CATALOG];
   const known = new Set(choices.map((entry) => entry.common_name));
@@ -61,15 +55,68 @@ function typeChoices() {
     const name = String(properties.common_name || "").trim();
     if (!/\p{L}{2}/u.test(name) || known.has(name)) return;
     known.add(name);
+    const type = findTreeType(properties);
     choices.push({
-      id: `own:${name}`,
       common_name: name,
       scientific_name: properties.scientific_name || "",
-      genus: properties.genus || "",
-      tree_type: properties.tree_type || "",
+      genus: properties.genus || type?.genus || "",
+      tree_type: properties.tree_type || type?.tree_type || "",
+      group: type?.group,
     });
   });
   return choices;
+}
+
+// Fills the botanical details of a type without touching what is typed.
+function fillTypeFields(form, choice) {
+  const values = {
+    common_name: choice.common_name,
+    scientific_name: choice.scientific_name || "",
+    scientific_synonym: choice.scientific_synonym || "",
+    genus: choice.genus || "",
+    tree_type: choice.tree_type || "",
+    edible: choice.edible ? "true" : "false",
+    flowering: choice.flowering ? "true" : "false",
+    fruit_category: choice.fruit_category || "",
+  };
+  Object.entries(values).forEach(([name, value]) => {
+    if (form.elements[name]) form.elements[name].value = value;
+  });
+}
+
+// The chosen type's group as one-tap chips: the main type, its subtypes and
+// names of your own in that group, each with how many trees you have mapped.
+function renderSubtypeChips(container, form, onChoose) {
+  const current = form.elements.common_name.value;
+  const group = findTreeType({ common_name: current })?.group;
+  const members = group
+    ? typeChoices().filter((choice) => choice.group === group)
+    : [];
+  container.replaceChildren();
+  container.hidden = members.length < 2;
+  if (container.hidden) return;
+  const counts = new Map();
+  annotationData.features.forEach(({ properties }) =>
+    counts.set(
+      properties.common_name,
+      (counts.get(properties.common_name) || 0) + 1,
+    ),
+  );
+  container.appendChild(popupText("tree-subtypes-caption", t("subtypes")));
+  members.forEach((choice) => {
+    const chip = document.createElement("button");
+    chip.type = "button";
+    chip.className = "subtype-chip";
+    chip.setAttribute("aria-pressed", String(choice.common_name === current));
+    chip.appendChild(popupText("", localizedCommonName(choice.common_name)));
+    if (counts.get(choice.common_name)) {
+      chip.appendChild(
+        popupText("subtype-count", String(counts.get(choice.common_name))),
+      );
+    }
+    chip.addEventListener("click", () => onChoose(choice));
+    container.appendChild(chip);
+  });
 }
 
 function typeSuggestions(query) {
@@ -166,21 +213,11 @@ function buildTypeField(form, properties) {
   list.setAttribute("role", "listbox");
   list.hidden = true;
 
-  // Fills the botanical details of a type without touching what is typed.
+  const subtypes = document.createElement("div");
+  subtypes.className = "tree-subtypes";
   const fillType = (choice) => {
-    const values = {
-      common_name: choice.common_name,
-      scientific_name: choice.scientific_name || "",
-      scientific_synonym: choice.scientific_synonym || "",
-      genus: choice.genus || "",
-      tree_type: choice.tree_type || "",
-      edible: choice.edible ? "true" : "false",
-      flowering: choice.flowering ? "true" : "false",
-      fruit_category: choice.fruit_category || "",
-    };
-    Object.entries(values).forEach(([name, value]) => {
-      form.elements[name].value = value;
-    });
+    fillTypeFields(form, choice);
+    renderSubtypeChips(subtypes, form, choose);
   };
   const choose = (choice) => {
     fillType(choice);
@@ -215,18 +252,25 @@ function buildTypeField(form, properties) {
 
   input.addEventListener("focus", render);
   input.addEventListener("input", () => {
-    const typed = searchKey(input.value.trim());
-    const exact = typeChoices().find((choice) =>
-      [choice.common_name, localizedCommonName(choice.common_name)]
-        .map(searchKey)
-        .includes(typed),
+    const typed = input.value.trim();
+    const key = treeNameKey(typed);
+    const type = findTreeType({ common_name: typed });
+    const exactType =
+      type &&
+      [type.common_name, type.english_name].map(treeNameKey).includes(key);
+    const own = typeChoices().find(
+      (choice) => treeNameKey(choice.common_name) === key,
     );
-    if (exact) {
-      fillType(exact);
-    } else {
-      // A name of your own: details from an earlier choice no longer apply.
-      fillType({ common_name: input.value.trim() });
-    }
+    // A name of your own keeps only the genus of a type it contains.
+    fillType(
+      exactType
+        ? type
+        : own || {
+            common_name: typed,
+            genus: type?.genus,
+            tree_type: type?.tree_type,
+          },
+    );
     render();
   });
   input.addEventListener("blur", () => {
@@ -243,7 +287,8 @@ function buildTypeField(form, properties) {
       list.hidden = true;
     }
   });
-  wrapper.append(label, input, list);
+  renderSubtypeChips(subtypes, form, choose);
+  wrapper.append(label, input, list, subtypes);
   return wrapper;
 }
 
@@ -409,6 +454,11 @@ function buildAnnotationEditor(feature) {
   actions.append(deleteButton, saveButton);
 
   form.append(header, body, actions);
+  // Trees saved with a name only get the catalogue details, stored on Save.
+  const known = findTreeType(properties);
+  if (known?.common_name === properties.common_name && !properties.genus) {
+    fillTypeFields(form, known);
+  }
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     const text = (name) => form.elements[name].value.trim();
@@ -431,7 +481,7 @@ function buildAnnotationEditor(feature) {
       edible: form.elements.edible.value === "true",
       flowering: form.elements.flowering.value === "true",
       fruit_category: text("fruit_category") || null,
-      health: form.elements.health.value,
+      health: form.elements.health.value || properties.health,
       review_status: form.elements.reviewed.checked ? "reviewed" : "unreviewed",
       date_surveyed: form.elements.date_surveyed.value || null,
     });

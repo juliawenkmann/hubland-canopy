@@ -18,6 +18,8 @@ in sync through Firebase.
   uploads it once you're back online.
 - **Your trees everywhere.** Sign in once per device (lock in the top bar) and
   every tree lives in the cloud.
+- **Tree types with subtypes** (e.g. Ahorn → Spitz-, Berg-, Feld-Ahorn); names
+  you type yourself join the matching type.
 - **Colour by species or health**, with quick filters for trees of **unknown
   type**, trees that **need review** and trees in **poor health**.
 - **Botanical plates** in each tree's popup, and a **Fruit & flowers** mode with
@@ -119,4 +121,4 @@ In the emulator, *Create account* with the editor email from
 - Campus boundary and part of the tree baseline: © OpenStreetMap contributors (ODbL 1.0)
 - Fruit locations: [mundraub.org](https://mundraub.org)
 - Aerial imagery: DOP40 © Bayerische Vermessungsverwaltung (CC BY 4.0)
-- Lebensbaum and Blasenbaum plates: Pierre-Joseph Redouté, *Traité des arbres et arbustes* (1800–1819), public domain; scans by the New York Public Library via Wikimedia Commons
+- Lebensbaum, Blasenbaum, Hainbuche, Weißdorn, Lärche and Japanischer Schnurbaum plates: Pierre-Joseph Redouté, *Traité des arbres et arbustes* (1800–1819), public domain; scans by the New York Public Library via Wikimedia Commons

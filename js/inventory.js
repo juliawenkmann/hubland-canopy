@@ -49,7 +49,9 @@ function treeTypeKey(feature) {
 
 function treeHealthKey(feature) {
   const health = feature?.properties?.health;
-  return ["good", "fair", "poor", "dead"].includes(health) ? health : "good";
+  return ["good", "fair", "poor", "dead"].includes(health)
+    ? health
+    : "not_recorded";
 }
 
 function treeFormKey(feature) {
@@ -168,7 +170,13 @@ function treeFacetValues(facet, allFeatures) {
   const fixedOrder = {
     health: ["good", "fair", "poor", "dead", "not_recorded"],
     review: ["unreviewed", "reviewed"],
-    forms: ["Laubbaum", "Strauch", "Obstbaum-Fundort", "not_recorded"],
+    forms: [
+      "Laubbaum",
+      "Nadelbaum",
+      "Strauch",
+      "Obstbaum-Fundort",
+      "not_recorded",
+    ],
     sources: ["manual", "openstreetmap", "campus"],
   }[facet];
   if (fixedOrder) {

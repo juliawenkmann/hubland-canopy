@@ -24,7 +24,8 @@ function renderLegend(mode) {
                   key,
                   label: treeFacetLabel("species", key),
                   color:
-                    GENUS_COLORS[feature.properties.genus] || COLOR_FALLBACK,
+                    GENUS_COLORS[treeGenus(feature.properties)] ||
+                    COLOR_FALLBACK,
                 });
               }
               return species;
@@ -166,7 +167,17 @@ function applyMapView() {
   map.getSource("trees").setData({
     type: "FeatureCollection",
     features: treesMode
-      ? annotationData.features.filter(treeMatchesSelection)
+      ? annotationData.features.filter(treeMatchesSelection).map((feature) =>
+          feature.properties.genus
+            ? feature
+            : {
+                ...feature,
+                properties: {
+                  ...feature.properties,
+                  genus: treeGenus(feature.properties),
+                },
+              },
+        )
       : [],
   });
   map

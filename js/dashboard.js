@@ -173,14 +173,14 @@ function treeInsightFeatures() {
 }
 
 function renderHealthSummary() {
-  const healthKeys = ["good", "fair", "poor", "dead"];
+  const healthKeys = ["good", "fair", "poor", "dead", "not_recorded"];
   const counts = Object.fromEntries(healthKeys.map((key) => [key, 0]));
   treeInsightFeatures().forEach((feature) => {
     const value = treeHealthKey(feature);
     counts[value] += 1;
   });
   const total = Object.values(counts).reduce((sum, count) => sum + count, 0);
-  const recorded = total;
+  const recorded = total - counts.not_recorded;
   document.getElementById("health-record-count").textContent = t(
     "healthRecordsRecorded",
     { count: integerFormatter.format(recorded) },

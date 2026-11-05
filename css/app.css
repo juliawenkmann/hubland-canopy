@@ -1547,6 +1547,60 @@ body.is-placing .map-actions {
   font-style: italic;
 }
 
+.tree-subtypes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.tree-subtypes[hidden],
+.tree-type-suggestions:not([hidden]) + .tree-subtypes {
+  display: none;
+}
+
+.tree-subtypes-caption {
+  flex-basis: 100%;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.subtype-chip {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(41, 76, 56, 0.16);
+  border-radius: 999px;
+  padding: 0 12px;
+  color: var(--forest-900);
+  background: white;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.subtype-chip[aria-pressed="true"] {
+  border-color: var(--forest-800);
+  color: white;
+  background: var(--forest-800);
+}
+
+.subtype-count {
+  min-width: 18px;
+  border-radius: 999px;
+  padding: 1px 6px;
+  color: var(--forest-800);
+  background: var(--sage-100);
+  font-size: 10px;
+  font-weight: 800;
+  text-align: center;
+}
+
 .choice-chips {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -2392,304 +2446,331 @@ body.food-mode .maplibregl-popup-content {
   background-repeat: no-repeat;
 }
 
-.botanical-tree-plate {
+.plate-tree {
   background-image: url("../assets/plates/tree.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-fruit-plate {
+.plate-fruit-apple,
+.plate-fruit-cherry,
+.plate-fruit-pear,
+.plate-fruit-mirabelle {
   background-image: url("../assets/plates/sheet-fruit.webp");
   background-size: 200% 200%;
 }
 
-.botanical-extra-fruit-plate {
+.plate-fruit-plum,
+.plate-fruit-quince {
   background-image: url("../assets/plates/sheet-extra-fruit.webp");
   background-size: 200% 200%;
 }
 
-.botanical-genus-plate {
+.plate-genus-acer,
+.plate-genus-alnus,
+.plate-genus-fraxinus,
+.plate-genus-gleditsia {
   background-image: url("../assets/plates/sheet-genus.webp");
   background-size: 300% 200%;
 }
 
-.botanical-aesculus-plate {
+.plate-aesculus {
   background-image: url("../assets/plates/aesculus.webp");
   background-position: center 84%;
   background-size: cover;
 }
 
-.botanical-juglans-plate {
+.plate-juglans {
   background-image: url("../assets/plates/juglans.webp");
   background-position: center 69%;
   background-size: cover;
 }
 
-.botanical-syringa-plate {
+.plate-syringa {
   background-image: url("../assets/plates/syringa.webp");
   background-position: center 36%;
   background-size: cover;
 }
 
-.botanical-prunus-laurocerasus-plate {
+.plate-prunus-laurocerasus {
   background-image: url("../assets/plates/prunus-laurocerasus.webp");
   background-position: center 29%;
   background-size: cover;
 }
 
-.botanical-robinia-pseudoacacia-plate {
+.plate-robinia-pseudoacacia {
   background-image: url("../assets/plates/robinia-pseudoacacia.webp");
   background-position: center 35%;
   background-size: cover;
 }
 
-.botanical-picea-pungens-plate {
+.plate-picea-pungens {
   background-image: url("../assets/plates/picea-pungens.webp");
   background-position: center 39%;
   background-size: cover;
 }
 
-.botanical-picea-abies-plate {
+.plate-picea-abies {
   background-image: url("../assets/plates/picea-abies.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-pinus-sylvestris-plate {
+.plate-pinus-sylvestris {
   background-image: url("../assets/plates/pinus-sylvestris.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-tilia-plate {
+.plate-tilia {
   background-image: url("../assets/plates/tilia.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-acer-palmatum-plate {
+.plate-acer-palmatum {
   background-image: url("../assets/plates/acer-palmatum.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-amelanchier-lamarckii-plate {
+.plate-amelanchier-lamarckii {
   background-image: url("../assets/plates/amelanchier-lamarckii.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-cornus-mas-plate {
+.plate-cornus-mas {
   background-image: url("../assets/plates/cornus-mas.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-ginkgo-biloba-plate {
+.plate-ginkgo-biloba {
   background-image: url("../assets/plates/ginkgo-biloba.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-paulownia-tomentosa-plate {
+.plate-paulownia-tomentosa {
   background-image: url("../assets/plates/paulownia-tomentosa.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-sambucus-nigra-plate {
+.plate-sambucus-nigra {
   background-image: url("../assets/plates/sambucus-nigra.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-taxus-baccata-plate {
+.plate-taxus-baccata {
   background-image: url("../assets/plates/taxus-baccata.webp");
   background-position: center;
   background-size: cover;
 }
 
 /* Redouté, Traité des arbres et arbustes (1800–1819), public domain. */
-.botanical-thuja-occidentalis-plate {
+.plate-thuja-occidentalis {
   background-image: url("../assets/plates/thuja-occidentalis.webp");
   background-position: center;
   background-size: contain; /* whole plant, tall plates */
 }
 
-.botanical-koelreuteria-paniculata-plate {
+.plate-koelreuteria-paniculata {
   background-image: url("../assets/plates/koelreuteria-paniculata.webp");
   background-position: center;
   background-size: contain; /* whole plant, tall plates */
 }
 
-.botanical-prunus-avium-plate {
+.plate-carpinus-betulus {
+  background-image: url("../assets/plates/carpinus-betulus.webp");
+  background-position: center;
+  background-size: contain;
+}
+
+.plate-crataegus-monogyna {
+  background-image: url("../assets/plates/crataegus-monogyna.webp");
+  background-position: center;
+  background-size: contain;
+}
+
+.plate-larix-decidua {
+  background-image: url("../assets/plates/larix-decidua.webp");
+  background-position: center;
+  background-size: contain;
+}
+
+.plate-styphnolobium-japonicum {
+  background-image: url("../assets/plates/styphnolobium-japonicum.webp");
+  background-position: center;
+  background-size: contain;
+}
+
+.plate-prunus-avium {
   background-image: url("../assets/plates/prunus-avium.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-prunus-spinosa-plate {
+.plate-prunus-spinosa {
   background-image: url("../assets/plates/prunus-spinosa.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-rosa-wild-plate {
+.plate-rosa-wild {
   background-image: url("../assets/plates/rosa-wild.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-morus-plate {
+.plate-morus {
   background-image: url("../assets/plates/morus.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-mespilus-germanica-plate {
+.plate-mespilus-germanica {
   background-image: url("../assets/plates/mespilus-germanica.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-ficus-carica-plate {
+.plate-ficus-carica {
   background-image: url("../assets/plates/ficus-carica.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-berberis-vulgaris-plate {
+.plate-berberis-vulgaris {
   background-image: url("../assets/plates/berberis-vulgaris.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-ailanthus-altissima-plate {
+.plate-ailanthus-altissima {
   background-image: url("../assets/plates/ailanthus-altissima.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-sorbus-aria-plate {
+.plate-sorbus-aria {
   background-image: url("../assets/plates/sorbus-aria.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-quercus-robur-plate {
+.plate-quercus-robur {
   background-image: url("../assets/plates/quercus-robur.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-sorbus-aucuparia-plate {
+.plate-sorbus-aucuparia {
   background-image: url("../assets/plates/sorbus-aucuparia.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-acer-platanoides-plate {
+.plate-acer-platanoides {
   background-image: url("../assets/plates/acer-platanoides.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-populus-tremula-plate {
+.plate-populus-tremula {
   background-image: url("../assets/plates/populus-tremula.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-populus-nigra-plate {
+.plate-populus-nigra {
   background-image: url("../assets/plates/populus-nigra.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-alnus-glutinosa-plate {
+.plate-alnus-glutinosa {
   background-image: url("../assets/plates/alnus-glutinosa.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-fagus-sylvatica-plate {
+.plate-fagus-sylvatica {
   background-image: url("../assets/plates/fagus-sylvatica.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-ulmus-glabra-plate {
+.plate-ulmus-glabra {
   background-image: url("../assets/plates/ulmus-glabra.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-betula-plate {
+.plate-betula {
   background-image: url("../assets/plates/betula.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-platanus-plate {
+.plate-platanus {
   background-image: url("../assets/plates/platanus.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-corylus-plate {
+.plate-corylus {
   background-image: url("../assets/plates/corylus.webp");
   background-position: center;
   background-size: cover;
 }
 
-.botanical-red-mirabelle-plate {
+.plate-red-mirabelle {
   background-image: url("../assets/plates/red-mirabelle.webp");
   background-position: center;
   background-size: cover;
 }
 
-.fruit-apple {
+.plate-fruit-apple {
   background-position: 0 0;
 }
 
-.fruit-cherry {
+.plate-fruit-cherry {
   background-position: 100% 0;
 }
 
-.fruit-pear {
+.plate-fruit-pear {
   background-position: 0 100%;
 }
 
-.fruit-mirabelle {
+.plate-fruit-mirabelle {
   background-position: 100% 100%;
 }
 
-.fruit-plum {
+.plate-fruit-plum {
   background-position: 0 0;
 }
 
-.fruit-quince {
+.plate-fruit-quince {
   background-position: 100% 0;
 }
 
-.genus-acer {
+.plate-genus-acer {
   background-position: 0 0;
 }
 
-.genus-alnus {
+.plate-genus-alnus {
   background-position: 50% 0;
 }
 
-.genus-fraxinus {
+.plate-genus-fraxinus {
   background-position: 100% 0;
 }
 
-.genus-gleditsia {
+.plate-genus-gleditsia {
   background-position: 0 100%;
-}
-
-.genus-tilia {
-  background-position: 50% 100%;
 }
 
 .tree-popup-id {

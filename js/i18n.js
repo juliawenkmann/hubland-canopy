@@ -37,6 +37,7 @@ function localizedCommonName(propertiesOrName) {
 
 function localizedTreeType(value) {
   if (value === "Laubbaum") return t("deciduousTree");
+  if (value === "Nadelbaum") return t("conifer");
   if (value === "Strauch") return t("shrub");
   if (value === "Obstbaum-Fundort") return t("fruitTreeLocation");
   return value || t("notRecorded");
