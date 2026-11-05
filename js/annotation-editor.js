@@ -1,456 +1,512 @@
 /*
- * The edit form shown inside a tree popup.
+ * The tree editor: a bottom sheet on phones, a card beside the map on laptops.
+ * The type is typed with suggestions; health and review are one tap; fields you
+ * have never filled in for any tree wait under "More fields".
  */
 "use strict";
 
-function annotationField(labelText, control) {
-  const wrapper = document.createElement("div");
-  wrapper.className = "annotation-field";
-  const label = document.createElement("label");
-  label.textContent = labelText;
-  label.htmlFor = control.id;
-  wrapper.append(label, control);
-  return wrapper;
+// Shown in the main form once any tree you mapped has a value for them.
+const OPTIONAL_TREE_FIELDS = [
+  { name: "trunk_circumference_cm", labelKey: "trunkGirth", unit: "cm" },
+  { name: "dbh_cm", labelKey: "trunkDiameter", unit: "cm" },
+  { name: "height_m", labelKey: "height", unit: "m" },
+  { name: "canopy_spread_m", labelKey: "canopySpread", unit: "m" },
+  { name: "co2_stored_kg", labelKey: "co2Stored", unit: "kg" },
+  { name: "co2_per_year_kg", labelKey: "co2PerYear", unit: "kg" },
+  { name: "stormwater_l_per_year", labelKey: "stormwater", unit: "L" },
+  { name: "photo_url", labelKey: "photo", type: "url" },
+];
+// Filled by the type picker or automatically, so always under "More fields".
+const DETAIL_TREE_FIELDS = [
+  { name: "scientific_name", labelKey: "scientificName", type: "text" },
+  { name: "scientific_synonym", labelKey: "scientificSynonym", type: "text" },
+  { name: "genus", labelKey: "genus", type: "text" },
+  { name: "date_surveyed", labelKey: "surveyed", type: "date" },
+];
+const HIDDEN_TYPE_FIELDS = [
+  "common_name",
+  "tree_type",
+  "edible",
+  "flowering",
+  "fruit_category",
+];
+
+function hasValue(value) {
+  return value !== null && value !== undefined && String(value).trim() !== "";
 }
 
-function annotationInput(id, name, type, value, placeholder = "") {
+function fieldWasUsed(name, properties) {
+  return (
+    hasValue(properties[name]) ||
+    annotationData.features.some(
+      (feature) =>
+        ["manual", "gps"].includes(feature.properties.detection_method) &&
+        hasValue(feature.properties[name]),
+    )
+  );
+}
+
+function searchKey(text) {
+  return String(text || "")
+    .toLocaleLowerCase("de")
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "");
+}
+
+// Catalogue types plus names you typed yourself on earlier trees.
+function typeChoices() {
+  const choices = [...TREE_IDENTIFICATION_CATALOG];
+  const known = new Set(choices.map((entry) => entry.common_name));
+  annotationData.features.forEach(({ properties }) => {
+    const name = String(properties.common_name || "").trim();
+    if (!/\p{L}{2}/u.test(name) || known.has(name)) return;
+    known.add(name);
+    choices.push({
+      id: `own:${name}`,
+      common_name: name,
+      scientific_name: properties.scientific_name || "",
+      genus: properties.genus || "",
+      tree_type: properties.tree_type || "",
+    });
+  });
+  return choices;
+}
+
+function typeSuggestions(query) {
+  const choices = typeChoices();
+  const wanted = searchKey(query.trim());
+  if (!wanted) {
+    const counts = new Map();
+    annotationData.features.forEach(({ properties }) => {
+      const name = properties.common_name;
+      if (name) counts.set(name, (counts.get(name) || 0) + 1);
+    });
+    return choices
+      .filter((choice) => counts.has(choice.common_name))
+      .sort((a, b) => counts.get(b.common_name) - counts.get(a.common_name))
+      .slice(0, 6);
+  }
+  const rank = (choice) => {
+    const names = [
+      choice.common_name,
+      COMMON_NAME_EN[choice.common_name],
+      choice.scientific_name,
+    ]
+      .filter(Boolean)
+      .map(searchKey);
+    if (names.some((name) => name.startsWith(wanted))) return 0;
+    if (
+      names.some((name) =>
+        name.split(/[\s-]+/).some((word) => word.startsWith(wanted)),
+      )
+    )
+      return 1;
+    return names.some((name) => name.includes(wanted)) ? 2 : null;
+  };
+  return choices
+    .map((choice) => [choice, rank(choice)])
+    .filter(([, score]) => score !== null)
+    .sort(
+      ([a, scoreA], [b, scoreB]) =>
+        scoreA - scoreB ||
+        localizedCommonName(a.common_name).localeCompare(
+          localizedCommonName(b.common_name),
+        ),
+    )
+    .slice(0, 6)
+    .map(([choice]) => choice);
+}
+
+function editorInput(name, type, value) {
   const input = document.createElement("input");
-  input.id = id;
   input.name = name;
+  input.id = `tree-editor-${name}`;
   input.type = type;
   input.value = value ?? "";
-  input.placeholder = placeholder;
   if (type === "number") {
     input.step = "0.1";
     input.min = "0";
+    input.inputMode = "decimal";
   }
   return input;
 }
 
-function optionalFormNumber(form, name) {
-  const rawValue = form.elements[name].value.trim();
-  if (!rawValue) return null;
-  const parsed = Number(rawValue);
-  return Number.isFinite(parsed) ? parsed : null;
+function editorField(label, control) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "annotation-field";
+  const labelElement = document.createElement("label");
+  labelElement.textContent = label;
+  labelElement.htmlFor = control.id;
+  wrapper.append(labelElement, control);
+  return wrapper;
+}
+
+function fieldLabel({ labelKey, unit }) {
+  return unit ? `${t(labelKey)} (${unit})` : t(labelKey);
+}
+
+function buildTypeField(form, properties) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "annotation-field tree-type-field";
+  const input = editorInput("tree_type_search", "text", "");
+  input.value = properties.common_name
+    ? localizedCommonName(properties.common_name)
+    : "";
+  input.placeholder = t("treeTypePlaceholder");
+  input.autocomplete = "off";
+  input.autocapitalize = "words";
+  input.enterKeyHint = "done";
+  input.setAttribute("role", "combobox");
+  input.setAttribute("aria-autocomplete", "list");
+  const label = document.createElement("label");
+  label.textContent = t("treeSelection");
+  label.htmlFor = input.id;
+  const list = document.createElement("div");
+  list.className = "tree-type-suggestions";
+  list.setAttribute("role", "listbox");
+  list.hidden = true;
+
+  // Fills the botanical details of a type without touching what is typed.
+  const fillType = (choice) => {
+    const values = {
+      common_name: choice.common_name,
+      scientific_name: choice.scientific_name || "",
+      scientific_synonym: choice.scientific_synonym || "",
+      genus: choice.genus || "",
+      tree_type: choice.tree_type || "",
+      edible: choice.edible ? "true" : "false",
+      flowering: choice.flowering ? "true" : "false",
+      fruit_category: choice.fruit_category || "",
+    };
+    Object.entries(values).forEach(([name, value]) => {
+      form.elements[name].value = value;
+    });
+  };
+  const choose = (choice) => {
+    fillType(choice);
+    input.value = localizedCommonName(choice.common_name);
+    list.hidden = true;
+  };
+  const render = () => {
+    const suggestions = typeSuggestions(input.value);
+    list.replaceChildren();
+    if (!input.value.trim() && suggestions.length) {
+      list.appendChild(popupText("tree-type-caption", t("mostUsedTypes"), "p"));
+    }
+    suggestions.forEach((choice) => {
+      const option = document.createElement("button");
+      option.type = "button";
+      option.className = "tree-type-option";
+      option.setAttribute("role", "option");
+      option.append(
+        popupText("", localizedCommonName(choice.common_name), "strong"),
+        popupText("", choice.scientific_name || "", "span"),
+      );
+      // pointerdown, so the input's blur doesn't hide the list first
+      option.addEventListener("pointerdown", (event) => {
+        event.preventDefault();
+        choose(choice);
+      });
+      option.addEventListener("click", () => choose(choice));
+      list.appendChild(option);
+    });
+    list.hidden = suggestions.length === 0;
+  };
+
+  input.addEventListener("focus", render);
+  input.addEventListener("input", () => {
+    const typed = searchKey(input.value.trim());
+    const exact = typeChoices().find((choice) =>
+      [choice.common_name, localizedCommonName(choice.common_name)]
+        .map(searchKey)
+        .includes(typed),
+    );
+    if (exact) {
+      fillType(exact);
+    } else {
+      // A name of your own: details from an earlier choice no longer apply.
+      fillType({ common_name: input.value.trim() });
+    }
+    render();
+  });
+  input.addEventListener("blur", () => {
+    list.hidden = true;
+  });
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      const first = typeSuggestions(input.value)[0];
+      if (first && input.value.trim()) choose(first);
+      input.blur();
+    } else if (event.key === "Escape" && !list.hidden) {
+      event.stopPropagation();
+      list.hidden = true;
+    }
+  });
+  wrapper.append(label, input, list);
+  return wrapper;
+}
+
+function buildChoiceChips(name, values, selected, labelFor) {
+  const group = document.createElement("fieldset");
+  group.className = "choice-chips";
+  const legend = document.createElement("legend");
+  legend.textContent = t(name);
+  group.appendChild(legend);
+  values.forEach((value) => {
+    const chip = document.createElement("label");
+    const radio = document.createElement("input");
+    radio.type = "radio";
+    radio.name = name;
+    radio.value = value;
+    radio.checked = value === selected;
+    chip.append(radio, popupText("", labelFor(value), "span"));
+    group.appendChild(chip);
+  });
+  return group;
+}
+
+function buildOsmDetails(properties) {
+  const record = document.createElement("dl");
+  record.className = "tree-record";
+  [
+    [t("osmElement"), `node/${properties.osm_id || t("notRecorded")}`],
+    [t("osmLeafType"), properties.osm_leaf_type || t("notRecorded")],
+    [
+      t("osmMappedCount"),
+      integerFormatter.format(properties.osm_tree_count_estimate || 1),
+    ],
+    [t("osmDescriptionTag"), properties.osm_description || t("notRecorded")],
+    [
+      t("osmUpdated"),
+      properties.osm_timestamp
+        ? formatDate(properties.osm_timestamp)
+        : t("notRecorded"),
+    ],
+  ].forEach(([label, value]) => appendRecordRow(record, label, value));
+  try {
+    Object.entries(JSON.parse(properties.osm_tags_json || "{}"))
+      .sort(([first], [second]) => first.localeCompare(second))
+      .forEach(([key, value]) => appendRecordRow(record, key, String(value)));
+  } catch {
+    // tags are optional
+  }
+  return record;
 }
 
 function buildAnnotationEditor(feature) {
   const properties = feature.properties;
   const isOsm = properties.detection_method === "openstreetmap-overpass";
-  const root = document.createElement("article");
-  root.className = "annotation-editor";
-  root.setAttribute("aria-label", t("annotationTitle"));
-  root.appendChild(popupText("", t("annotationTitle"), "h2"));
-
-  const meta = document.createElement("div");
-  meta.className = "annotation-meta";
-  const sourceChip = popupText(
-    "annotation-chip",
-    t(isOsm ? "osmMappedTree" : "manualAnnotation"),
-  );
-  meta.appendChild(sourceChip);
-  meta.appendChild(
-    popupText(
-      "annotation-chip",
-      `${feature.geometry.coordinates[1].toFixed(5)}, ${feature.geometry.coordinates[0].toFixed(5)}`,
-    ),
-  );
-  if (Number.isFinite(Number(properties.location_accuracy_m))) {
-    meta.appendChild(
-      popupText(
-        "annotation-chip",
-        `GPS ±${Math.round(Number(properties.location_accuracy_m))} m`,
-      ),
-    );
-  }
-  root.appendChild(meta);
-
-  if (isOsm) {
-    const osmRecord = document.createElement("dl");
-    osmRecord.className = "tree-record";
-    [
-      [t("osmElement"), `node/${properties.osm_id || t("notRecorded")}`],
-      [t("osmLeafType"), properties.osm_leaf_type || t("notRecorded")],
-      [
-        t("osmMappedCount"),
-        integerFormatter.format(properties.osm_tree_count_estimate || 1),
-      ],
-      [t("osmDescriptionTag"), properties.osm_description || t("notRecorded")],
-      [
-        t("osmUpdated"),
-        properties.osm_timestamp
-          ? formatDate(properties.osm_timestamp)
-          : t("notRecorded"),
-      ],
-    ].forEach(([label, value]) => appendRecordRow(osmRecord, label, value));
-    root.appendChild(osmRecord);
-
-    const tagDetails = document.createElement("details");
-    tagDetails.className = "osm-tag-details";
-    const tagSummary = document.createElement("summary");
-    tagSummary.textContent = t("allOsmTags");
-    const tagList = document.createElement("dl");
-    tagList.className = "tree-record";
-    try {
-      Object.entries(JSON.parse(properties.osm_tags_json || "{}"))
-        .sort(([first], [second]) => first.localeCompare(second))
-        .forEach(([key, value]) =>
-          appendRecordRow(tagList, key, String(value)),
-        );
-    } catch {
-      appendRecordRow(tagList, "OSM", t("notRecorded"));
-    }
-    tagDetails.append(tagSummary, tagList);
-    root.appendChild(tagDetails);
-  }
+  const [lng, lat] = feature.geometry.coordinates;
 
   const form = document.createElement("form");
-  form.className = "annotation-form";
+  form.className = "tree-editor-form";
 
-  const treeTypeInput = document.createElement("input");
-  treeTypeInput.type = "hidden";
-  treeTypeInput.name = "tree_type";
-  treeTypeInput.value = properties.tree_type || "";
-
-  const edibleInput = document.createElement("input");
-  edibleInput.type = "hidden";
-  edibleInput.name = "edible";
-  edibleInput.value = properties.edible ? "true" : "false";
-
-  const floweringInput = document.createElement("input");
-  floweringInput.type = "hidden";
-  floweringInput.name = "flowering";
-  floweringInput.value = properties.flowering ? "true" : "false";
-
-  const fruitCategoryInput = document.createElement("input");
-  fruitCategoryInput.type = "hidden";
-  fruitCategoryInput.name = "fruit_category";
-  fruitCategoryInput.value = properties.fruit_category || "";
-
-  const presetSelect = document.createElement("select");
-  presetSelect.id = `annotation-preset-${properties.id}`;
-  presetSelect.name = "identification_preset";
-  const manualOption = document.createElement("option");
-  manualOption.value = "";
-  manualOption.textContent = t("chooseTreeType");
-  presetSelect.appendChild(manualOption);
-
-  const currentPreset = TREE_IDENTIFICATION_CATALOG.find(
-    (entry) =>
-      entry.common_name === properties.common_name &&
-      entry.genus === properties.genus,
+  const header = document.createElement("header");
+  header.className = "tree-editor-header";
+  const title = popupText(
+    "",
+    properties.common_name
+      ? localizedCommonName(properties.common_name)
+      : t("newTree"),
+    "h2",
   );
-  [...TREE_IDENTIFICATION_CATALOG]
-    .sort((first, second) =>
-      localizedCommonName(first.common_name).localeCompare(
-        localizedCommonName(second.common_name),
-        currentLanguage === "de" ? "de" : "en",
-      ),
-    )
-    .forEach((entry) => {
-      const option = document.createElement("option");
-      option.value = entry.id;
-      option.textContent = `${localizedCommonName(entry.common_name)} · ${entry.scientific_name}`;
-      option.selected = entry.id === currentPreset?.id;
-      presetSelect.appendChild(option);
-    });
+  title.id = "tree-editor-title";
+  const close = document.createElement("button");
+  close.type = "button";
+  close.className = "tree-editor-close";
+  close.textContent = "×";
+  close.setAttribute("aria-label", t("closeEditor"));
+  close.addEventListener("click", closeAnnotationEditor);
+  const meta = [
+    Number.isFinite(Number(properties.location_accuracy_m)) &&
+    hasValue(properties.location_accuracy_m)
+      ? `GPS ±${Math.round(Number(properties.location_accuracy_m))} m`
+      : t(isOsm ? "methodOsm" : "methodManual"),
+    `${lat.toFixed(5)}, ${lng.toFixed(5)}`,
+  ].join(" · ");
+  header.append(title, close, popupText("tree-editor-meta", meta, "p"));
 
-  const presetField = annotationField(t("treeSelection"), presetSelect);
-  presetField.classList.add("annotation-preset-field");
-  form.append(
-    presetField,
-    popupText("annotation-preset-hint", t("treeSelectionHint"), "p"),
-    treeTypeInput,
-    edibleInput,
-    floweringInput,
-    fruitCategoryInput,
-  );
-
-  form.append(
-    annotationField(
-      t("commonName"),
-      annotationInput(
-        `annotation-common-${properties.id}`,
-        "common_name",
-        "text",
-        properties.common_name,
-        t("unknownTree"),
-      ),
-    ),
-    annotationField(
-      t("scientificName"),
-      annotationInput(
-        `annotation-scientific-${properties.id}`,
-        "scientific_name",
-        "text",
-        properties.scientific_name,
-      ),
-    ),
-    annotationField(
-      t("scientificSynonym"),
-      annotationInput(
-        `annotation-synonym-${properties.id}`,
-        "scientific_synonym",
-        "text",
-        properties.scientific_synonym,
-      ),
-    ),
-    annotationField(
-      t("genus"),
-      annotationInput(
-        `annotation-genus-${properties.id}`,
-        "genus",
-        "text",
-        properties.genus,
-        t("unknownGenus"),
-      ),
-    ),
-    annotationField(
-      `${t("trunkGirth")} (cm)`,
-      annotationInput(
-        `annotation-girth-${properties.id}`,
-        "trunk_circumference_cm",
-        "number",
-        properties.trunk_circumference_cm,
-      ),
-    ),
-    annotationField(
-      `${t("trunkDiameter")} (cm)`,
-      annotationInput(
-        `annotation-dbh-${properties.id}`,
-        "dbh_cm",
-        "number",
-        properties.dbh_cm,
-      ),
-    ),
-    annotationField(
-      `${t("height")} (m)`,
-      annotationInput(
-        `annotation-height-${properties.id}`,
-        "height_m",
-        "number",
-        properties.height_m,
-      ),
-    ),
-    annotationField(
-      `${t("canopySpread")} (m)`,
-      annotationInput(
-        `annotation-canopy-${properties.id}`,
-        "canopy_spread_m",
-        "number",
-        properties.canopy_spread_m,
-      ),
-    ),
-  );
-
-  presetSelect.addEventListener("change", () => {
-    const preset = TREE_IDENTIFICATION_CATALOG.find(
-      (entry) => entry.id === presetSelect.value,
-    );
-    if (!preset) {
-      form.elements.tree_type.value = "";
-      form.elements.edible.value = "false";
-      form.elements.flowering.value = "false";
-      form.elements.fruit_category.value = "";
-      return;
-    }
-    form.elements.common_name.value = preset.common_name;
-    form.elements.scientific_name.value = preset.scientific_name;
-    form.elements.scientific_synonym.value = preset.scientific_synonym || "";
-    form.elements.genus.value = preset.genus;
-    form.elements.tree_type.value = preset.tree_type;
-    form.elements.edible.value = preset.edible ? "true" : "false";
-    form.elements.flowering.value = preset.flowering ? "true" : "false";
-    form.elements.fruit_category.value = preset.fruit_category || "";
+  const body = document.createElement("div");
+  body.className = "tree-editor-body";
+  HIDDEN_TYPE_FIELDS.forEach((name) => {
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = name;
+    input.value =
+      name === "edible" || name === "flowering"
+        ? String(Boolean(properties[name]))
+        : properties[name] || "";
+    form.appendChild(input);
   });
-
-  const healthSelect = document.createElement("select");
-  healthSelect.id = `annotation-health-${properties.id}`;
-  healthSelect.name = "health";
-  ["good", "fair", "poor", "dead"].forEach((value) => {
-    const option = document.createElement("option");
-    option.value = value;
-    option.textContent = healthLabel(value);
-    option.selected = value === treeHealthKey({ properties });
-    healthSelect.appendChild(option);
-  });
-  form.appendChild(annotationField(t("health"), healthSelect));
-
-  form.append(
-    annotationField(
-      `${t("co2Stored")} (kg)`,
-      annotationInput(
-        `annotation-co2-${properties.id}`,
-        "co2_stored_kg",
-        "number",
-        properties.co2_stored_kg,
-      ),
-    ),
-    annotationField(
-      `${t("co2PerYear")} (kg)`,
-      annotationInput(
-        `annotation-co2-year-${properties.id}`,
-        "co2_per_year_kg",
-        "number",
-        properties.co2_per_year_kg,
-      ),
-    ),
-    annotationField(
-      `${t("stormwater")} (L)`,
-      annotationInput(
-        `annotation-water-${properties.id}`,
-        "stormwater_l_per_year",
-        "number",
-        properties.stormwater_l_per_year,
-      ),
-    ),
-    annotationField(
-      t("surveyed"),
-      annotationInput(
-        `annotation-date-${properties.id}`,
-        "date_surveyed",
-        "date",
-        properties.date_surveyed,
-      ),
-    ),
-    annotationField(
-      t("photo"),
-      annotationInput(
-        `annotation-photo-${properties.id}`,
-        "photo_url",
-        "url",
-        properties.photo_url,
-        "https://…",
-      ),
+  body.appendChild(buildTypeField(form, properties));
+  body.appendChild(
+    buildChoiceChips(
+      "health",
+      ["good", "fair", "poor", "dead"],
+      treeHealthKey({ properties }),
+      healthLabel,
     ),
   );
+
+  const reviewed = document.createElement("label");
+  reviewed.className = "toggle-field";
+  const reviewedBox = document.createElement("input");
+  reviewedBox.type = "checkbox";
+  reviewedBox.name = "reviewed";
+  reviewedBox.checked = properties.review_status === "reviewed";
+  reviewed.append(reviewedBox, popupText("", t("reviewed"), "span"));
+  body.appendChild(reviewed);
 
   const notes = document.createElement("textarea");
-  notes.id = `annotation-notes-${properties.id}`;
   notes.name = "notes";
+  notes.id = "tree-editor-notes";
+  notes.rows = 2;
   notes.value = properties.notes || "";
   notes.placeholder = t("notesPlaceholder");
-  form.appendChild(annotationField(t("notes"), notes));
+  body.appendChild(editorField(t("notes"), notes));
 
-  const reviewSelect = document.createElement("select");
-  reviewSelect.id = `annotation-review-${properties.id}`;
-  reviewSelect.name = "review_status";
-  ["unreviewed", "reviewed"].forEach((value) => {
-    const option = document.createElement("option");
-    option.value = value;
-    option.textContent = t(value);
-    option.selected = value === properties.review_status;
-    reviewSelect.appendChild(option);
+  const more = document.createElement("details");
+  more.className = "more-fields";
+  const moreSummary = document.createElement("summary");
+  moreSummary.textContent = t("moreFields");
+  const moreGrid = document.createElement("div");
+  moreGrid.className = "tree-editor-grid";
+  more.append(moreSummary, moreGrid);
+
+  const usedGrid = document.createElement("div");
+  usedGrid.className = "tree-editor-grid";
+  OPTIONAL_TREE_FIELDS.forEach((field) => {
+    const control = editorInput(
+      field.name,
+      field.type || "number",
+      properties[field.name],
+    );
+    const target = fieldWasUsed(field.name, properties) ? usedGrid : moreGrid;
+    target.appendChild(editorField(fieldLabel(field), control));
   });
-  form.appendChild(annotationField(t("reviewStatus"), reviewSelect));
-
-  const sourceNote = popupText(
-    "data-availability",
-    isOsm
-      ? `${t("annotationMethod")}: ${t("methodOsm")}. ${t("osmCaveat")}`
-      : `${t("annotationMethod")}: ${t("methodManual")}.`,
-    "p",
-  );
-  form.appendChild(sourceNote);
-
-  if (isOsm && properties.source_url) {
-    const sourceLink = document.createElement("a");
-    sourceLink.className = "survey-date source-link";
-    sourceLink.href = properties.source_url;
-    sourceLink.target = "_blank";
-    sourceLink.rel = "noopener noreferrer";
-    sourceLink.textContent = t("openOsmElement");
-    form.appendChild(sourceLink);
-  }
+  DETAIL_TREE_FIELDS.forEach((field) => {
+    const control = editorInput(field.name, field.type, properties[field.name]);
+    moreGrid.appendChild(editorField(fieldLabel(field), control));
+  });
+  if (usedGrid.childElementCount) body.appendChild(usedGrid);
+  if (isOsm) more.appendChild(buildOsmDetails(properties));
+  body.appendChild(more);
 
   const actions = document.createElement("div");
-  actions.className = "annotation-form-actions";
-  const saveButton = document.createElement("button");
-  saveButton.className = "annotation-button primary";
-  saveButton.type = "submit";
-  saveButton.textContent = t("saveAnnotation");
+  actions.className = "tree-editor-actions";
   const deleteButton = document.createElement("button");
-  deleteButton.className = "annotation-button annotation-delete";
   deleteButton.type = "button";
+  deleteButton.className = "text-button danger";
   deleteButton.textContent = t("deleteAnnotation");
-  actions.append(saveButton, deleteButton);
-  form.appendChild(actions);
+  deleteButton.addEventListener("click", () => {
+    if (window.confirm(t("confirmDelete"))) deleteAnnotation(properties.id);
+  });
+  const saveButton = document.createElement("button");
+  saveButton.type = "submit";
+  saveButton.className = "annotation-button primary";
+  saveButton.textContent = t("saveTree");
+  actions.append(deleteButton, saveButton);
 
+  form.append(header, body, actions);
   form.addEventListener("submit", (event) => {
     event.preventDefault();
-    const updatedFeature = {
-      ...feature,
-      properties: {
-        ...properties,
-        common_name: form.elements.common_name.value.trim(),
-        scientific_name: form.elements.scientific_name.value.trim(),
-        scientific_synonym: form.elements.scientific_synonym.value.trim(),
-        genus: form.elements.genus.value.trim(),
-        tree_type: form.elements.tree_type.value || null,
-        edible: form.elements.edible.value === "true",
-        flowering: form.elements.flowering.value === "true",
-        fruit_category: form.elements.fruit_category.value.trim() || null,
-        trunk_circumference_cm: optionalFormNumber(
-          form,
-          "trunk_circumference_cm",
-        ),
-        dbh_cm: optionalFormNumber(form, "dbh_cm"),
-        height_m: optionalFormNumber(form, "height_m"),
-        canopy_spread_m: optionalFormNumber(form, "canopy_spread_m"),
-        health: form.elements.health.value,
-        co2_stored_kg: optionalFormNumber(form, "co2_stored_kg"),
-        co2_per_year_kg: optionalFormNumber(form, "co2_per_year_kg"),
-        stormwater_l_per_year: optionalFormNumber(
-          form,
-          "stormwater_l_per_year",
-        ),
-        date_surveyed: form.elements.date_surveyed.value || null,
-        photo_url: form.elements.photo_url.value.trim(),
-        notes: form.elements.notes.value.trim(),
-        review_status: form.elements.review_status.value,
-        updated_at: new Date().toISOString(),
-      },
-    };
-    updateAnnotation(updatedFeature);
-    if (activePopup) activePopup.remove();
+    const text = (name) => form.elements[name].value.trim();
+    const updated = { ...properties, updated_at: new Date().toISOString() };
+    [
+      "common_name",
+      "scientific_name",
+      "scientific_synonym",
+      "genus",
+      "notes",
+      "photo_url",
+    ].forEach((name) => {
+      updated[name] = text(name);
+    });
+    OPTIONAL_TREE_FIELDS.filter((field) => !field.type).forEach(({ name }) => {
+      updated[name] = optionalFormNumber(form, name);
+    });
+    Object.assign(updated, {
+      tree_type: form.elements.tree_type.value || null,
+      edible: form.elements.edible.value === "true",
+      flowering: form.elements.flowering.value === "true",
+      fruit_category: text("fruit_category") || null,
+      health: form.elements.health.value,
+      review_status: form.elements.reviewed.checked ? "reviewed" : "unreviewed",
+      date_surveyed: form.elements.date_surveyed.value || null,
+    });
+    updateAnnotation({ ...feature, properties: updated });
+    closeAnnotationEditor();
     setAnnotationStatus("annotationSaved");
   });
-
-  deleteButton.addEventListener("click", () => {
-    if (window.confirm(t("confirmDelete"))) {
-      deleteAnnotation(properties.id);
-    }
-  });
-
-  root.appendChild(form);
-  return root;
+  return form;
 }
 
-function openAnnotationEditor(feature) {
-  const inheritedPanelRestore = activePopupRestoresPanel;
-  activePopupRestoresPanel = false;
-  if (activePopup) activePopup.remove();
-  const shouldRestorePanel = inheritedPanelRestore || prepareViewportForPopup();
+function optionalFormNumber(form, name) {
+  const rawValue = form.elements[name].value.trim();
+  if (!rawValue) return null;
+  const parsed = Number(rawValue.replace(",", "."));
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function treeEditorIsOpen() {
+  return !document.getElementById("tree-editor").hidden;
+}
+
+// Ring around the tree being edited, so you can see which one it is.
+function showEditingRing(coordinates) {
+  map?.getSource("editing")?.setData({
+    type: "FeatureCollection",
+    features: coordinates
+      ? [
+          {
+            type: "Feature",
+            geometry: { type: "Point", coordinates },
+            properties: {},
+          },
+        ]
+      : [],
+  });
+}
+
+function openAnnotationEditor(feature, { focusType = false } = {}) {
+  activePopup?.remove();
   activeAnnotationId = feature.properties.id;
-  activePopupFeature = null;
-  const popup = new maplibregl.Popup({
-    anchor: "bottom",
-    offset: 16,
-    maxWidth: "368px",
-  })
-    .setLngLat(feature.geometry.coordinates)
-    .setDOMContent(buildAnnotationEditor(feature))
-    .addTo(map);
-  activePopup = popup;
-  activePopupRestoresPanel = shouldRestorePanel;
-  focusPopupInViewport(popup);
-  popup.on("close", () => {
-    if (activePopup === popup) {
-      const restorePanel = activePopupRestoresPanel;
-      activePopup = null;
-      activeAnnotationId = null;
-      activePopupRestoresPanel = false;
-      if (restorePanel) setDashboardCollapsed(false);
-    }
+  const editor = document.getElementById("tree-editor");
+  editor.replaceChildren(buildAnnotationEditor(feature));
+  editor.hidden = false;
+  document.body.classList.add("is-editing");
+  showEditingRing(feature.geometry.coordinates);
+  // Keyboard first (iOS only opens it within the tap that led here).
+  if (focusType) editor.querySelector("#tree-editor-tree_type_search").focus();
+  const phone = window.matchMedia("(max-width: 760px)").matches;
+  map.easeTo({
+    center: feature.geometry.coordinates,
+    offset: phone
+      ? [0, -Math.round(editor.offsetHeight / 2)]
+      : [-Math.round(editor.offsetWidth / 2 + 9), 0],
+    duration: 500,
   });
 }
+
+function closeAnnotationEditor() {
+  const editor = document.getElementById("tree-editor");
+  if (editor.hidden) return;
+  editor.hidden = true;
+  editor.replaceChildren();
+  activeAnnotationId = null;
+  document.body.classList.remove("is-editing");
+  showEditingRing(null);
+}
+
+// Keep the sheet above the on-screen keyboard on phones.
+window.visualViewport?.addEventListener("resize", () => {
+  const covered =
+    window.innerHeight -
+    window.visualViewport.height -
+    window.visualViewport.offsetTop;
+  document.documentElement.style.setProperty(
+    "--keyboard-inset",
+    `${Math.max(0, Math.round(covered))}px`,
+  );
+});

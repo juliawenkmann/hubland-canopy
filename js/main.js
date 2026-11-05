@@ -163,6 +163,10 @@ document.addEventListener("pointerdown", (event) => {
 });
 
 document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && treeEditorIsOpen() && !accountPanelIsOpen()) {
+    closeAnnotationEditor();
+    return;
+  }
   if (event.key === "Escape" && accountPanelIsOpen()) {
     setAccountPanelOpen(false);
     document.getElementById("account-toggle").focus();

@@ -184,16 +184,30 @@ function addMapLayers() {
     "circle-stroke-color": "#fff8ef",
   });
 
+  map.addSource("editing", { type: "geojson", data: empty });
+  map.addLayer({
+    id: "editing-ring",
+    type: "circle",
+    source: "editing",
+    paint: {
+      "circle-radius": 17,
+      "circle-color": "rgba(255, 253, 247, 0.18)",
+      "circle-stroke-color": "#fffdf7",
+      "circle-stroke-width": 3,
+    },
+  });
+
   // Your own position stays on top of the tree markers.
   map.moveLayer("gps-accuracy");
   map.moveLayer("gps-dot");
+  map.moveLayer("editing-ring");
 
   [
     ["tree-clusters", "trees"],
     ["fruit-clusters", "fruit"],
   ].forEach(([layer, source]) => {
     map.on("click", layer, async (event) => {
-      if (manualPlacementMode) return;
+      if (manualPlacementMode || treeEditorIsOpen()) return;
       const cluster = event.features[0];
       const zoom = await map
         .getSource(source)
@@ -206,7 +220,7 @@ function addMapLayers() {
     ["fruit-targets", () => treeData.features],
   ].forEach(([layer, features]) => {
     map.on("click", layer, (event) => {
-      if (manualPlacementMode) return;
+      if (manualPlacementMode || treeEditorIsOpen()) return;
       const id = closestTreeFromEvent(event)?.properties.id;
       const feature = features().find(
         (item) => String(item.properties.id) === String(id),

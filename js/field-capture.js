@@ -97,6 +97,7 @@ function showGpsPosition(fix) {
 
 function startPlacement({ followGps }) {
   if (placement || requireSignIn()) return;
+  closeAnnotationEditor();
   if (dashboardMode !== "trees") setDashboardMode("trees");
   if (window.matchMedia("(max-width: 760px)").matches)
     setDashboardCollapsed(true);

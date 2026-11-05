@@ -118,7 +118,7 @@ function addManualAnnotation(
     detectionMethod === "gps" ? "gpsAdded" : "manualAdded",
     detectionMethod === "gps" ? { accuracy } : {},
   );
-  openAnnotationEditor(feature);
+  openAnnotationEditor(feature, { focusType: true });
 }
 
 function updateAnnotation(updatedFeature) {
@@ -156,7 +156,8 @@ function deleteAnnotation(id) {
   persistAnnotations();
   syncAnnotationSource();
   if (deletedFeature) queueCloudOperation("delete", deletedFeature);
-  if (activePopup) activePopup.remove();
+  closeAnnotationEditor();
+  activePopup?.remove();
   setAnnotationStatus("annotationDeleted");
 }
 

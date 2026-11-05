@@ -123,14 +123,15 @@ function applyLanguage({ refreshDynamic = true } = {}) {
   renderLegend(colorMode);
   updateSelectionStatus();
   renderAnnotationUI();
-  if (activePopup && activeAnnotationId) {
-    const annotation = annotationData.features.find(
-      (feature) => feature.properties.id === activeAnnotationId,
-    );
-    if (annotation) {
-      activePopup.setDOMContent(buildAnnotationEditor(annotation));
-    }
-  } else if (activePopup && activePopupFeature) {
+  const editing = annotationData.features.find(
+    (feature) => feature.properties.id === activeAnnotationId,
+  );
+  if (editing && treeEditorIsOpen()) {
+    document
+      .getElementById("tree-editor")
+      .replaceChildren(buildAnnotationEditor(editing));
+  }
+  if (activePopup && activePopupFeature) {
     activePopup.setDOMContent(
       buildTreePopup(
         activePopupFeature.properties,
