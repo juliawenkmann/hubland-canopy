@@ -28,7 +28,7 @@ const TREE_TYPE_GROUPS = [
     ["Akazie", "Black locust", "Robinia pseudoacacia", "L", { plate: "robinia-pseudoacacia" }],
     ["Kugel-Robinie", "Mop-top robinia", "Robinia pseudoacacia ‘Umbraculifera’", "L"],
   ],
-  [["Amberbaum", "Sweetgum", "Liquidambar styraciflua", "L"]],
+  [["Amberbaum", "Sweetgum", "Liquidambar styraciflua", "L", { plate: "liquidambar-styraciflua" }]],
   [
     ["Birke", "Birch", "Betula sp.", "L", { plate: "betula" }],
     ["Hänge-Birke", "Silver birch", "Betula pendula", "L"],
@@ -69,7 +69,7 @@ const TREE_TYPE_GROUPS = [
     ["Schmalblättrige Esche ‘Raywood’", "Narrow-leaved ash ‘Raywood’", "Fraxinus angustifolia ‘Raywood’", "L"],
     ["Blumen-Esche", "Manna ash", "Fraxinus ornus", "L"],
   ],
-  [["Esskastanie", "Sweet chestnut", "Castanea sativa", "L"]],
+  [["Esskastanie", "Sweet chestnut", "Castanea sativa", "L", { plate: "castanea-sativa" }]],
   [
     ["Fichte", "Spruce", "Picea sp.", "N", { plate: "picea-abies" }],
     ["Gemeine Fichte", "Norway spruce", "Picea abies", "N"],
@@ -83,7 +83,7 @@ const TREE_TYPE_GROUPS = [
     ["Säulen-Hainbuche", "Columnar hornbeam", "Carpinus betulus ‘Fastigiata’", "L"],
   ],
   [["Japanischer Schnurbaum", "Japanese pagoda tree", "Styphnolobium japonicum", "L", { plate: "styphnolobium-japonicum", scientific_synonym: "Sophora japonica" }]],
-  [["Judasbaum", "Judas tree", "Cercis siliquastrum", "L"]],
+  [["Judasbaum", "Judas tree", "Cercis siliquastrum", "L", { plate: "cercis-siliquastrum" }]],
   [
     ["Kastanie", "Horse chestnut", "Aesculus sp.", "L", { plate: "aesculus" }],
     ["Gewöhnliche Rosskastanie", "Common horse chestnut", "Aesculus hippocastanum", "L"],
@@ -116,10 +116,10 @@ const TREE_TYPE_GROUPS = [
     ["Silber-Linde", "Silver linden", "Tilia tomentosa", "L", { flowering: true, fruit_category: "Linde" }],
     ["Silber-Linde ‘Brabant’", "Silver linden ‘Brabant’", "Tilia tomentosa ‘Brabant’", "L", { flowering: true, fruit_category: "Linde" }],
   ],
-  [["Magnolie", "Magnolia", "Magnolia sp.", "S"]],
+  [["Magnolie", "Magnolia", "Magnolia sp.", "S", { plate: "magnolia" }]],
   [
-    ["Mammutbaum", "Giant sequoia", "Sequoiadendron giganteum", "N"],
-    ["Urweltmammutbaum", "Dawn redwood", "Metasequoia glyptostroboides", "N"],
+    ["Mammutbaum", "Giant sequoia", "Sequoiadendron giganteum", "N", { plate: "sequoiadendron-giganteum" }],
+    ["Urweltmammutbaum", "Dawn redwood", "Metasequoia glyptostroboides", "N", { plate: "tree" }],
   ],
   [
     ["Mehlbeere", "Common whitebeam", "Sorbus aria", "L", { plate: "sorbus-aria" }],
@@ -136,24 +136,24 @@ const TREE_TYPE_GROUPS = [
     ["Platane", "Plane tree", "Platanus sp.", "L", { plate: "platanus" }],
     ["Ahornblättrige Platane", "London plane tree", "Platanus × acerifera", "L", { scientific_synonym: "Platanus × hispanica" }],
   ],
-  [["Douglasie", "Douglas fir", "Pseudotsuga menziesii", "N"]],
+  [["Douglasie", "Douglas fir", "Pseudotsuga menziesii", "N", { plate: "pseudotsuga-menziesii" }]],
   [
-    ["Tanne", "Fir", "Abies sp.", "N"],
+    ["Tanne", "Fir", "Abies sp.", "N", { plate: "abies-alba" }],
     ["Weiß-Tanne", "Silver fir", "Abies alba", "N"],
     ["Nordmann-Tanne", "Nordmann fir", "Abies nordmanniana", "N"],
   ],
-  [["Trompetenbaum", "Indian bean tree", "Catalpa bignonioides", "L"]],
-  [["Tulpenbaum", "Tulip tree", "Liriodendron tulipifera", "L"]],
+  [["Trompetenbaum", "Indian bean tree", "Catalpa bignonioides", "L", { plate: "catalpa-bignonioides" }]],
+  [["Tulpenbaum", "Tulip tree", "Liriodendron tulipifera", "L", { plate: "liriodendron-tulipifera" }]],
   [
     ["Ulme", "Elm", "Ulmus sp.", "L", { plate: "ulmus-glabra" }],
     ["Berg-Ulme", "Wych elm", "Ulmus glabra", "L"],
     ["Feld-Ulme", "Field elm", "Ulmus minor", "L"],
   ],
-  [["Wacholder", "Juniper", "Juniperus sp.", "S"]],
+  [["Wacholder", "Juniper", "Juniperus sp.", "S", { plate: "juniperus-communis" }]],
   [
-    ["Weide", "Willow", "Salix sp.", "L"],
+    ["Weide", "Willow", "Salix sp.", "L", { plate: "salix-alba" }],
     ["Silber-Weide", "White willow", "Salix alba", "L"],
-    ["Trauer-Weide", "Weeping willow", "Salix × sepulcralis", "L"],
+    ["Trauer-Weide", "Weeping willow", "Salix × sepulcralis", "L", { plate: "salix-babylonica" }],
     ["Sal-Weide", "Goat willow", "Salix caprea", "S"],
   ],
   [
@@ -162,7 +162,7 @@ const TREE_TYPE_GROUPS = [
     ["Rotdorn", "Red hawthorn", "Crataegus laevigata ‘Paul’s Scarlet’", "L"],
     ["Apfeldorn", "Lavalle hawthorn", "Crataegus × lavallei", "L"],
   ],
-  [["Zürgelbaum", "Nettle tree", "Celtis australis", "L"]],
+  [["Zürgelbaum", "Nettle tree", "Celtis australis", "L", { plate: "celtis-australis" }]],
 
   // Shrubs
   [["Berberitze", "Common barberry", "Berberis vulgaris", "S", { plate: "berberis-vulgaris", edible: true, fruit_category: "Berberitze" }]],

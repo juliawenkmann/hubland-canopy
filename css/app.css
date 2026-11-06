@@ -2607,6 +2607,84 @@ body.food-mode .maplibregl-popup-content {
   background-size: contain;
 }
 
+.plate-abies-alba {
+  background-image: url("../assets/plates/abies-alba.webp");
+  background-position: center;
+  background-size: contain;
+}
+
+.plate-castanea-sativa {
+  background-image: url("../assets/plates/castanea-sativa.webp");
+  background-position: center;
+  background-size: contain;
+}
+
+.plate-catalpa-bignonioides {
+  background-image: url("../assets/plates/catalpa-bignonioides.webp");
+  background-position: center;
+  background-size: contain;
+}
+
+.plate-celtis-australis {
+  background-image: url("../assets/plates/celtis-australis.webp");
+  background-position: center;
+  background-size: contain;
+}
+
+.plate-cercis-siliquastrum {
+  background-image: url("../assets/plates/cercis-siliquastrum.webp");
+  background-position: center;
+  background-size: contain;
+}
+
+.plate-juniperus-communis {
+  background-image: url("../assets/plates/juniperus-communis.webp");
+  background-position: center;
+  background-size: contain;
+}
+
+.plate-liquidambar-styraciflua {
+  background-image: url("../assets/plates/liquidambar-styraciflua.webp");
+  background-position: center;
+  background-size: contain;
+}
+
+.plate-liriodendron-tulipifera {
+  background-image: url("../assets/plates/liriodendron-tulipifera.webp");
+  background-position: center;
+  background-size: contain;
+}
+
+.plate-magnolia {
+  background-image: url("../assets/plates/magnolia.webp");
+  background-position: center;
+  background-size: contain;
+}
+
+.plate-pseudotsuga-menziesii {
+  background-image: url("../assets/plates/pseudotsuga-menziesii.webp");
+  background-position: center;
+  background-size: contain;
+}
+
+.plate-salix-alba {
+  background-image: url("../assets/plates/salix-alba.webp");
+  background-position: center;
+  background-size: contain;
+}
+
+.plate-salix-babylonica {
+  background-image: url("../assets/plates/salix-babylonica.webp");
+  background-position: center;
+  background-size: contain;
+}
+
+.plate-sequoiadendron-giganteum {
+  background-image: url("../assets/plates/sequoiadendron-giganteum.webp");
+  background-position: center;
+  background-size: contain;
+}
+
 .plate-prunus-avium {
   background-image: url("../assets/plates/prunus-avium.webp");
   background-position: center;

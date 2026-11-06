@@ -124,4 +124,12 @@ In the emulator, *Create account* with the editor email from
 - Campus boundary and part of the tree baseline: © OpenStreetMap contributors (ODbL 1.0)
 - Fruit locations: [mundraub.org](https://mundraub.org)
 - Aerial imagery: DOP40 © Bayerische Vermessungsverwaltung (CC BY 4.0)
-- Lebensbaum, Blasenbaum, Hainbuche, Weißdorn, Lärche and Japanischer Schnurbaum plates: Pierre-Joseph Redouté, *Traité des arbres et arbustes* (1800–1819), public domain; scans by the New York Public Library via Wikimedia Commons
+- Plates for Lebensbaum, Blasenbaum, Hainbuche, Weißdorn, Lärche, Japanischer
+  Schnurbaum, Amberbaum, Esskastanie, Judasbaum, Magnolie, Trompetenbaum,
+  Tulpenbaum, Wacholder, Weide, Zürgelbaum and Tanne: Pierre-Joseph Redouté,
+  *Traité des arbres et arbustes* (1800–1819), public domain; scans by the New
+  York Public Library via Wikimedia Commons
+- Mammutbaum plate: *Curtis's Botanical Magazine*, Tab. 4778 (1854), public
+  domain, via the Biodiversity Heritage Library and Wikimedia Commons
+- Douglasie plate: watercolour by Mary Vaux Walcott, public domain, via
+  Wikimedia Commons
